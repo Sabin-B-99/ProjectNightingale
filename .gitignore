@@ -2,7 +2,7 @@
 target/
 log/
 pom.xml
-**/src/main/resources/
+src/main/resources/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
