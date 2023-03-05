@@ -3,7 +3,7 @@ package com.projectnight.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "topics")
+@Table(name = "practice_topics")
 public class PracticeTopic {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
