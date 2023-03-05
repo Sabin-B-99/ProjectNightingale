@@ -15,6 +15,7 @@ public class ChordProgressions {
 
     @OneToMany
     @Column(name = "chord")
+    @JoinColumn(name = "chord_id_fk")
     private List<Chord> chords;
 
     @Column(name = "time")
