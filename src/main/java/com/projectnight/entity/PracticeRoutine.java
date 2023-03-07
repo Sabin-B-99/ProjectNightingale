@@ -1,7 +1,6 @@
 package com.projectnight.entity;
 
 import javax.persistence.*;
-import java.sql.Time;
 import java.util.List;
 
 @Entity
@@ -16,10 +15,19 @@ public class PracticeRoutine {
     @OneToMany
     @Column(name = "topics")
     @JoinColumn(name = "practice_topic_id_fk")
-    private List<PracticeTopic> practiceTopics;
+    private List<PracticeTopicItems> practiceTopics;
 
-    @Column(name = "time")
-    private Time time;
+    @OneToMany
+    @JoinColumns(
+            {
+                    @JoinColumn(name = "topics_id_fk", referencedColumnName = "topics_id_fk"),
+                    @JoinColumn(name = "chord_changes_id_fk", referencedColumnName = "chord_changes_id_fk"),
+                    @JoinColumn(name = "chord_progressions_id_fk", referencedColumnName = "chord_progressions_id_fk"),
+                    @JoinColumn(name = "chords_id_fk", referencedColumnName = "chords_id_fk")
+            }
+    )
+    private List<PracticeTopicItems> practiceItems;
+
 
     public PracticeRoutine() {
     }
@@ -30,21 +38,5 @@ public class PracticeRoutine {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public List<PracticeTopic> getPracticeTopics() {
-        return practiceTopics;
-    }
-
-    public void setPracticeTopics(List<PracticeTopic> practiceTopics) {
-        this.practiceTopics = practiceTopics;
-    }
-
-    public Time getTime() {
-        return time;
-    }
-
-    public void setTime(Time time) {
-        this.time = time;
     }
 }
