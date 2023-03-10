@@ -13,10 +13,12 @@ public class ChordProgressions {
     @Column(name = "id")
     private int id;
 
-    @OneToMany
-    @Column(name = "chord")
-    @JoinColumn(name = "chord_id_fk")
-    private List<Chord> chords;
+    @OneToMany(mappedBy = "progressions")
+    private List<ChordsUsed> chordsUsed;
+
+    @ManyToOne
+    @JoinColumn(name = "topic_id_fk")
+    private Topic topic;
 
     @Column(name = "time")
     private Time time;
@@ -32,12 +34,20 @@ public class ChordProgressions {
         this.id = id;
     }
 
-    public List<Chord> getChords() {
-        return chords;
+    public List<ChordsUsed> getChordsUsed() {
+        return chordsUsed;
     }
 
-    public void setChords(List<Chord> chords) {
-        this.chords = chords;
+    public void setChordsUsed(List<ChordsUsed> chordsUsed) {
+        this.chordsUsed = chordsUsed;
+    }
+
+    public Topic getTopic() {
+        return topic;
+    }
+
+    public void setTopic(Topic topic) {
+        this.topic = topic;
     }
 
     public Time getTime() {
