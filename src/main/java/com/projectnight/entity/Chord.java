@@ -19,6 +19,10 @@ public class Chord {
     @Column(name = "chord_image_path")
     private String chordImagePath;
 
+    @ManyToOne
+    @JoinColumn(name = "chords_used_fk")
+    private ChordsUsed chordsUsed;
+
     public Chord() {
     }
 
@@ -44,5 +48,13 @@ public class Chord {
 
     public void setChordImagePath(String chordImagePath) {
         this.chordImagePath = chordImagePath;
+    }
+
+    public ChordsUsed getChordsUsed() {
+        return chordsUsed;
+    }
+
+    public void setChordsUsed(ChordsUsed chordsUsed) {
+        this.chordsUsed = chordsUsed;
     }
 }
