@@ -2,6 +2,7 @@ package com.projectnight.entity;
 
 import javax.persistence.*;
 import java.sql.Time;
+import java.util.List;
 
 @Entity
 @Table(name = "chord_changes")
@@ -12,16 +13,19 @@ public class ChordChanges {
     private int id;
 
     @OneToOne
-    @JoinColumn(name = "from_chord_id_fk")
-    private Chord from;
+    @JoinColumn(name = "from_chords_used_fk")
+    private ChordsUsed from;
 
     @OneToOne
-    @JoinColumn(name = "to_chord_id_fk")
-    private Chord to;
+    @JoinColumn(name = "to_chords_used_fk")
+    private ChordsUsed to;
 
     @Column(name = "time")
     private Time time;
 
+    @ManyToOne
+    @JoinColumn(name = "topic_id_fk")
+    private Topic topic;
     public ChordChanges() {
     }
 
@@ -33,19 +37,19 @@ public class ChordChanges {
         this.id = id;
     }
 
-    public Chord getFrom() {
+    public ChordsUsed getFrom() {
         return from;
     }
 
-    public void setFrom(Chord from) {
+    public void setFrom(ChordsUsed from) {
         this.from = from;
     }
 
-    public Chord getTo() {
+    public ChordsUsed getTo() {
         return to;
     }
 
-    public void setTo(Chord to) {
+    public void setTo(ChordsUsed to) {
         this.to = to;
     }
 
@@ -55,5 +59,13 @@ public class ChordChanges {
 
     public void setTime(Time time) {
         this.time = time;
+    }
+
+    public Topic getTopic() {
+        return topic;
+    }
+
+    public void setTopic(Topic topic) {
+        this.topic = topic;
     }
 }
