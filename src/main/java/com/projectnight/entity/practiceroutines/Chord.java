@@ -1,6 +1,4 @@
-package com.projectnight.entity;
-
-import org.hibernate.annotations.GeneratorType;
+package com.projectnight.entity.practiceroutines;
 
 import javax.persistence.*;
 

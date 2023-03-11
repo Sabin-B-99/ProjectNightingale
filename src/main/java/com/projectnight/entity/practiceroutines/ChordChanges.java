@@ -1,8 +1,7 @@
-package com.projectnight.entity;
+package com.projectnight.entity.practiceroutines;
 
 import javax.persistence.*;
 import java.sql.Time;
-import java.util.List;
 
 @Entity
 @Table(name = "chord_changes")
