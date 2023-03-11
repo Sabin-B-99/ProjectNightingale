@@ -2,10 +2,7 @@ package com.projectnight.configuration;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -32,18 +29,41 @@ public class AppConfig {
     }
 
     @Bean
-    public DataSource projectNightDataSource(){
-        ComboPooledDataSource dataSource = new ComboPooledDataSource();
+    @Primary
+    public DataSource projectNightUserDataSource(){
 
-        try {
-            dataSource.setDriverClass((env.getProperty("jdbc.driver")));
-        }catch (PropertyVetoException e){
-            throw new RuntimeException(e);
-        }
+        String driver = env.getProperty("jdbc.user.driver");
+        String url = env.getProperty("jdbc.user.url");
+        String user = env.getProperty("jdbc.user.user");
+        String password = env.getProperty("jdbc.user.password");
 
-        dataSource.setJdbcUrl(env.getProperty("jdbc.url"));
-        dataSource.setUser(env.getProperty("jdbc.user"));
-        dataSource.setPassword(env.getProperty("jdbc.password"));
+        ComboPooledDataSource dataSource = dataSourceConfigurerHelper(driver, url , user, password);
+        return dataSource;
+    }
+
+    @Bean
+    public DataSource projectNightPracticeRoutineDataSource(){
+
+        String driver = env.getProperty("jdbc.practiceRoutine.driver");
+        String url = env.getProperty("jdbc.practiceRoutine.url");
+        String user = env.getProperty("jdbc.practiceRoutine.user");
+        String password = env.getProperty("jdbc.practiceRoutine.password");
+
+        ComboPooledDataSource dataSource = dataSourceConfigurerHelper(driver, url, user, password);
+        return dataSource;
+    }
+
+    private ComboPooledDataSource dataSourceConfigurerHelper(String driver,String url, String user, String password){
+           ComboPooledDataSource dataSource = new ComboPooledDataSource();
+           try {
+               dataSource.setDriverClass((env.getProperty(driver)));
+           }catch (PropertyVetoException e){
+               throw new RuntimeException(e);
+           }
+
+        dataSource.setJdbcUrl(env.getProperty(url));
+        dataSource.setUser(env.getProperty(user));
+        dataSource.setPassword(env.getProperty(password));
 
         dataSource.setInitialPoolSize(Integer.parseInt(env.getProperty("connection.pool.initialPoolSize")));
         dataSource.setMinPoolSize(Integer.parseInt(env.getProperty("connection.pool.minPoolSize")));
@@ -52,4 +72,6 @@ public class AppConfig {
 
         return dataSource;
     }
+
+
 }
