@@ -1,5 +1,7 @@
 package com.projectnight.configuration;
 
 
-public class ProjectNightingaleSecurityInitializer {
+import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;
+
+public class ProjectNightingaleSecurityInitializer extends AbstractSecurityWebApplicationInitializer {
 }
