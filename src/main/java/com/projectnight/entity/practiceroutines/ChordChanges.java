@@ -1,7 +1,7 @@
 package com.projectnight.entity.practiceroutines;
 
 import javax.persistence.*;
-import java.sql.Time;
+import java.util.List;
 
 @Entity
 @Table(name = "chord_changes")
@@ -11,20 +11,18 @@ public class ChordChanges {
     @Column(name = "id")
     private int id;
 
-    @OneToOne
-    @JoinColumn(name = "from_chords_used_fk")
-    private ChordsUsed from;
-
-    @OneToOne
-    @JoinColumn(name = "to_chords_used_fk")
-    private ChordsUsed to;
-
-    @Column(name = "time")
-    private Time time;
+    @ManyToOne
+    @JoinColumn(name = "from_chord_id")
+    private Chords from;
 
     @ManyToOne
-    @JoinColumn(name = "topic_id_fk")
-    private Topic topic;
+    @JoinColumn(name = "to_chord_id")
+    private Chords to;
+
+
+    @OneToMany(mappedBy = "chordChanges")
+    private List<TopicChordChanges> topicAssoc;
+
     public ChordChanges() {
     }
 
@@ -36,35 +34,27 @@ public class ChordChanges {
         this.id = id;
     }
 
-    public ChordsUsed getFrom() {
+    public Chords getFrom() {
         return from;
     }
 
-    public void setFrom(ChordsUsed from) {
+    public void setFrom(Chords from) {
         this.from = from;
     }
 
-    public ChordsUsed getTo() {
+    public Chords getTo() {
         return to;
     }
 
-    public void setTo(ChordsUsed to) {
+    public void setTo(Chords to) {
         this.to = to;
     }
 
-    public Time getTime() {
-        return time;
+    public List<TopicChordChanges> getTopicAssoc() {
+        return topicAssoc;
     }
 
-    public void setTime(Time time) {
-        this.time = time;
-    }
-
-    public Topic getTopic() {
-        return topic;
-    }
-
-    public void setTopic(Topic topic) {
-        this.topic = topic;
+    public void setTopicAssoc(List<TopicChordChanges> topicAssoc) {
+        this.topicAssoc = topicAssoc;
     }
 }

@@ -1,60 +1,62 @@
 package com.projectnight.entity.practiceroutines;
 
+import com.projectnight.entity.practiceroutines.embeddedPK.ChordProgressionsPK;
+
 import javax.persistence.*;
-import java.sql.Time;
-import java.util.List;
 
 @Entity
 @Table(name = "chord_progressions")
 public class ChordProgressions {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private int id;
+    @EmbeddedId
+    private ChordProgressionsPK id;
 
-    @OneToMany(mappedBy = "progressions")
-    private List<ChordsUsed> chordsUsed;
 
     @ManyToOne
-    @JoinColumn(name = "topic_id_fk")
-    private Topic topic;
+    @MapsId("chordId")
+    @JoinColumn(name = "chord_id")
+    private Chords chords;
 
-    @Column(name = "time")
-    private Time time;
+    @ManyToOne
+    @MapsId("progressionId")
+    @JoinColumn(name = "progression_id")
+    private Progressions progressions;
+
+    @Column(name = "order")
+    private int order;
 
     public ChordProgressions() {
     }
 
-    public int getId() {
+    public ChordProgressionsPK getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(ChordProgressionsPK id) {
         this.id = id;
     }
 
-    public List<ChordsUsed> getChordsUsed() {
-        return chordsUsed;
+    public Chords getChords() {
+        return chords;
     }
 
-    public void setChordsUsed(List<ChordsUsed> chordsUsed) {
-        this.chordsUsed = chordsUsed;
+    public void setChords(Chords chords) {
+        this.chords = chords;
     }
 
-    public Topic getTopic() {
-        return topic;
+    public Progressions getProgressions() {
+        return progressions;
     }
 
-    public void setTopic(Topic topic) {
-        this.topic = topic;
+    public void setProgressions(Progressions progressions) {
+        this.progressions = progressions;
     }
 
-    public Time getTime() {
-        return time;
+    public int getOrder() {
+        return order;
     }
 
-    public void setTime(Time time) {
-        this.time = time;
+    public void setOrder(int order) {
+        this.order = order;
     }
 }

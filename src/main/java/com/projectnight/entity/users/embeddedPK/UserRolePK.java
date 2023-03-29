@@ -1,18 +1,18 @@
-package com.projectnight.entity.users;
+package com.projectnight.entity.users.embeddedPK;
 
 import javax.persistence.Embeddable;
 import java.io.Serializable;
 import java.util.Objects;
 
 @Embeddable
-public class UserRoleId implements Serializable {
+public class UserRolePK implements Serializable {
     private long userId;
     private long roleId;
 
-    public UserRoleId() {
+    public UserRolePK() {
     }
 
-    public UserRoleId(long userId, long roleId) {
+    public UserRolePK(long userId, long roleId) {
         this.userId = userId;
         this.roleId = roleId;
     }
@@ -37,7 +37,7 @@ public class UserRoleId implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        UserRoleId that = (UserRoleId) o;
+        UserRolePK that = (UserRolePK) o;
         return userId == that.userId && roleId == that.roleId;
     }
 

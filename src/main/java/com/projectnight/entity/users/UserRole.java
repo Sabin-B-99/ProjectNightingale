@@ -1,14 +1,15 @@
 package com.projectnight.entity.users;
 
+import com.projectnight.entity.users.embeddedPK.UserRolePK;
+
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Table(name = "userRole")
 public class UserRole {
 
     @EmbeddedId
-    private UserRoleId id;
+    private UserRolePK id;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -21,11 +22,11 @@ public class UserRole {
     public UserRole() {
     }
 
-    public UserRoleId getId() {
+    public UserRolePK getId() {
         return id;
     }
 
-    public void setId(UserRoleId id) {
+    public void setId(UserRolePK id) {
         this.id = id;
     }
 
