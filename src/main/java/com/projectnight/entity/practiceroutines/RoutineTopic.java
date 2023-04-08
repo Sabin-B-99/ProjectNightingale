@@ -1,9 +1,10 @@
 package com.projectnight.entity.practiceroutines;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.projectnight.entity.practiceroutines.embeddedPK.RoutineTopicPK;
 
 import javax.persistence.*;
-import java.time.LocalTime;
 
 @Entity
 @Table(name = "routine_topic")
@@ -21,8 +22,6 @@ public class RoutineTopic {
     @MapsId("topicId")
     private Topics topics;
 
-    @Column(name = "time")
-    private LocalTime time;
 
     public RoutineTopic() {
     }
@@ -49,13 +48,5 @@ public class RoutineTopic {
 
     public void setTopics(Topics topics) {
         this.topics = topics;
-    }
-
-    public LocalTime getTime() {
-        return time;
-    }
-
-    public void setTime(LocalTime time) {
-        this.time = time;
     }
 }

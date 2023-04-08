@@ -1,5 +1,8 @@
 package com.projectnight.entity.practiceroutines;
 
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -17,16 +20,20 @@ public class Topics {
 
 
     @OneToMany(mappedBy = "topics")
+    @JsonIgnore
     private List<TopicChords> chordsAssoc;
 
     @OneToMany(mappedBy = "topics")
+    @JsonIgnore
     private List<TopicChordChanges> chordChangesAssoc;
 
 
     @OneToMany(mappedBy = "topics")
+    @JsonIgnore
     private List<TopicProgressions> progressionsAssoc;
 
     @OneToMany(mappedBy = "topics")
+    @JsonIgnore
     private List<RoutineTopic> routinesAssoc;
 
     public Topics() {

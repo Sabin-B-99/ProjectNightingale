@@ -1,5 +1,8 @@
 package com.projectnight.entity.practiceroutines;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -17,6 +20,7 @@ public class Routines {
 
 
     @OneToMany(mappedBy = "routines")
+    @JsonIgnore
     private List<RoutineTopic> topicsAssoc;
 
 
