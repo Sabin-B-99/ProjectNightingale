@@ -9,4 +9,6 @@ public interface TopicsService {
     public void saveTopic(Topics topic);
     public Topics getTopic(int topicId);
     public void deleteTopic(int topicId);
+
+    public List<Topics> getTopicsByRoutineId(int routineId);
 }
