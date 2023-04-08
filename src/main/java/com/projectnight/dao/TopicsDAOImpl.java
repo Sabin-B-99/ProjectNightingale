@@ -13,7 +13,7 @@ import java.util.List;
 public class TopicsDAOImpl implements TopicsDAO{
 
     @Autowired
-    SessionFactory sessionFactory;
+    private SessionFactory sessionFactory;
 
     @Override
     public List<Topics> getTopics() {
@@ -38,8 +38,17 @@ public class TopicsDAOImpl implements TopicsDAO{
 
     @Override
     public void deleteTopic(int topiId) {
-        Session session =sessionFactory.getCurrentSession();
+        Session session = sessionFactory.getCurrentSession();
         Topics topic = session.get(Topics.class, topiId);
         session.delete(topic);
+    }
+
+    @Override
+    public List<Topics> getTopicsByRoutineId(int routineId) {
+        Session session = sessionFactory.getCurrentSession();
+        Query<Topics> query = session.createQuery("select t from Topics t left join t.routinesAssoc rt where rt.routines.id = :routineid", Topics.class);
+        query.setParameter("routineid", routineId);
+        List<Topics> topics = query.getResultList();
+        return topics;
     }
 }

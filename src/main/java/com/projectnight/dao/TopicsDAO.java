@@ -9,4 +9,6 @@ public interface TopicsDAO {
     public void saveTopic(Topics topic);
     public Topics getTopic(int topicId);
     public void deleteTopic(int topiId);
+
+    public List<Topics> getTopicsByRoutineId(int routineId);
 }
