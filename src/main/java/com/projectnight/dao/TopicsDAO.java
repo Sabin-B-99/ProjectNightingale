@@ -1,5 +1,8 @@
 package com.projectnight.dao;
 
+import com.projectnight.entity.practiceroutines.ChordChanges;
+import com.projectnight.entity.practiceroutines.Chords;
+import com.projectnight.entity.practiceroutines.Progressions;
 import com.projectnight.entity.practiceroutines.Topics;
 
 import java.util.List;
@@ -11,4 +14,8 @@ public interface TopicsDAO {
     public void deleteTopic(int topiId);
 
     public List<Topics> getTopicsByRoutineId(int routineId);
+    public List<Progressions> getProgressionsByTopicId(int topicId);
+    public List<ChordChanges> getChordChangesByTopicId(int topicId);
+
+    public List<Chords> getChordsByTopicId(int topicId);
 }
