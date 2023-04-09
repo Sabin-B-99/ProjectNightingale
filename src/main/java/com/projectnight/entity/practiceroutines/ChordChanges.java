@@ -1,5 +1,7 @@
 package com.projectnight.entity.practiceroutines;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -21,6 +23,7 @@ public class ChordChanges {
 
 
     @OneToMany(mappedBy = "chordChanges")
+    @JsonIgnore
     private List<TopicChordChanges> topicAssoc;
 
     public ChordChanges() {
