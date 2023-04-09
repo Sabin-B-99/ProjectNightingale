@@ -2,9 +2,7 @@ package com.projectnight.controller.rest;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.projectnight.entity.practiceroutines.Routines;
-import com.projectnight.entity.practiceroutines.Topics;
 import com.projectnight.services.RoutinesService;
-import com.projectnight.services.TopicsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,10 +18,6 @@ public class RoutineController {
 
     @Autowired
     private RoutinesService routinesService;
-
-    @Autowired
-    private TopicsService topicsService;
-
     @GetMapping("/routines")
     public List<Routines> getRoutines(){
         return routinesService.getRoutines();
@@ -36,10 +30,5 @@ public class RoutineController {
             throw  new RuntimeException("Routine Not Found");
         }
         return routine;
-    }
-
-    @GetMapping("/routines/{routineId}/topics")
-    public List<Topics> getTopicsByRoutineId(@PathVariable int routineId){
-        return topicsService.getTopicsByRoutineId(routineId);
     }
 }
