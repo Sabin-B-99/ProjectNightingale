@@ -50,10 +50,7 @@ public class AppConfig {
         dataSource.setUser(env.getProperty("jdbc.user.user"));
         dataSource.setPassword(env.getProperty("jdbc.user.password"));
 
-        dataSource.setInitialPoolSize(Integer.parseInt(env.getProperty("connection.pool.initialPoolSize")));
-        dataSource.setMinPoolSize(Integer.parseInt(env.getProperty("connection.pool.minPoolSize")));
-        dataSource.setMaxPoolSize(Integer.parseInt(env.getProperty("connection.pool.maxPoolSize")));
-        dataSource.setMaxIdleTime(Integer.parseInt(env.getProperty("connection.pool.maxIdleTime")));
+        configureDataSourcePoolSizes(dataSource);
 
         return dataSource;
     }
@@ -71,14 +68,18 @@ public class AppConfig {
         dataSource.setUser(env.getProperty("jdbc.practiceRoutine.user"));
         dataSource.setPassword(env.getProperty("jdbc.practiceRoutine.password"));
 
+        configureDataSourcePoolSizes(dataSource);
+
+        return dataSource;
+    }
+
+    public void configureDataSourcePoolSizes(ComboPooledDataSource dataSource){
         dataSource.setInitialPoolSize(Integer.parseInt(env.getProperty("connection.pool.initialPoolSize")));
         dataSource.setMinPoolSize(Integer.parseInt(env.getProperty("connection.pool.minPoolSize")));
         dataSource.setMaxPoolSize(Integer.parseInt(env.getProperty("connection.pool.maxPoolSize")));
         dataSource.setMaxIdleTime(Integer.parseInt(env.getProperty("connection.pool.maxIdleTime")));
 
-        return dataSource;
     }
-
 
     @Bean
     public Properties getHibernateProperties(){
