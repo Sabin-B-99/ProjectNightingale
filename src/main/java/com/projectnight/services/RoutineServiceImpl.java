@@ -1,6 +1,7 @@
 package com.projectnight.services;
 
 import com.projectnight.dao.RoutinesDAO;
+import com.projectnight.dto.Routine;
 import com.projectnight.entity.practiceroutines.Routines;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,7 +29,7 @@ public class RoutineServiceImpl implements RoutinesService{
 
     @Override
     @Transactional
-    public Routines getRoutine(int routineId) {
+    public Routine getRoutine(int routineId) {
         return routinesDAO.getRoutine(routineId);
     }
 

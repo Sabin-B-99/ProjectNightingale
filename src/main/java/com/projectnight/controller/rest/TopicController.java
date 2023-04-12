@@ -1,8 +1,9 @@
 package com.projectnight.controller.rest;
 
-import com.projectnight.entity.practiceroutines.ChordChanges;
-import com.projectnight.entity.practiceroutines.Chords;
-import com.projectnight.entity.practiceroutines.Progressions;
+import com.projectnight.dto.Topic;
+import com.projectnight.dto.TopicChord;
+import com.projectnight.dto.TopicChordChange;
+import com.projectnight.dto.TopicChordProgression;
 import com.projectnight.entity.practiceroutines.Topics;
 import com.projectnight.services.TopicsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +28,8 @@ public class TopicController {
     }
 
     @GetMapping("/topics/{topicId}")
-    public Topics getTopicById(@PathVariable int topicId){
-        Topics topic = topicsService.getTopic(topicId);
+    public Topic getTopicById(@PathVariable int topicId){
+        Topic topic = topicsService.getTopic(topicId);
         if(topic == null){
             throw new RuntimeException("Topic not found");
         }
@@ -36,22 +37,22 @@ public class TopicController {
     }
 
     @GetMapping("/routines/{routineId}/topics")
-    public List<Topics> getTopicsByRoutineId(@PathVariable int routineId){
+    public List<Topic> getTopicsByRoutineId(@PathVariable int routineId){
         return topicsService.getTopicsByRoutineId(routineId);
     }
 
     @GetMapping("/topics/{topicId}/progressions")
-    public List<Progressions> getProgressionsByTopicId(@PathVariable int topicId){
-        return topicsService.getProgressionsByTopicId(topicId);
+    public TopicChordProgression getProgressionsByTopicId(@PathVariable int topicId){
+        return topicsService.getProgressionByTopicId(topicId);
     }
 
     @GetMapping("/topics/{topicId}/chordchanges")
-    public List<ChordChanges> getChordChangesByTopicId(@PathVariable int topicId){
+    public List<TopicChordChange> getChordChangesByTopicId(@PathVariable int topicId){
         return topicsService.getChordChangesByTopicId(topicId);
     }
 
     @GetMapping("/topics/{topicId}/chords")
-    public List<Chords> getChordsByTopicId(@PathVariable int topicId){
+    public List<TopicChord> getChordsByTopicId(@PathVariable int topicId){
         return topicsService.getChordsByTopicId(topicId);
     }
 }

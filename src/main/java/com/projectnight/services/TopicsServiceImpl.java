@@ -1,9 +1,10 @@
 package com.projectnight.services;
 
 import com.projectnight.dao.TopicsDAO;
-import com.projectnight.entity.practiceroutines.ChordChanges;
-import com.projectnight.entity.practiceroutines.Chords;
-import com.projectnight.entity.practiceroutines.Progressions;
+import com.projectnight.dto.Topic;
+import com.projectnight.dto.TopicChord;
+import com.projectnight.dto.TopicChordChange;
+import com.projectnight.dto.TopicChordProgression;
 import com.projectnight.entity.practiceroutines.Topics;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,7 +31,7 @@ public class TopicsServiceImpl implements TopicsService {
 
     @Override
     @Transactional
-    public Topics getTopic(int topicId) {
+    public Topic getTopic(int topicId) {
         return topicsDAO.getTopic(topicId);
     }
 
@@ -42,25 +43,25 @@ public class TopicsServiceImpl implements TopicsService {
 
     @Override
     @Transactional
-    public List<Topics> getTopicsByRoutineId(int routineId) {
+    public List<Topic> getTopicsByRoutineId(int routineId) {
         return topicsDAO.getTopicsByRoutineId(routineId);
     }
 
     @Override
     @Transactional
-    public List<Progressions> getProgressionsByTopicId(int topicId) {
-        return topicsDAO.getProgressionsByTopicId(topicId);
+    public TopicChordProgression getProgressionByTopicId(int topicId) {
+        return topicsDAO.getProgressionByTopicId(topicId);
     }
 
     @Override
     @Transactional
-    public List<ChordChanges> getChordChangesByTopicId(int topicId) {
+    public List<TopicChordChange> getChordChangesByTopicId(int topicId) {
         return topicsDAO.getChordChangesByTopicId(topicId);
     }
 
     @Override
     @Transactional
-    public List<Chords> getChordsByTopicId(int topicId) {
+    public List<TopicChord> getChordsByTopicId(int topicId) {
         return topicsDAO.getChordsByTopicId(topicId);
     }
 }

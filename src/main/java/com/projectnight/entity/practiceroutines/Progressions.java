@@ -1,6 +1,8 @@
 package com.projectnight.entity.practiceroutines;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -17,9 +19,11 @@ public class Progressions {
     private int noOfChords;
 
     @OneToMany(mappedBy = "progressions")
+    @JsonIgnore
     private List<ChordProgressions> chordsAssoc;
 
     @OneToMany(mappedBy = "progressions")
+    @JsonIgnore
     private List<TopicProgressions> topicsAssoc;
 
     public Progressions() {

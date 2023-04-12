@@ -1,5 +1,6 @@
 package com.projectnight.dao;
 
+import com.projectnight.dto.Routine;
 import com.projectnight.entity.practiceroutines.Routines;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -30,9 +31,10 @@ public class RoutinesDAOImpl implements RoutinesDAO {
     }
 
     @Override
-    public Routines getRoutine(int routineId) {
+    public Routine getRoutine(int routineId) {
         Session session = sessionFactory.getCurrentSession();
-        Routines routine = session.get(Routines.class, routineId);
+        Routines routineEntity = session.get(Routines.class, routineId);
+        Routine routine = new Routine(routineEntity.getTitle());
         return routine;
     }
 
