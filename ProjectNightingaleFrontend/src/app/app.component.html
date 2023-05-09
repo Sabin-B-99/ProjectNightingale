@@ -1,9 +1,10 @@
 <div class="row">
-  <app-navbar></app-navbar>
+  <app-navbar (songsNavItemClicked)="loadFeature($event)"></app-navbar>
   <div class="col-sm-3">
-    <app-sidebar></app-sidebar>
+    <app-sidebar (practiceBtnClicked)="loadFeature($event)" ></app-sidebar>
   </div>
   <div class="col-auto">
-    <app-routines></app-routines>
+    <app-routines *ngIf="loadedFeature === 'practice'"></app-routines>
+    <app-songs *ngIf="loadedFeature === 'songs'"></app-songs>
   </div>
 </div>

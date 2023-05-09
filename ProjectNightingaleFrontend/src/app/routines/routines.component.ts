@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Routine} from "./routine";
+import {Routine} from "./routine-item/routine";
 
 @Component({
   selector: 'app-routines',
@@ -8,9 +8,9 @@ import {Routine} from "./routine";
 })
 export class RoutinesComponent implements OnInit{
   public routines: Routine[] = [
-    new Routine("Can't help falling in love with you"),
-    new Routine("Sitting in the dock of the bay"),
-    new Routine("About You")
+    new Routine("Can't help falling in love with you. Chord Progressions"),
+    new Routine("Sitting in the dock of the bay. Strum Patterns"),
+    new Routine("About You. Chord Perfect")
   ];
   constructor() {
   }

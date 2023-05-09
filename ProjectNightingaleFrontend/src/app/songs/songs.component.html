@@ -1,0 +1,24 @@
+
+<div class="container row mt-5">
+  <div class="row-cols-auto">
+    <form class="d-flex" role="search">
+      <input class="form-control me-2" type="search" placeholder="Song" aria-label="Search">
+      <button class="btn btn-outline-success" type="submit">Search</button>
+    </form>
+  </div>
+
+
+  <div class="row-cols-auto">
+    <div class="container">
+      <div class="row-cols-auto">
+        <h1>Top</h1>
+        <div class="container mt-sm-2" *ngFor="let song of songs">
+          <ul class="list-group col-md-7">
+            <li class="list-group-item"><a>{{song.title}}</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, EventEmitter, Output} from '@angular/core';
 
 @Component({
   selector: 'app-sidebar',
@@ -6,5 +6,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./sidebar.component.css']
 })
 export class SidebarComponent {
-
+  @Output()
+  practiceBtnClicked: EventEmitter<string> = new EventEmitter<string>();
+  onPracticeBtnClicked(feature: string) :void{
+    this.practiceBtnClicked.emit(feature);
+  }
 }
