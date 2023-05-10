@@ -7,8 +7,8 @@ import {Component, EventEmitter, Output} from '@angular/core';
 })
 export class SidebarComponent {
   @Output()
-  practiceBtnClicked: EventEmitter<string> = new EventEmitter<string>();
-  onPracticeBtnClicked(feature: string) :void{
-    this.practiceBtnClicked.emit(feature);
+  sidebarBtnClicked: EventEmitter<string> = new EventEmitter<string>();
+  onSidebarBtnClicked(feature: string) :void{
+    this.sidebarBtnClicked.emit(feature);
   }
 }

@@ -1,0 +1,13 @@
+<div class="row mt-sm-5">
+  <div class="row">
+    <h1 class="col-sm-auto">Your songbooks</h1>
+    <button type="button" class="col-md-auto me-auto bg-light">Create</button>
+  </div>
+  <div>
+    <div class="container mt-sm-2" *ngFor="let songbook of songbooks">
+      <ul class="list-group">
+        <li class="list-group-item"><a>{{songbook.bookTitle}}</a></li>
+      </ul>
+    </div>
+  </div>
+</div>

@@ -8,6 +8,11 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { SongsComponent } from './songs/songs.component';
 import { RoutineItemComponent } from './routines/routine-item/routine-item.component';
 import { SongItemComponent } from './songs/song-item/song-item.component';
+import { TopicsComponent } from './routines/topics/topics.component';
+import { TopicItemComponent } from './routines/topics/topic-item/topic-item.component';
+import { SongbooksComponent } from './songbook/songbooks.component';
+import { SongbookItemComponent } from './songbook/songbook-item/songbook-item.component';
+import { ChordsComponent } from './chords/chords.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +22,12 @@ import { SongItemComponent } from './songs/song-item/song-item.component';
     SidebarComponent,
     SongsComponent,
     RoutineItemComponent,
-    SongItemComponent
+    SongItemComponent,
+    TopicsComponent,
+    TopicItemComponent,
+    SongbooksComponent,
+    SongbookItemComponent,
+    ChordsComponent
   ],
   imports: [
     BrowserModule

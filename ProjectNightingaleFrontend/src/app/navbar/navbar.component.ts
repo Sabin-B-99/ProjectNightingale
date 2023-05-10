@@ -7,12 +7,12 @@ import {Component, EventEmitter, OnInit, Output} from "@angular/core";
 export class NavbarComponent implements OnInit{
 
   @Output()
-  songsNavItemClicked: EventEmitter<string> = new EventEmitter<string>();
+  navItemClicked: EventEmitter<string> = new EventEmitter<string>();
 
   constructor() {
   }
-  onSongsNavItemClicked(feature: string):void {
-    this.songsNavItemClicked.emit(feature);
+  onNavItemClicked(feature: string):void {
+    this.navItemClicked.emit(feature);
   }
 
   ngOnInit(): void {
