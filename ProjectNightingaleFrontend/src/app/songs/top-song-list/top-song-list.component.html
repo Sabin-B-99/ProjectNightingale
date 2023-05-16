@@ -1,0 +1,10 @@
+<div class="container">
+  <div class="row-cols-auto">
+    <h1>Top</h1>
+    <div class="container mt-sm-2" *ngFor="let song of songs">
+      <ul class="list-group col-md-7">
+        <li class="list-group-item"><a (click)="emitSelectedSong(song)">{{song.title}}</a></li>
+      </ul>
+    </div>
+  </div>
+</div>

@@ -1,5 +1,5 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {Routine} from "./routine-item/routine";
+import {Routine} from "../../models/routine-model/routine";
 
 @Component({
   selector: 'app-routine-list',

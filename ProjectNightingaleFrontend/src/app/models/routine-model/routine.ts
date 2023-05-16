@@ -1,4 +1,4 @@
-import {Topic} from "../../routine-detail/topics/topic-list/topic-item/topic";
+import {Topic} from "../topic-model/topic";
 
 export class Routine{
 

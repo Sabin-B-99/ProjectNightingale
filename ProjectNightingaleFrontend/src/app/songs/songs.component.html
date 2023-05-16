@@ -8,16 +8,12 @@
   </div>
 
 
-  <div class="row-cols-auto">
-    <div class="container">
-      <div class="row-cols-auto">
-        <h1>Top</h1>
-        <div class="container mt-sm-2" *ngFor="let song of songs">
-          <ul class="list-group col-md-7">
-            <li class="list-group-item"><a>{{song.title}}</a></li>
-          </ul>
-        </div>
-      </div>
+  <div class="row mt-sm-5">
+    <div class="col-md-auto">
+      <app-top-song-list (selectedSongEmitter)="assignSelectedSong($event)"></app-top-song-list>
+    </div>
+    <div class="col-md-auto">
+      <app-song-detail [selectedSong]="selectedSong" *ngIf="selectedSong"></app-song-detail>
     </div>
   </div>
 </div>

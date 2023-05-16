@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Routine} from "../routine-list/routine-item/routine";
+import {Routine} from "../../models/routine-model/routine";
 
 @Component({
   selector: 'app-routine-detail',

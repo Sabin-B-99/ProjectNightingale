@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {Song} from "./song-item/song";
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Song} from "../models/song-model/song";
 
 @Component({
   selector: 'app-songs',
@@ -7,18 +7,16 @@ import {Song} from "./song-item/song";
   styleUrls: ['./songs.component.css']
 })
 export class SongsComponent implements OnInit{
-  public songs: Song[] = [
-    new Song("Can't help falling in love with you"),
-    new Song("Brand new day"),
-    new Song("Heartbeats"),
-    new Song("Guaranteed"),
-    new Song("Sadhana"),
-  ];
 
+  selectedSong: Song;
   constructor() {
   }
 
   ngOnInit(): void {
   }
 
+
+  assignSelectedSong(selectedSong: Song) {
+    this.selectedSong = selectedSong;
+  }
 }
