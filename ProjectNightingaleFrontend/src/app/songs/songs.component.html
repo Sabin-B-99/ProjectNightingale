@@ -10,7 +10,7 @@
 
   <div class="row mt-sm-5">
     <div class="col-md-auto">
-      <app-top-song-list (selectedSongEmitter)="assignSelectedSong($event)"></app-top-song-list>
+      <app-top-song-list></app-top-song-list>
     </div>
     <div class="col-md-auto">
       <app-song-detail [selectedSong]="selectedSong" *ngIf="selectedSong"></app-song-detail>

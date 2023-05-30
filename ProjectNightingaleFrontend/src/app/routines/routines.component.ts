@@ -1,20 +1,32 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Routine} from "../models/routine-model/routine";
+import {RoutineService} from "../services/routine.service";
 
 @Component({
   selector: 'app-routines',
   templateUrl: './routines.component.html',
-  styleUrls: ['./routines.component.css']
+  styleUrls: ['./routines.component.css'],
+  providers: [RoutineService]
 })
-export class RoutinesComponent {
+export class RoutinesComponent implements OnInit{
 
   selectedRoutine:Routine;
   routineBeingCreated: boolean = false;
-  assignSelectedRoutine($event: Routine) {
-    this.selectedRoutine = $event;
+
+  constructor(private routineService: RoutineService) {
   }
+
 
   displayRoutineCreator(routineBeingCreated: boolean) {
     this.routineBeingCreated = routineBeingCreated;
+  }
+
+  ngOnInit(): void {
+    this.routineService.routineSelected
+      .subscribe(
+        (routine: Routine) =>{
+          this.selectedRoutine = routine;
+        }
+      )
   }
 }
