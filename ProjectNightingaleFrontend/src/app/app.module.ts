@@ -16,6 +16,7 @@ import { RoutineCreatorComponent } from './routines/routine-creator/routine-crea
 import {TopicCreatorComponent} from "./routines/routine-detail/topics/topic-creator/topic-creator.component";
 import { SongDetailComponent } from './songs/song-detail/song-detail.component';
 import { TopSongListComponent } from './songs/top-song-list/top-song-list.component';
+import {AppRoutingModule} from "./app-routing.module";
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { TopSongListComponent } from './songs/top-song-list/top-song-list.compon
     TopSongListComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,12 +1,9 @@
 <div class="row">
-  <app-navbar (navItemClicked)="loadFeature($event)"></app-navbar>
+  <app-navbar></app-navbar>
   <div class="col-md-2">
-    <app-sidebar (sidebarBtnClicked)="loadFeature($event)" ></app-sidebar>
+    <app-sidebar></app-sidebar>
   </div>
   <div class="col-auto">
-    <app-routines *ngIf="loadedFeature === 'practice'"></app-routines>
-    <app-songs *ngIf="loadedFeature === 'songs'"></app-songs>
-    <app-songbook *ngIf="loadedFeature === 'songbook'"></app-songbook>
-    <app-chords *ngIf="loadedFeature === 'chords'"></app-chords>
+    <router-outlet></router-outlet>
   </div>
 </div>

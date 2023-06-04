@@ -13,14 +13,17 @@
   <div class="collapse navbar-collapse justify-content-center" id="navmenu">
     <ul class="navbar-nav mx-auto">
       <li class="nav-item">
-        <a href="#"
-           class="nav-link" (click)="onNavItemClicked('songs')">Songs</a>
+        <a
+          routerLinkActive="active"
+          [routerLink]="['songs']" class="nav-link">Songs</a>
       </li>
       <li class="nav-item">
-        <a href="#" class="nav-link" (click)="onNavItemClicked('chords')">Chords</a>
+        <a
+          routerLinkActive="active"
+          [routerLink]="['chords']" class="nav-link">Chords</a>
       </li>
       <li class="nav-item">
-        <a href="#" class="nav-link">Metronome</a>
+        <a class="nav-link">Metronome</a>
       </li>
     </ul>
   </div>

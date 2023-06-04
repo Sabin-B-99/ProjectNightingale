@@ -7,11 +7,4 @@ import { Component } from '@angular/core';
 })
 export class AppComponent{
   title = 'ProjectNightingale';
-
-  loadedFeature: string = 'practice';
-
-
-  loadFeature($event: string) {
-    this.loadedFeature = $event;
-  }
 }
