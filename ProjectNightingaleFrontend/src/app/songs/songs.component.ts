@@ -9,15 +9,8 @@ import {SongService} from "../services/song.service";
   providers: [SongService]
 })
 export class SongsComponent implements OnInit{
-
-  selectedSong: Song;
-  constructor(private songService: SongService) {
+  constructor() {
   }
-
   ngOnInit(): void {
-    this.songService.selectedSong
-      .subscribe( (song: Song) =>{
-        this.selectedSong = song;
-      })
   }
 }

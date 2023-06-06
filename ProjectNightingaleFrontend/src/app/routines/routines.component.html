@@ -1,15 +1,10 @@
 <div class="container">
   <div class="row">
     <div class="col-md-auto">
-      <app-routine-list (routineAddBtnClickEmitter)="displayRoutineCreator(true)">
-      </app-routine-list>
+      <app-routine-list></app-routine-list>
     </div>
     <div class="col-md-auto">
-      <app-routine-detail *ngIf="selectedRoutine && !routineBeingCreated"
-                          [selectedRoutine]="selectedRoutine"></app-routine-detail>
-    </div>
-    <div class="col-md-auto">
-      <app-routine-creator *ngIf="routineBeingCreated"></app-routine-creator>
+      <router-outlet></router-outlet>
     </div>
   </div>
 </div>

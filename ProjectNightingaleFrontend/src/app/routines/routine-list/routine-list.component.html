@@ -7,9 +7,9 @@
                 class="col-md-auto me-auto bg-light"
                 (click)="onRoutineAddBtnClicked()">Add</button>
       </div>
-      <div class="container mt-sm-2" *ngFor="let routine of routines">
+      <div class="container mt-sm-2" *ngFor="let routine of routines; let id = index">
         <ul class="list-group col-md-7">
-          <li class="list-group-item"><a (click)="onRoutineSelected(routine)">{{routine.title}}</a></li>
+          <li class="list-group-item"><a (click)="onRoutineSelected(id)">{{routine.title}}</a></li>
         </ul>
       </div>
     </div>

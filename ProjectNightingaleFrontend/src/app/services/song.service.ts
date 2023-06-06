@@ -6,7 +6,6 @@ import {Song} from "../models/song-model/song";
 })
 export class SongService {
 
-  public selectedSong: EventEmitter<Song> = new EventEmitter<Song>();
 
   private topSongs: Song[] = [
     new Song("Can't help falling in love with you",  "Wise man say..."),
@@ -19,5 +18,9 @@ export class SongService {
 
   public getTopSongs(): Song[]{
     return this.topSongs.slice();
+  }
+
+  public getSelectedSongById(id: number): Song{
+    return this.topSongs[id];
   }
 }
