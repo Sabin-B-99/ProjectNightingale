@@ -30,7 +30,7 @@ export class TopicCreatorComponent implements OnInit, OnDestroy, AfterViewInit{
   ngAfterViewInit(): void {
     this.parentRoutineFormSubscription = this.parentRoutineFormObservable
       .subscribe((parentRoutineForm: FormGroup) =>{
-        console.log(parentRoutineForm);
+        console.log(this.topicForm);
       });
   }
 }

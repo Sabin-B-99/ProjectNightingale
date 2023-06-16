@@ -26,13 +26,14 @@ export class RoutineCreatorComponent implements OnInit{
 
   onRoutineSubmitted() {
      this.routineFormSubject.next(this.routineCreationForm);
-     console.log(this.routineCreationForm);
   }
 
 
   onAddTopicClicked(){
     const topicFormRef: ComponentRef<TopicCreatorComponent> = this.routineCreationFormHost.viewContainerRef
        .createComponent<TopicCreatorComponent>(TopicCreatorComponent);
+
+    topicFormRef.instance.parentRoutineFormObservable = this.routineFormSubject;
   }
 
   ngOnInit(): void {
