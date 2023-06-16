@@ -17,6 +17,8 @@ import {TopicCreatorComponent} from "./routines/routine-detail/topics/topic-crea
 import { SongDetailComponent } from './songs/song-detail/song-detail.component';
 import { TopSongListComponent } from './songs/top-song-list/top-song-list.component';
 import {AppRoutingModule} from "./app-routing.module";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import { RoutineCreationFormHostDirective } from './directives/routine-creation-form-host.directive';
 
 @NgModule({
   declarations: [
@@ -34,11 +36,14 @@ import {AppRoutingModule} from "./app-routing.module";
     RoutineCreatorComponent,
     TopicCreatorComponent,
     SongDetailComponent,
-    TopSongListComponent
+    TopSongListComponent,
+    RoutineCreationFormHostDirective
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ReactiveFormsModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

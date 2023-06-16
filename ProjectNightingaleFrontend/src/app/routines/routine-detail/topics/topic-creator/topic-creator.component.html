@@ -1,25 +1,32 @@
 <div>
-  <div >
+  <form [formGroup]="topicForm">
     <ul class="list-group">
       <li class="list-group-item">
-        <a><input type="text" placeholder="Topic Title"/></a>
+        <a><input type="text"
+                  formControlName = "topicTitleInput"
+                  placeholder="Topic Title"/></a>
         <div class="row">
           <p class="col-sm-auto">Song:</p>
-          <input type="text" placeholder="song" class="col-sm-auto"/>
-          <button class="col-sm-auto">Save</button>
+          <input type="text"
+                 formControlName="topicSongInput"
+                 placeholder="song" class="col-sm-auto"/>
+          <button type="button" class="col-sm-auto">Save</button>
         </div>
         <div class="row">
           <p>Chords:</p>
-          <button class="col-sm-auto">Add Chords</button>
+          <button type="button" class="col-sm-auto">Add Chords</button>
         </div>
         <div class="row">
           <p>Changes:</p>
-          <button class="col-sm-auto">Add Changes</button>
+          <button type="button" class="col-sm-auto">Add Changes</button>
         </div>
         <div class="row">
           <p class="col-sm-auto">Strum Patterns:</p>
-          <input type="text" placeholder="D(U)D(U)(D)UDU" class="col-sm-auto"/>
-          <button class="col-sm-auto">Add</button>
+          <input type="text"
+                 placeholder="D(U)D(U)(D)UDU"
+                 formControlName="topicStrumPatternInput"
+                 class="col-sm-auto"/>
+          <button type="button" class="col-sm-auto">Add</button>
         </div>
         <div class="row">
           <p>Metronome:</p>
@@ -27,9 +34,11 @@
         </div>
         <div class="row">
           <p class="col-sm-auto">Time:</p>
-          <input type="time" class="col-sm-auto"/>
+          <input type="time"
+                 formControlName="topicTimeInput"
+                 class="col-sm-auto"/>
         </div>
       </li>
     </ul>
-  </div>
+  </form>
 </div>

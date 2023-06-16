@@ -10,8 +10,6 @@ import {ActivatedRoute, Params, Router} from "@angular/router";
 })
 export class RoutineListComponent implements OnInit{
 
-  @Output()
-  routineAddBtnClickEmitter: EventEmitter<void> = new EventEmitter<void>();
 
   public routines: Routine[];
   constructor(private routineService: RoutineService,
@@ -26,7 +24,7 @@ export class RoutineListComponent implements OnInit{
     this.router.navigate([id, 'topics'], {relativeTo: this.route});
   }
 
-  onRoutineAddBtnClicked() {
-    this.routineAddBtnClickEmitter.emit();
+  onAddRoutineButtonClicked(): void{
+    this.router.navigate(['create'], {relativeTo: this.route});
   }
 }

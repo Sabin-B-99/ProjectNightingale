@@ -6,6 +6,7 @@ import {SongbooksComponent} from "./songbook/songbooks.component";
 import {RoutineDetailComponent} from "./routines/routine-detail/routine-detail.component";
 import {RoutinesComponent} from "./routines/routines.component";
 import {SongDetailComponent} from "./songs/song-detail/song-detail.component";
+import {RoutineCreatorComponent} from "./routines/routine-creator/routine-creator.component";
 
 const appRoutes: Routes = [
   {path: '', pathMatch: "full", redirectTo:'/routines'},
@@ -17,7 +18,8 @@ const appRoutes: Routes = [
   {path: 'chords', component: ChordsComponent},
   {path: 'routines', component: RoutinesComponent,
     children: [
-      {path: ':id/topics', component: RoutineDetailComponent}
+      {path: ':id/topics', component: RoutineDetailComponent},
+      {path: 'create', component: RoutineCreatorComponent}
     ]},
 ]
 @NgModule({
