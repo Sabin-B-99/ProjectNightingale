@@ -8,10 +8,15 @@
                  placeholder="Routine Title">
         </a>
       </li>
-      <li class="list-group-item">
+      <li class="list-group-item"
+        *ngFor="let topicForm of topicFormArray.controls; let i = index">
         <a>
-          <ng-template appRoutineCreationFormHost></ng-template>
-<!--          <app-topic-creator [parentRoutineFormObservable]="routineFormSubject"></app-topic-creator>-->
+          <app-topic-creator
+            [topicForm]="topicForm"
+            [totalTopics]="topicFormArray.length"
+            [indexInCurrentRoutine]="i"
+            (deleteTopicEvent)="deleteTopic($event)">
+          </app-topic-creator>
         </a>
       </li>
       <li class="list-group-item">

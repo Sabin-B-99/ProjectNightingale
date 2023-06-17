@@ -18,7 +18,6 @@ import { SongDetailComponent } from './songs/song-detail/song-detail.component';
 import { TopSongListComponent } from './songs/top-song-list/top-song-list.component';
 import {AppRoutingModule} from "./app-routing.module";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import { RoutineCreationFormHostDirective } from './directives/routine-creation-form-host.directive';
 
 @NgModule({
   declarations: [
@@ -36,8 +35,7 @@ import { RoutineCreationFormHostDirective } from './directives/routine-creation-
     RoutineCreatorComponent,
     TopicCreatorComponent,
     SongDetailComponent,
-    TopSongListComponent,
-    RoutineCreationFormHostDirective
+    TopSongListComponent
   ],
   imports: [
     BrowserModule,

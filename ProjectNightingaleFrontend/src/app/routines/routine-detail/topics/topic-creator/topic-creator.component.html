@@ -5,6 +5,10 @@
         <a><input type="text"
                   formControlName = "topicTitleInput"
                   placeholder="Topic Title"/></a>
+        <button class="btn btn-danger" type="button"
+                *ngIf="totalTopics > 1"
+                (click)="deleteTopic
+                (indexInCurrentRoutine)">X</button>
         <div class="row">
           <p class="col-sm-auto">Song:</p>
           <input type="text"
