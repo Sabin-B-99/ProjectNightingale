@@ -1,6 +1,9 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormArray, FormControl, FormGroup} from "@angular/forms";
 import {TopicCreatorComponent} from "../routine-detail/topics/topic-creator/topic-creator.component";
+import {RoutineCreatorService} from "../../services/routine-creator.service";
+import {Routine} from "../../models/routine-model/routine";
+import {Topic} from "../../models/topic-model/topic";
 
 @Component({
   selector: 'app-routine-creator',
@@ -11,8 +14,13 @@ export class RoutineCreatorComponent implements OnInit{
 
   routineCreationForm: FormGroup;
 
+  constructor(private routineCreatorService: RoutineCreatorService) {
+  }
+
   onRoutineSubmitted() {
-    console.log(this.routineCreationForm.value);
+     const routineTopics: Topic[] = this.routineCreationForm.value.topics;
+     const routineTitle: string = this.routineCreationForm.value.routineTitle;
+     this.routineCreatorService.routineCreated = new Routine(routineTitle, routineTopics)
   }
 
 
@@ -22,7 +30,7 @@ export class RoutineCreatorComponent implements OnInit{
 
   ngOnInit(): void {
      this.routineCreationForm = new FormGroup({
-       'titleInput': new FormControl(null),
+       'routineTitle': new FormControl(null),
        'topics': new FormArray([
          TopicCreatorComponent.addTopicForm()
        ])

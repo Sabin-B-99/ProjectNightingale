@@ -3,7 +3,7 @@
     <ul class="list-group">
       <li class="list-group-item">
         <a><input type="text"
-                  formControlName = "topicTitleInput"
+                  formControlName = "topicTitle"
                   placeholder="Topic Title"/></a>
         <button class="btn btn-danger" type="button"
                 *ngIf="totalTopics > 1"
@@ -12,7 +12,7 @@
         <div class="row">
           <p class="col-sm-auto">Song:</p>
           <input type="text"
-                 formControlName="topicSongInput"
+                 formControlName="topicSongTitle"
                  placeholder="song" class="col-sm-auto"/>
           <button type="button" class="col-sm-auto">Save</button>
         </div>
@@ -28,7 +28,7 @@
           <p class="col-sm-auto">Strum Patterns:</p>
           <input type="text"
                  placeholder="D(U)D(U)(D)UDU"
-                 formControlName="topicStrumPatternInput"
+                 formControlName="topicStrumPattern"
                  class="col-sm-auto"/>
           <button type="button" class="col-sm-auto">Add</button>
         </div>
@@ -39,7 +39,7 @@
         <div class="row">
           <p class="col-sm-auto">Time:</p>
           <input type="time"
-                 formControlName="topicTimeInput"
+                 formControlName="topicTime"
                  class="col-sm-auto"/>
         </div>
       </li>

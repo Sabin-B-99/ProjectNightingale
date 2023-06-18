@@ -25,15 +25,15 @@ export class TopicCreatorComponent{
 
   @Output()
   deleteTopicEvent: EventEmitter<number> = new EventEmitter<number>();
-  constructor(private routineCreatorService: RoutineCreatorService) {
+  constructor() {
   }
 
   static addTopicForm(): FormGroup{
     return new FormGroup({
-      'topicTitleInput': new FormControl(null),
-      'topicSongInput': new FormControl(null),
-      'topicStrumPatternInput': new FormControl(null),
-      'topicTimeInput': new FormControl(null)
+      'topicTitle': new FormControl(null),
+      'topicSongTitle': new FormControl(null),
+      'topicStrumPattern': new FormControl(null),
+      'topicTime': new FormControl(null)
     })
   }
 
