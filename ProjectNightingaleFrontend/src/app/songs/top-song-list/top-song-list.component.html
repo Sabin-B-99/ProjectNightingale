@@ -3,7 +3,7 @@
     <h1>Top</h1>
     <div class="container mt-sm-2" *ngFor="let song of songs; let i = index">
       <ul class="list-group col-md-7">
-        <li class="list-group-item"><a (click)="onSongFromTopSongListSelected(i)">{{song.title}}</a></li>
+        <li class="list-group-item" (click)="onSongFromTopSongListSelected(i)"><a>{{song.title}}</a></li>
       </ul>
     </div>
   </div>
