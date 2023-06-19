@@ -9,7 +9,7 @@ export class ChordService {
   private chordRoots: ChordRoot[] = [
     new ChordRoot("C"),
     new ChordRoot("Csharp"),
-    new ChordRoot("Cflat"),
+    new ChordRoot("Dflat"),
     new ChordRoot("D"),
     new ChordRoot("Dsharp"),
     new ChordRoot("Eflat"),

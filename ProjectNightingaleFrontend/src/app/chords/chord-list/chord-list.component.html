@@ -1,39 +1,18 @@
 <div class="container">
   <p>Select Root Note:</p>
-  <div class="row">
-    <div class="col col-sm-auto">
-      <p>C</p>
-    </div>
-    <div class="col col-sm-auto">
-      <div class="row">
-        <p>C&sharp;</p>
-      </div>
-      <div class="row">
-        <p>D&flat;</p>
-      </div>
-    </div>
-    <div class="col col-sm-auto">
-      <p>D</p>
-    </div>
-    <div class="col col-sm-auto">
-      <p>D</p>
-    </div>
-    <div class="col col-sm-auto">
-      <p>D</p>
+  <div class="row col-8">
+    <div class="col col-sm"
+         *ngFor="let chordRootNote of chordRootNotes">
+      <p>{{chordRootNote.rootName | musicNote}}</p>
     </div>
   </div>
 </div>
 <div class="container">
   <p>Select Key:</p>
-  <div class="row">
-    <div class="col col-sm-auto">
-      <p>maj</p>
-    </div>
-    <div class="col col-sm-auto">
-      <p>5</p>
-    </div>
-    <div class="col col-sm-auto">
-      <p>6</p>
+  <div class="row col-8">
+    <div class="col col-sm-auto"
+         *ngFor="let chordKey of chordKeys">
+      <p>{{chordKey.keyName}}</p>
     </div>
   </div>
 </div>
