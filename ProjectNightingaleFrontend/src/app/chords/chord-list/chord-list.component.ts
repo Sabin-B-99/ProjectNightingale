@@ -16,4 +16,14 @@ export class ChordListComponent {
     this.chordRootNotes = this.chordService.getRootNotes();
     this.chordKeys = this.chordService.getKeys();
   }
+
+  setSelectedChordKey(chordKey: ChordKey) {
+    this.chordService.selectedChordKey = chordKey;
+    this.chordService.setSelectedChord();
+  }
+
+  setSelectedChordRootNote(chordRootNote: ChordRoot) {
+    this.chordService.selectedRootNote = chordRootNote;
+    this.chordService.setSelectedChord();
+  }
 }

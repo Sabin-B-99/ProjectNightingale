@@ -2,6 +2,7 @@
   <p>Select Root Note:</p>
   <div class="row col-8">
     <div class="col col-sm"
+         (click)="setSelectedChordRootNote(chordRootNote)"
          *ngFor="let chordRootNote of chordRootNotes">
       <p>{{chordRootNote.rootName | musicNote}}</p>
     </div>
@@ -10,7 +11,7 @@
 <div class="container">
   <p>Select Key:</p>
   <div class="row col-8">
-    <div class="col col-sm-auto"
+    <div class="col col-sm-auto" (click)="setSelectedChordKey(chordKey)"
          *ngFor="let chordKey of chordKeys">
       <p>{{chordKey.keyName}}</p>
     </div>

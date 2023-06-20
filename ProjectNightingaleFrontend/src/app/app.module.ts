@@ -20,6 +20,7 @@ import {AppRoutingModule} from "./app-routing.module";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { ChordListComponent } from './chords/chord-list/chord-list.component';
 import { MusicNotePipe } from './pipes/music-note.pipe';
+import { ChordItemComponent } from './chords/chord-item/chord-item.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { MusicNotePipe } from './pipes/music-note.pipe';
     SongDetailComponent,
     TopSongListComponent,
     ChordListComponent,
-    MusicNotePipe
+    MusicNotePipe,
+    ChordItemComponent
   ],
   imports: [
     BrowserModule,
