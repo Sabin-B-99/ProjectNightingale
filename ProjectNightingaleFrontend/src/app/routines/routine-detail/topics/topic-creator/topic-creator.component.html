@@ -18,11 +18,15 @@
         </div>
         <div class="row">
           <p>Chords:</p>
-          <button type="button" class="col-sm-auto">Add Chords</button>
+          <button type="button"
+                  (click)="onAddChordsButtonClicked()"
+                  class="col-sm-auto">Add Chords</button>
         </div>
         <div class="row">
           <p>Changes:</p>
-          <button type="button" class="col-sm-auto">Add Changes</button>
+          <button type="button"
+                  (click)="onAddChangesButtonClicked()"
+                  class="col-sm-auto">Add Changes</button>
         </div>
         <div class="row">
           <p class="col-sm-auto">Strum Patterns:</p>
@@ -45,4 +49,12 @@
       </li>
     </ul>
   </form>
+
+  <div>
+    <ng-template appTopicChordsSelector></ng-template>
+  </div>
+
+  <div>
+    <ng-template appTopicChordsSelector></ng-template>
+  </div>
 </div>

@@ -1,9 +1,23 @@
-import {AfterViewInit, Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
+import {
+  AfterViewInit,
+  Component, ComponentRef,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  ViewChild,
+  ViewContainerRef
+} from '@angular/core';
 import {FormControl, FormGroup} from "@angular/forms";
 import {map, Observable, Subject, Subscription} from "rxjs";
 import {RoutineCreatorService} from "../../../../services/routine-creator.service";
 import {Topic} from "../../../../models/topic-model/topic";
 import {Routine} from "../../../../models/routine-model/routine";
+import {TopicChordChangesSelectorDirective} from "../../../../directives/topic-chord-changes-selector.directive";
+import {TopicChordChangesMenuComponent} from "./topic-chord-changes-menu/topic-chord-changes-menu.component";
+import {TopicChordsSelectorDirective} from "../../../../directives/topic-chords-selector.directive";
+import {ChordListComponent} from "../../../../chords/chord-list/chord-list.component";
 
 @Component({
   selector: 'app-topic-creator',
@@ -22,6 +36,11 @@ export class TopicCreatorComponent{
   @Input()
   totalTopics: number;
 
+  @ViewChild(TopicChordChangesSelectorDirective, {static: false})
+  chordChangesMenuHost!: TopicChordChangesSelectorDirective;
+
+  @ViewChild(TopicChordsSelectorDirective, {static: false})
+  chordsMenu!: TopicChordsSelectorDirective;
 
   @Output()
   deleteTopicEvent: EventEmitter<number> = new EventEmitter<number>();
@@ -39,5 +58,29 @@ export class TopicCreatorComponent{
 
   deleteTopic(topicIndex: number){
     this.deleteTopicEvent.emit(topicIndex);
+  }
+
+  onAddChordsButtonClicked() {
+    this.loadTopicChordsMenuComponent();
+  }
+
+  onAddChangesButtonClicked() {
+    this.loadTopicChordChangesMenuComponent();
+  }
+
+  loadTopicChordChangesMenuComponent(){
+    const viewContainerRef: ViewContainerRef = this.chordChangesMenuHost.viewContainerRef;
+    viewContainerRef.clear();
+
+    const chordChangesMenuComponent: ComponentRef<TopicChordChangesMenuComponent> =
+      viewContainerRef.createComponent<TopicChordChangesMenuComponent>(TopicChordChangesMenuComponent);
+  }
+
+  loadTopicChordsMenuComponent(){
+    const viewContainerRef: ViewContainerRef = this.chordsMenu.viewContainerRef;
+    viewContainerRef.clear();
+
+    const chordsMenuComponent: ComponentRef<ChordListComponent> =
+      viewContainerRef.createComponent<ChordListComponent>(ChordListComponent);
   }
 }
