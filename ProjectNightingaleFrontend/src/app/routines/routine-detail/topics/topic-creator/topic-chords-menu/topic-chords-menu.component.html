@@ -1,3 +1,16 @@
-<div class="container">
-  <app-topic-list></app-topic-list>
+<div class="chords-menu-backdrop">
+  <div class="chords-menu-alert-box">
+    <div class="container" >
+      <div class="row">
+        <p>Select chords: </p>
+        <div class="col col-md-auto">
+          <app-chord-list></app-chord-list>
+        </div>
+      </div>
+    </div>
+    <div class="chords-menu-alter-box-actions">
+      <button class="btn btn-primary" (click)="onCloseClicked()">Close</button>
+    </div>
+  </div>
 </div>
+

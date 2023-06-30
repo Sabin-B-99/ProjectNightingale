@@ -1,7 +1,7 @@
 import {Directive, ViewContainerRef} from '@angular/core';
 
 @Directive({
-  selector: '[appTopicChordsSelector]'
+  selector: '[appTopicChordChangesSelector]'
 })
 export class TopicChordChangesSelectorDirective {
 

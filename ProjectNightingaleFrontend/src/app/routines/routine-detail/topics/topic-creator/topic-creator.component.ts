@@ -1,30 +1,24 @@
 import {
-  AfterViewInit,
   Component, ComponentRef,
   EventEmitter,
-  Input,
-  OnDestroy,
-  OnInit,
+  Input, OnDestroy,
   Output,
   ViewChild,
   ViewContainerRef
 } from '@angular/core';
 import {FormControl, FormGroup} from "@angular/forms";
-import {map, Observable, Subject, Subscription} from "rxjs";
-import {RoutineCreatorService} from "../../../../services/routine-creator.service";
-import {Topic} from "../../../../models/topic-model/topic";
-import {Routine} from "../../../../models/routine-model/routine";
 import {TopicChordChangesSelectorDirective} from "../../../../directives/topic-chord-changes-selector.directive";
 import {TopicChordChangesMenuComponent} from "./topic-chord-changes-menu/topic-chord-changes-menu.component";
 import {TopicChordsSelectorDirective} from "../../../../directives/topic-chords-selector.directive";
-import {ChordListComponent} from "../../../../chords/chord-list/chord-list.component";
+import {TopicChordsMenuComponent} from "./topic-chords-menu/topic-chords-menu.component";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-topic-creator',
   templateUrl: './topic-creator.component.html',
   styleUrls: ['./topic-creator.component.css']
 })
-export class TopicCreatorComponent{
+export class TopicCreatorComponent implements OnDestroy{
 
 
   @Input()
@@ -39,11 +33,16 @@ export class TopicCreatorComponent{
   @ViewChild(TopicChordChangesSelectorDirective, {static: false})
   chordChangesMenuHost!: TopicChordChangesSelectorDirective;
 
+  private closeChordChangesMenuSubscription: Subscription;
+
   @ViewChild(TopicChordsSelectorDirective, {static: false})
-  chordsMenu!: TopicChordsSelectorDirective;
+  chordsMenuHost!: TopicChordsSelectorDirective;
+
+  private closeChordsMenuSubscription: Subscription;
 
   @Output()
   deleteTopicEvent: EventEmitter<number> = new EventEmitter<number>();
+
   constructor() {
   }
 
@@ -74,13 +73,37 @@ export class TopicCreatorComponent{
 
     const chordChangesMenuComponent: ComponentRef<TopicChordChangesMenuComponent> =
       viewContainerRef.createComponent<TopicChordChangesMenuComponent>(TopicChordChangesMenuComponent);
+
+    this.closeChordChangesMenuSubscription = chordChangesMenuComponent.instance.close
+      .subscribe(
+        ()=>{
+          this.closeChordChangesMenuSubscription.unsubscribe();
+          viewContainerRef.clear();
+        }
+      )
   }
 
   loadTopicChordsMenuComponent(){
-    const viewContainerRef: ViewContainerRef = this.chordsMenu.viewContainerRef;
+    const viewContainerRef: ViewContainerRef = this.chordsMenuHost.viewContainerRef;
     viewContainerRef.clear();
 
-    const chordsMenuComponent: ComponentRef<ChordListComponent> =
-      viewContainerRef.createComponent<ChordListComponent>(ChordListComponent);
+    const chordsMenuComponent: ComponentRef<TopicChordsMenuComponent> =
+      viewContainerRef.createComponent<TopicChordsMenuComponent>(TopicChordsMenuComponent);
+
+     this.closeChordsMenuSubscription = chordsMenuComponent.instance.close.subscribe(
+       () =>{
+         this.closeChordsMenuSubscription.unsubscribe();
+         viewContainerRef.clear();
+       }
+    )
+  }
+
+  ngOnDestroy(): void {
+    if(this.closeChordChangesMenuSubscription){
+      this.closeChordChangesMenuSubscription.unsubscribe();
+    }
+    if(this.closeChordsMenuSubscription){
+      this.closeChordsMenuSubscription.unsubscribe();
+    }
   }
 }

@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
 
 @Component({
   selector: 'app-topic-chord-changes-menu',
@@ -7,6 +7,8 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 })
 export class TopicChordChangesMenuComponent  implements OnInit, OnDestroy{
 
+  @Output()
+  close: EventEmitter<void> = new EventEmitter<void>();
 
   constructor() {
   }
@@ -15,6 +17,10 @@ export class TopicChordChangesMenuComponent  implements OnInit, OnDestroy{
   }
 
   ngOnInit(): void {
+  }
+
+  onCloseClicked(){
+    this.close.emit();
   }
 
 }
