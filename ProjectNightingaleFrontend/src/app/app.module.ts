@@ -25,6 +25,7 @@ import { TopicChordChangesSelectorDirective } from './directives/topic-chord-cha
 import { TopicChordChangesMenuComponent } from './routines/routine-detail/topics/topic-creator/topic-chord-changes-menu/topic-chord-changes-menu.component';
 import { TopicChordsMenuComponent } from './routines/routine-detail/topics/topic-creator/topic-chords-menu/topic-chords-menu.component';
 import { TopicChordsSelectorDirective } from './directives/topic-chords-selector.directive';
+import { DivToggledDirective } from './directives/div-toggled.directive';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { TopicChordsSelectorDirective } from './directives/topic-chords-selector
     TopicChordChangesSelectorDirective,
     TopicChordChangesMenuComponent,
     TopicChordsMenuComponent,
-    TopicChordsSelectorDirective
+    TopicChordsSelectorDirective,
+    DivToggledDirective
   ],
   imports: [
     BrowserModule,
