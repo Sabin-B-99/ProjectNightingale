@@ -44,11 +44,12 @@ export class ChordService {
     new ChordKey("sus4")
   ];
 
-  public selectedRootNote: ChordRoot;
-  public selectedChordKey: ChordKey;
+
   private selectedChord: Chord;
+  private selectedChords: Chord[] = [];
 
   selectedChordChanged: Subject<Chord> = new Subject<Chord>();
+  selectedChordChangesChanged: Subject<Chord[]> = new Subject<Chord[]>();
   constructor() { }
 
   getRootNotes(): ChordRoot[]{
@@ -59,10 +60,18 @@ export class ChordService {
     return this.chordKey.slice();
   }
 
-  setSelectedChord(){
-    if(this.selectedRootNote && this.selectedChordKey){
-      this.selectedChord = new Chord(this.selectedRootNote, this.selectedChordKey);
+  setSelectedChord(chord: Chord): boolean{
+    if(chord){
+      this.selectedChord = chord;
+      this.selectedChords.push(this.selectedChord);
       this.selectedChordChanged.next(this.selectedChord);
+      this.selectedChordChangesChanged.next(this.selectedChords.slice());
+      return true;
     }
+    return false;
+  }
+
+  resetSelectedChords() {
+    this.selectedChords.splice(0, this.selectedChords.length);
   }
 }
