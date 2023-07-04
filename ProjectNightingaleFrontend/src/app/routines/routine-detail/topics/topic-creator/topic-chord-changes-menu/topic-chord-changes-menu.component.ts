@@ -1,4 +1,5 @@
 import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
+import {Chord} from "../../../../../models/chord-model/chord";
 
 @Component({
   selector: 'app-topic-chord-changes-menu',
@@ -9,6 +10,10 @@ export class TopicChordChangesMenuComponent  implements OnInit, OnDestroy{
 
   @Output()
   close: EventEmitter<void> = new EventEmitter<void>();
+
+  selectedChordsChangesFrom: Chord[];
+  selectedChordsChangesTo: Chord[];
+
 
   constructor() {
   }
@@ -21,6 +26,14 @@ export class TopicChordChangesMenuComponent  implements OnInit, OnDestroy{
 
   onCloseClicked(){
     this.close.emit();
+  }
+
+  setChordChangesFromArr($event: Chord[]) {
+    this.selectedChordsChangesFrom = $event;
+  }
+
+  setChordChangesToArr($event: Chord[]) {
+    this.selectedChordsChangesTo = $event;
   }
 
 }

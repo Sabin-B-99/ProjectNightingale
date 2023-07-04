@@ -4,17 +4,38 @@
       <div class="row">
         <div class="col col-md">
           <p>From: </p>
-          <app-chord-list></app-chord-list>
+          <app-chord-list (selectedChordsChangedEvent)="setChordChangesFromArr($event)" ></app-chord-list>
         </div>
         <div class="col col-md">
           <p>To: </p>
-          <app-chord-list></app-chord-list>
+          <app-chord-list (selectedChordsChangedEvent)="setChordChangesToArr($event)"></app-chord-list>
         </div>
       </div>
     </div>
+
+    <div class="container mt-sm-3">
+      <div class="row col-2">
+        <div class="col col-sm-1">
+          <p *ngFor="let chordsFrom of selectedChordsChangesFrom">
+            {{chordsFrom.chordRoot.rootName | musicNote}}{{chordsFrom.chordKey.keyName}}
+          </p>
+        </div>
+
+        <div class="col col-sm-1">
+          <p *ngFor="let chordsTo of selectedChordsChangesTo" class="col col-sm-1">
+            {{chordsTo.chordRoot.rootName | musicNote}}{{chordsTo.chordKey.keyName}}
+          </p>
+        </div>
+
+      </div>
+    </div>
+
+
     <div class="alter-box-actions">
       <button class="btn btn-primary">Save</button>
       <button class="btn btn-danger" (click)="onCloseClicked()">Close</button>
     </div>
+
+
   </div>
 </div>

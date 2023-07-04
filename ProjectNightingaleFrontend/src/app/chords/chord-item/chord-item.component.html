@@ -1,4 +1,4 @@
 <div class="container" *ngIf="selectedChord">
   <p>Selected Chord: {{selectedChord.chordRoot.rootName | musicNote}}{{selectedChord.chordKey.keyName}}</p>
-  <img [src]="selectedChordImagePath">
+  <img [src]="selectedChord.imagePath">
 </div>

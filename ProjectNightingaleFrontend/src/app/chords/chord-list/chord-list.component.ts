@@ -1,4 +1,4 @@
-import {Component, Directive, ElementRef, HostListener, OnDestroy} from '@angular/core';
+import {Component, Directive, ElementRef, EventEmitter, HostListener, OnDestroy, Output} from '@angular/core';
 import {ChordService} from "../../services/chord.service";
 import {ChordRoot} from "../../models/chord-model/chord-root-model/chord-root";
 import {ChordKey} from "../../models/chord-model/chord-key-model/chord-key";
@@ -13,6 +13,14 @@ export class ChordListComponent{
 
   selectedChordRoot: ChordRoot | null;
   selectedChordKey: ChordKey | null;
+
+  selectedChords: Chord[] = [];
+
+  @Output()
+  selectedChordsChangedEvent: EventEmitter<Chord[]> = new EventEmitter<Chord[]>();
+
+  @Output()
+  selectedChordChangedEvent: EventEmitter<Chord> = new EventEmitter<Chord>();
 
   selectedRootNoteIndex: number = -1;
   selectedKeyNoteIndex: number = -1;
@@ -38,14 +46,20 @@ export class ChordListComponent{
 
   private checkRootAndKeyAndSetSelectedChord() {
     if(this.selectedChordRoot && this.selectedChordKey){
-      let chordSuccessfullySet: boolean =
-        this.chordService.setSelectedChord(new Chord(this.selectedChordRoot, this.selectedChordKey));
-      if(chordSuccessfullySet){
-        this.selectedChordRoot = null;
-        this.selectedChordKey = null;
-        this.selectedRootNoteIndex = -1;
-        this.selectedKeyNoteIndex  = -1;
-      }
+
+      const selectedChord: Chord = new Chord(this.selectedChordRoot, this.selectedChordKey);
+      //TODO: changeImagePath Later from DB
+      selectedChord.imagePath = "https://midnightmusic.com/wp-content/uploads/2013/08/G.png";
+
+      this.selectedChordChangedEvent.emit(selectedChord);
+
+      this.selectedChords.push(selectedChord);
+      this.selectedChordsChangedEvent.emit(this.selectedChords.slice());
+
+      this.selectedChordRoot = null;
+      this.selectedChordKey = null;
+      this.selectedRootNoteIndex = -1;
+      this.selectedKeyNoteIndex  = -1;
     }
   }
 }

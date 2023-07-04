@@ -1,10 +1,10 @@
 <div class="mt-sm-5 container">
   <div class="row">
     <div class="col-sm">
-      <app-chord-list></app-chord-list>
+      <app-chord-list (selectedChordChangedEvent)="setSelectedChord($event)"></app-chord-list>
     </div>
     <div class="col-auto">
-      <app-chord-item></app-chord-item>
+      <app-chord-item [selectedChord]="selectedChord"></app-chord-item>
     </div>
   </div>
 </div>

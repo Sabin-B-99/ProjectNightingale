@@ -4,16 +4,19 @@
       <div class="row">
         <p>Select chords: </p>
         <div class="col col-md-auto">
-          <app-chord-list></app-chord-list>
+          <app-chord-list (selectedChordsChangedEvent)="setSelectedChords($event)" ></app-chord-list>
         </div>
       </div>
     </div>
+
     <div *ngFor="let selectedChord of selectedChords">
       <p>{{selectedChord.chordRoot.rootName | musicNote}}{{selectedChord.chordKey.keyName}}</p>
     </div>
+
     <div class="chords-menu-alter-box-actions">
       <button class="btn btn-primary" (click)="onCloseClicked()">Close</button>
     </div>
+
   </div>
 </div>
 

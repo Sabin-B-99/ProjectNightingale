@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {Chord} from "../models/chord-model/chord";
 
 @Component({
   selector: 'app-chords',
@@ -6,5 +7,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./chords.component.css']
 })
 export class ChordsComponent {
-
+  selectedChord: Chord;
+  setSelectedChord($event: Chord) {
+    this.selectedChord = $event;
+  }
 }
