@@ -1,17 +1,28 @@
 <div class="chords-menu-backdrop">
   <div class="chords-menu-alert-box">
-    <div class="container" >
+    <div class="container border" >
+
       <div class="row">
-        <p>Select chords: </p>
-        <div class="col col-md-auto">
+        <div class="col col-md-7">
           <app-chord-list (selectedChordsChangedEvent)="setSelectedChords($event)" ></app-chord-list>
+        </div>
+
+        <div class="selected-chords col col-sm" #scrollToBottom [scrollTop]="scrollToBottom.scrollHeight">
+          <p>Selected Chords:</p>
+          <div *ngFor="let selectedChord of selectedChords">
+            <button class="border rounded-pill align-items-start m-sm-1"
+                    (click)="setLatestChordSelected(selectedChord)">
+              {{selectedChord.chordRoot.rootName | musicNote}}{{selectedChord.chordKey.keyName}}
+            </button>
+          </div>
+        </div>
+
+        <div class="col col-sm">
+          <app-chord-item [selectedChord]="latestChordSelected"></app-chord-item>
         </div>
       </div>
     </div>
 
-    <div *ngFor="let selectedChord of selectedChords">
-      <p>{{selectedChord.chordRoot.rootName | musicNote}}{{selectedChord.chordKey.keyName}}</p>
-    </div>
 
     <div class="chords-menu-alter-box-actions">
       <button class="btn btn-primary" (click)="onCloseClicked()">Close</button>

@@ -14,6 +14,7 @@ export class TopicChordsMenuComponent implements OnInit, OnDestroy{
   close: EventEmitter<void> = new EventEmitter<void>();
 
   selectedChords: Chord[];
+  latestChordSelected: Chord | undefined;
 
   constructor() {
   }
@@ -29,5 +30,13 @@ export class TopicChordsMenuComponent implements OnInit, OnDestroy{
   }
   setSelectedChords($event: Chord[]) {
     this.selectedChords = $event;
+    const latestChordSelected: Chord | undefined = this.selectedChords.at(this.selectedChords.length - 1);
+    if(latestChordSelected){
+      this.setLatestChordSelected(latestChordSelected);
+    }
+  }
+
+  setLatestChordSelected(chord: Chord | undefined) {
+    this.latestChordSelected = chord;
   }
 }

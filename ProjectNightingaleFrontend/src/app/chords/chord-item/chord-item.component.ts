@@ -11,7 +11,7 @@ import {Chord} from "../../models/chord-model/chord";
 export class ChordItemComponent implements OnInit, OnDestroy{
 
   @Input()
-  selectedChord: Chord;
+  selectedChord: Chord | undefined;
 
   constructor() {
   }

@@ -22,3 +22,9 @@
 .chords-menu-alter-box-actions{
   text-align: right;
 }
+
+.selected-chords{
+  overflow-y: scroll;
+  height: 30rem;
+  width: 30rem;
+}

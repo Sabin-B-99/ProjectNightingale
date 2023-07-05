@@ -1,5 +1,5 @@
 <div class="container">
-  <p>Select Root Note:</p>
+  <p class="row col-8">Select Root Note:</p>
   <div class="row col-8">
     <button class="col col-sm-2 border rounded-pill align-items-start m-sm-1"
             (click)="setSelectedChordRootNote(chordRootNote)"
@@ -8,9 +8,7 @@
       {{chordRootNote.rootName | musicNote}}
     </button>
   </div>
-</div>
-<div class="container">
-  <p>Select Key:</p>
+  <p class="row col-8">Select Key:</p>
   <div class="row col-8">
     <button class="col col-sm-2 border rounded-pill align-items-start m-sm-1"
             (click)="setSelectedChordKey(chordKey)"
@@ -20,3 +18,5 @@
     </button>
   </div>
 </div>
+
+
