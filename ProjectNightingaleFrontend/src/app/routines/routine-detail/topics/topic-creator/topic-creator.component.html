@@ -18,6 +18,12 @@
         </div>
         <div class="row">
           <p>Chords:</p>
+          <div class="container row">
+            <span *ngFor="let chordSelected of topicCreated.selectedChords"
+                  class="border col-sm-auto">
+              {{chordSelected.chordRoot.rootName | musicNote}}{{chordSelected.chordKey.keyName}}
+            </span>
+          </div>
           <button type="button"
                   (click)="onAddChordsButtonClicked()"
                   class="col-sm-auto">Add Chords</button>

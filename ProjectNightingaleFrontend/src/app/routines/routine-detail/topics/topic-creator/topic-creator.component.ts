@@ -1,4 +1,5 @@
 import {
+  ChangeDetectorRef,
   Component, ComponentRef,
   EventEmitter,
   Input, OnDestroy,
@@ -12,6 +13,9 @@ import {TopicChordChangesMenuComponent} from "./topic-chord-changes-menu/topic-c
 import {TopicChordsSelectorDirective} from "../../../../directives/topic-chords-selector.directive";
 import {TopicChordsMenuComponent} from "./topic-chords-menu/topic-chords-menu.component";
 import {Subscription} from "rxjs";
+import {Topic} from "../../../../models/topic-model/topic";
+import {Chord} from "../../../../models/chord-model/chord";
+import {TopicCreatorService} from "../../../../services/topic-creator.service";
 
 @Component({
   selector: 'app-topic-creator',
@@ -20,6 +24,7 @@ import {Subscription} from "rxjs";
 })
 export class TopicCreatorComponent implements OnDestroy{
 
+  topicCreated: Topic = new Topic('');
 
   @Input()
   topicForm: FormGroup;
@@ -35,15 +40,17 @@ export class TopicCreatorComponent implements OnDestroy{
 
   private closeChordChangesMenuSubscription: Subscription;
 
+
   @ViewChild(TopicChordsSelectorDirective, {static: false})
   chordsMenuHost!: TopicChordsSelectorDirective;
 
   private closeChordsMenuSubscription: Subscription;
+  private saveChordsMenuSubscription: Subscription;
 
   @Output()
   deleteTopicEvent: EventEmitter<number> = new EventEmitter<number>();
 
-  constructor() {
+  constructor(private topicCreatorService: TopicCreatorService) {
   }
 
   static addTopicForm(): FormGroup{
@@ -96,14 +103,31 @@ export class TopicCreatorComponent implements OnDestroy{
          viewContainerRef.clear();
        }
     )
+
+    this.saveChordsMenuSubscription = chordsMenuComponent.instance.save
+      .subscribe(
+        (chords: Chord[]) =>{
+          this.topicCreated.setSelectedChords(chords);
+          this.saveChordsMenuSubscription.unsubscribe();
+          viewContainerRef.clear();
+        }
+      )
+
+    if(this.topicCreated.selectedChords.length > 0){
+      chordsMenuComponent.instance.setSelectedChordsForEdit(this.topicCreated.selectedChords.slice());
+    }
   }
 
   ngOnDestroy(): void {
+    this.topicCreatorService.addTopic(this.topicCreated);
     if(this.closeChordChangesMenuSubscription){
       this.closeChordChangesMenuSubscription.unsubscribe();
     }
     if(this.closeChordsMenuSubscription){
       this.closeChordsMenuSubscription.unsubscribe();
+    }
+    if(this.saveChordsMenuSubscription){
+      this.saveChordsMenuSubscription.unsubscribe();
     }
   }
 }

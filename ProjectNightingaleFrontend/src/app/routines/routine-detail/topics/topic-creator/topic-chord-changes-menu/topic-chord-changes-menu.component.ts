@@ -28,12 +28,4 @@ export class TopicChordChangesMenuComponent  implements OnInit, OnDestroy{
     this.close.emit();
   }
 
-  setChordChangesFromArr($event: Chord[]) {
-    this.selectedChordsChangesFrom = $event;
-  }
-
-  setChordChangesToArr($event: Chord[]) {
-    this.selectedChordsChangesTo = $event;
-  }
-
 }

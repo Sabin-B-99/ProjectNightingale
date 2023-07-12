@@ -4,17 +4,20 @@
 
       <div class="row">
         <div class="col col-md-7">
-          <app-chord-list (selectedChordsChangedEvent)="setSelectedChords($event)" ></app-chord-list>
+          <app-chord-list (selectedChordChangedEvent)="setLatestChordSelected($event)"></app-chord-list>
         </div>
 
         <div class="selected-chords col col-sm" #scrollToBottom [scrollTop]="scrollToBottom.scrollHeight">
           <p>Selected Chords:</p>
-          <div *ngFor="let selectedChord of selectedChords">
-            <button class="border rounded-pill align-items-start m-sm-1"
-                    (click)="setLatestChordSelected(selectedChord)">
-              {{selectedChord.chordRoot.rootName | musicNote}}{{selectedChord.chordKey.keyName}}
-            </button>
-          </div>
+            <div *ngFor="let selectedChord of selectedChords"
+                 (click)="setLatestChordSelected(selectedChord)"
+                 class="border my-sm-1 selected-chord-container">
+              <p>
+                {{selectedChord.chordRoot.rootName | musicNote}}{{selectedChord.chordKey.keyName}}
+              </p>
+              <button class="btn btn-outline-danger remove-selected-chord"
+                      (click)="removeSelectedChord(selectedChord)">X</button>
+            </div>
         </div>
 
         <div class="col col-sm">
@@ -25,7 +28,8 @@
 
 
     <div class="chords-menu-alter-box-actions">
-      <button class="btn btn-primary" (click)="onCloseClicked()">Close</button>
+      <button class="btn btn-primary mx-sm-2" (click)="onSaveClicked()">Save</button>
+      <button class="btn btn-primary mx-sm-2" (click)="onCloseClicked()">Close</button>
     </div>
 
   </div>

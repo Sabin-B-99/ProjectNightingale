@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import {ChordRoot} from "../models/chord-model/chord-root-model/chord-root";
 import {ChordKey} from "../models/chord-model/chord-key-model/chord-key";
-import {Chord} from "../models/chord-model/chord";
-import {Subject} from "rxjs";
 
 @Injectable({
   providedIn: 'root'

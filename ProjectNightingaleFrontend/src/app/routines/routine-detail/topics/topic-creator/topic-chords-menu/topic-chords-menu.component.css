@@ -26,5 +26,22 @@
 .selected-chords{
   overflow-y: scroll;
   height: 30rem;
-  width: 30rem;
+  width: 40rem;
+}
+
+.selected-chord-container{
+  position: relative;
+  text-align: center;
+}
+
+.remove-selected-chord{
+  line-height: 3px;
+  width: 3px;
+  font-size: 8pt;
+  margin-top: 1px;
+  margin-right: 2px;
+  margin-left: 2px;
+  position: absolute;
+  top:0;
+  right:0;
 }

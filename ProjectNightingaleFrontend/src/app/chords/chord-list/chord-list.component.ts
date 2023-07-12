@@ -3,21 +3,19 @@ import {ChordService} from "../../services/chord.service";
 import {ChordRoot} from "../../models/chord-model/chord-root-model/chord-root";
 import {ChordKey} from "../../models/chord-model/chord-key-model/chord-key";
 import {Chord} from "../../models/chord-model/chord";
+import {SelectedChordsService} from "../../services/selected-chords.service";
 
 @Component({
   selector: 'app-chord-list',
   templateUrl: './chord-list.component.html',
   styleUrls: ['./chord-list.component.css']
 })
-export class ChordListComponent{
+export class ChordListComponent implements OnDestroy{
 
   selectedChordRoot: ChordRoot | null;
   selectedChordKey: ChordKey | null;
 
-  selectedChords: Chord[] = [];
 
-  @Output()
-  selectedChordsChangedEvent: EventEmitter<Chord[]> = new EventEmitter<Chord[]>();
 
   @Output()
   selectedChordChangedEvent: EventEmitter<Chord> = new EventEmitter<Chord>();
@@ -27,7 +25,7 @@ export class ChordListComponent{
 
   chordRootNotes: ChordRoot[];
   chordKeys: ChordKey[];
-  constructor(private chordService: ChordService) {
+  constructor(private chordService: ChordService, private selectedChordService: SelectedChordsService) {
     this.chordRootNotes = this.chordService.getRootNotes();
     this.chordKeys = this.chordService.getKeys();
   }
@@ -52,14 +50,17 @@ export class ChordListComponent{
       selectedChord.imagePath = "https://midnightmusic.com/wp-content/uploads/2013/08/G.png";
 
       this.selectedChordChangedEvent.emit(selectedChord);
+      this.selectedChordService.addChord(selectedChord);
 
-      this.selectedChords.push(selectedChord);
-      this.selectedChordsChangedEvent.emit(this.selectedChords.slice());
 
       this.selectedChordRoot = null;
       this.selectedChordKey = null;
       this.selectedRootNoteIndex = -1;
       this.selectedKeyNoteIndex  = -1;
     }
+  }
+
+  ngOnDestroy(): void {
+    this.selectedChordService.clearSelectedChords();
   }
 }

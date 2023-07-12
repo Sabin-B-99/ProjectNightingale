@@ -26,6 +26,7 @@ import { TopicChordChangesMenuComponent } from './routines/routine-detail/topics
 import { TopicChordsMenuComponent } from './routines/routine-detail/topics/topic-creator/topic-chords-menu/topic-chords-menu.component';
 import { TopicChordsSelectorDirective } from './directives/topic-chords-selector.directive';
 import { DivToggledDirective } from './directives/div-toggled.directive';
+import {NgOptimizedImage} from "@angular/common";
 
 @NgModule({
   declarations: [
@@ -53,12 +54,13 @@ import { DivToggledDirective } from './directives/div-toggled.directive';
     TopicChordsSelectorDirective,
     DivToggledDirective
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    ReactiveFormsModule,
-    FormsModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        ReactiveFormsModule,
+        FormsModule,
+        NgOptimizedImage
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })
