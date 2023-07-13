@@ -4,35 +4,43 @@
       <div class="row">
         <div class="col col-md">
           <p>From: </p>
-          <app-chord-list></app-chord-list>
+          <app-chord-list (selectedChordChangedEvent)="setLatestChordSelected($event)"
+                          [disableAllChordsButton]="disableFromChords"></app-chord-list>
         </div>
         <div class="col col-md">
           <p>To: </p>
-          <app-chord-list></app-chord-list>
+          <app-chord-list (selectedChordChangedEvent)="setLatestChordSelected($event)"
+                          [disableAllChordsButton]="disableToChords"></app-chord-list>
+        </div>
+        <app-chord-item class="col mt-sm-0 col-sm-2 g-0" [selectedChord]="latestSelectedChord">
+        </app-chord-item>
+      </div>
+    </div>
+    <hr>
+    <div class="container row">
+      <p *ngIf="chordChanges" class="mt-sm-1">Selected Chord Changes:</p>
+      <div class="chord-changes-container row row-cols-3" #scrollToBottom [scrollTop]="scrollToBottom.scrollHeight">
+        <div *ngFor="let chordChange of chordChanges"
+             class="col col-md-5 my-sm-1">
+          <div class="border selected-chord-change-container">
+            <a (click)="setLatestChordSelected(chordChange.getFromChord())">
+              {{chordChange.getChordFromRootName() | musicNote}}{{chordChange.getChordFromKeyName()}}
+            </a>
+            ->
+            <a (click)="setLatestChordSelected(chordChange.getToChord())">
+              {{chordChange.getChordToRootName() | musicNote}}{{chordChange.getChordToKeyName()}}
+            </a>
+            <button class="btn btn-outline-danger remove-selected-chord-change"
+                    (click)="removeSelectedChordChange(chordChange)">X</button>
+          </div>
         </div>
       </div>
     </div>
 
-    <div class="container mt-sm-3">
-      <div class="row col-2">
-        <div class="col col-sm-1">
-          <p *ngFor="let chordsFrom of selectedChordsChangesFrom">
-            {{chordsFrom.chordRoot.rootName | musicNote}}{{chordsFrom.chordKey.keyName}}
-          </p>
-        </div>
-
-        <div class="col col-sm-1">
-          <p *ngFor="let chordsTo of selectedChordsChangesTo" class="col col-sm-1">
-            {{chordsTo.chordRoot.rootName | musicNote}}{{chordsTo.chordKey.keyName}}
-          </p>
-        </div>
-
-      </div>
-    </div>
 
 
     <div class="alter-box-actions">
-      <button class="btn btn-primary">Save</button>
+      <button class="btn btn-primary" (click)="onSaveClicked()">Save</button>
       <button class="btn btn-danger" (click)="onCloseClicked()">Close</button>
     </div>
 

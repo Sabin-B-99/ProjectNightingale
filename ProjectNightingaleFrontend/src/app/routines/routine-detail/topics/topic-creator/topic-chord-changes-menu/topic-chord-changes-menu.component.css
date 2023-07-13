@@ -11,8 +11,8 @@
 .alert-box{
   position: fixed;
   top: 5vh;
-  left: 10vw;
-  width: 80vw;
+  left: 5vw;
+  width: 90vw;
   padding: 16px;
   z-index: 100;
   background: white;
@@ -21,4 +21,26 @@
 
 .alter-box-actions{
   text-align: right;
+}
+.chord-changes-container{
+  overflow-y: scroll;
+  overflow-x: scroll;
+  height: 6rem;
+  width: 40rem;
+}
+
+.selected-chord-change-container {
+  position: relative;
+  text-align: center;
+}
+.remove-selected-chord-change{
+  line-height: 3px;
+  width: 3px;
+  font-size: 8pt;
+  margin-top: 1px;
+  margin-right: 2px;
+  margin-left: 2px;
+  position: absolute;
+  top:0;
+  right:0;
 }

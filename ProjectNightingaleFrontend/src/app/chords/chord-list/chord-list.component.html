@@ -4,7 +4,8 @@
     <button class="col col-sm-2 border rounded-pill align-items-start m-sm-1"
             (click)="setSelectedChordRootNote(chordRootNote)"
             *ngFor="let chordRootNote of chordRootNotes; let i = index"
-            [ngStyle]="{'background-color': selectedRootNoteIndex == i ? 'skyblue': ''}">
+            [ngStyle]="{'background-color': selectedRootNoteIndex == i ? 'skyblue': ''}"
+            [disabled]="disableAllChordsButton">
       {{chordRootNote.rootName | musicNote}}
     </button>
   </div>
@@ -13,7 +14,8 @@
     <button class="col col-sm-2 border rounded-pill align-items-start m-sm-1"
             (click)="setSelectedChordKey(chordKey)"
             *ngFor="let chordKey of chordKeys; let i = index"
-            [ngStyle]="{'background-color': selectedKeyNoteIndex == i ? 'skyblue': ''}">
+            [ngStyle]="{'background-color': selectedKeyNoteIndex == i ? 'skyblue': ''}"
+            [disabled]="disableAllChordsButton">
       {{chordKey.keyName}}
     </button>
   </div>
