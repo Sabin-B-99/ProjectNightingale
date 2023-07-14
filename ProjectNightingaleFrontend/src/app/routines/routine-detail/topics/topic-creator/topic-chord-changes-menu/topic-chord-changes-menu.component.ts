@@ -4,7 +4,6 @@ import {ChordChange} from "../../../../../models/chord-change/chord-change";
 import {ChordChangesService} from "../../../../../services/chord-changes.service";
 import {Subscription} from "rxjs";
 import {SelectedChordsService} from "../../../../../services/selected-chords.service";
-import {fakeAsync} from "@angular/core/testing";
 
 @Component({
   selector: 'app-topic-chord-changes-menu',
@@ -86,6 +85,11 @@ export class TopicChordChangesMenuComponent  implements OnInit, OnDestroy{
   }
 
   onSaveClicked() {
-    this.save.emit(this.chordChanges);
+    this.save.emit(this.chordChanges.slice());
+  }
+
+  setChordChangesForEdit(chordChanges: ChordChange[]) {
+    this.chordChanges = chordChanges;
+    this.chordChangesService.setChordChanges(chordChanges);
   }
 }

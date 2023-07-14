@@ -16,6 +16,7 @@ import {Subscription} from "rxjs";
 import {Topic} from "../../../../models/topic-model/topic";
 import {Chord} from "../../../../models/chord-model/chord";
 import {TopicCreatorService} from "../../../../services/topic-creator.service";
+import {ChordChange} from "../../../../models/chord-change/chord-change";
 
 @Component({
   selector: 'app-topic-creator',
@@ -39,6 +40,7 @@ export class TopicCreatorComponent implements OnDestroy{
   chordChangesMenuHost!: TopicChordChangesSelectorDirective;
 
   private closeChordChangesMenuSubscription: Subscription;
+  private saveChordChangesMenuSubscription: Subscription;
 
 
   @ViewChild(TopicChordsSelectorDirective, {static: false})
@@ -87,7 +89,19 @@ export class TopicCreatorComponent implements OnDestroy{
           this.closeChordChangesMenuSubscription.unsubscribe();
           viewContainerRef.clear();
         }
-      )
+      );
+
+    this.saveChordChangesMenuSubscription = chordChangesMenuComponent.instance.save
+      .subscribe(
+        (chordChanges: ChordChange[]) =>{
+          this.topicCreated.setChordChanges(chordChanges);
+          this.saveChordChangesMenuSubscription.unsubscribe();
+          viewContainerRef.clear();
+        }
+      );
+    if(this.topicCreated.chordChanges.length > 0){
+      chordChangesMenuComponent.instance.setChordChangesForEdit(this.topicCreated.chordChanges.slice());
+    }
   }
 
   loadTopicChordsMenuComponent(){
@@ -102,7 +116,7 @@ export class TopicCreatorComponent implements OnDestroy{
          this.closeChordsMenuSubscription.unsubscribe();
          viewContainerRef.clear();
        }
-    )
+    );
 
     this.saveChordsMenuSubscription = chordsMenuComponent.instance.save
       .subscribe(
@@ -111,7 +125,7 @@ export class TopicCreatorComponent implements OnDestroy{
           this.saveChordsMenuSubscription.unsubscribe();
           viewContainerRef.clear();
         }
-      )
+      );
 
     if(this.topicCreated.selectedChords.length > 0){
       chordsMenuComponent.instance.setSelectedChordsForEdit(this.topicCreated.selectedChords.slice());
@@ -128,6 +142,9 @@ export class TopicCreatorComponent implements OnDestroy{
     }
     if(this.saveChordsMenuSubscription){
       this.saveChordsMenuSubscription.unsubscribe();
+    }
+    if(this.saveChordChangesMenuSubscription){
+      this.saveChordChangesMenuSubscription.unsubscribe();
     }
   }
 }

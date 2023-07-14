@@ -30,6 +30,15 @@
         </div>
         <div class="row">
           <p>Changes:</p>
+          <div class="container row">
+            <span *ngFor="let chordChange of topicCreated.chordChanges"
+                  class="border col-sm-auto">
+            <p>
+              {{chordChange.getChordFromRootName() | musicNote}}{{chordChange.getChordFromKeyName()}}
+              -> {{chordChange.getChordToRootName() | musicNote}}{{chordChange.getChordToKeyName()}}
+            </p>
+            </span>
+          </div>
           <button type="button"
                   (click)="onAddChangesButtonClicked()"
                   class="col-sm-auto">Add Changes</button>

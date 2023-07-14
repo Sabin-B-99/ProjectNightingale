@@ -24,4 +24,8 @@ export class ChordChangesService {
     this.chordChanges.splice(removalIndex, 1);
     this.chordChangesChanged.next(this.chordChanges.slice());
   }
+
+  setChordChanges(chordChanges: ChordChange[]) {
+    this.chordChanges = chordChanges;
+  }
 }
