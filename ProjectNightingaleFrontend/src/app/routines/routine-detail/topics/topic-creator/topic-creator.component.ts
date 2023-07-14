@@ -7,7 +7,7 @@ import {
   ViewChild,
   ViewContainerRef
 } from '@angular/core';
-import {FormControl, FormGroup} from "@angular/forms";
+import {FormArray, FormControl, FormGroup} from "@angular/forms";
 import {TopicChordChangesSelectorDirective} from "../../../../directives/topic-chord-changes-selector.directive";
 import {TopicChordChangesMenuComponent} from "./topic-chord-changes-menu/topic-chord-changes-menu.component";
 import {TopicChordsSelectorDirective} from "../../../../directives/topic-chords-selector.directive";
@@ -60,8 +60,13 @@ export class TopicCreatorComponent implements OnDestroy{
       'topicTitle': new FormControl(null),
       'topicSongTitle': new FormControl(null),
       'topicStrumPattern': new FormControl(null),
-      'topicTime': new FormControl(null)
+      'topicTime': new FormControl(null),
+      'strumPatterns': new FormArray([])
     })
+  }
+
+  get strumInputArray(): FormArray<FormGroup>{
+    return (<FormArray<FormGroup>>this.topicForm?.get('strumPatterns'));
   }
 
   deleteTopic(topicIndex: number){
@@ -146,5 +151,17 @@ export class TopicCreatorComponent implements OnDestroy{
     if(this.saveChordChangesMenuSubscription){
       this.saveChordChangesMenuSubscription.unsubscribe();
     }
+  }
+
+  onAddStrumPatternInputClicked() {
+    this.strumInputArray.push(new FormGroup(
+      {
+        'topicStrumPattern': new FormControl()
+      }
+    ));
+  }
+
+  deleteStrumPatternInput(i: number) {
+    this.strumInputArray.removeAt(i);
   }
 }

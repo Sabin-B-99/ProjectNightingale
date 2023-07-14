@@ -16,7 +16,7 @@
                  placeholder="song" class="col-sm-auto"/>
           <button type="button" class="col-sm-auto">Save</button>
         </div>
-        <div class="row">
+        <div class="container row">
           <p>Chords:</p>
           <div class="container row">
             <span *ngFor="let chordSelected of topicCreated.selectedChords"
@@ -28,7 +28,7 @@
                   (click)="onAddChordsButtonClicked()"
                   class="col-sm-auto">Add Chords</button>
         </div>
-        <div class="row">
+        <div class="container row">
           <p>Changes:</p>
           <div class="container row">
             <span *ngFor="let chordChange of topicCreated.chordChanges"
@@ -43,13 +43,18 @@
                   (click)="onAddChangesButtonClicked()"
                   class="col-sm-auto">Add Changes</button>
         </div>
-        <div class="row">
+        <div class="container">
           <p class="col-sm-auto">Strum Patterns:</p>
-          <input type="text"
-                 placeholder="D(U)D(U)(D)UDU"
-                 formControlName="topicStrumPattern"
-                 class="col-sm-auto"/>
-          <button type="button" class="col-sm-auto">Add</button>
+          <div formArrayName="strumPatterns">
+            <li class="list-group-item" *ngFor="let strumInput of strumInputArray.controls; let i = index">
+              <input type="text"
+                     placeholder="DUX(D)U(D)U(X)"
+                     formControlName="topicStrumPattern"
+                     class="col-sm-auto"/>
+              <button class="btn btn-outline-danger" (click)="deleteStrumPatternInput(i)">x</button>
+            </li>
+          </div>
+          <button type="button" class="col-sm-auto" (click)="onAddStrumPatternInputClicked()">Add</button>
         </div>
         <div class="row">
           <p>Metronome:</p>
