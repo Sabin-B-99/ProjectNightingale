@@ -16,7 +16,7 @@ import {Subscription} from "rxjs";
 import {Topic} from "../../../../models/topic-model/topic";
 import {Chord} from "../../../../models/chord-model/chord";
 import {TopicCreatorService} from "../../../../services/topic-creator.service";
-import {ChordChange} from "../../../../models/chord-change/chord-change";
+import {ChordChange} from "../../../../models/chord-change-model/chord-change";
 
 @Component({
   selector: 'app-topic-creator',

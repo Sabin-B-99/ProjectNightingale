@@ -7,6 +7,7 @@ import {RoutineDetailComponent} from "./routines/routine-detail/routine-detail.c
 import {RoutinesComponent} from "./routines/routines.component";
 import {SongDetailComponent} from "./songs/song-detail/song-detail.component";
 import {RoutineCreatorComponent} from "./routines/routine-creator/routine-creator.component";
+import {MetronomeComponent} from "./metronome/metronome.component";
 
 const appRoutes: Routes = [
   {path: '', pathMatch: "full", redirectTo:'/routines'},
@@ -16,6 +17,7 @@ const appRoutes: Routes = [
       {path: ':id', component: SongDetailComponent}
     ]},
   {path: 'chords', component: ChordsComponent},
+  {path: 'metronome', component: MetronomeComponent},
   {path: 'routines', component: RoutinesComponent,
     children: [
       {path: ':id/topics', component: RoutineDetailComponent},

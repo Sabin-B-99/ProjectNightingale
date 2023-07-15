@@ -1,5 +1,5 @@
 import {Chord} from "../chord-model/chord";
-import {ChordChange} from "../chord-change/chord-change";
+import {ChordChange} from "../chord-change-model/chord-change";
 
 export class Topic{
 

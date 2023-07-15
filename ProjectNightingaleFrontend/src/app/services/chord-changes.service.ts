@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {ChordChange} from "../models/chord-change/chord-change";
+import {ChordChange} from "../models/chord-change-model/chord-change";
 import {Subject} from "rxjs";
 
 @Injectable({

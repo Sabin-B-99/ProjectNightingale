@@ -27,6 +27,7 @@ import { TopicChordsMenuComponent } from './routines/routine-detail/topics/topic
 import { TopicChordsSelectorDirective } from './directives/topic-chords-selector.directive';
 import { DivToggledDirective } from './directives/div-toggled.directive';
 import {NgOptimizedImage} from "@angular/common";
+import { MetronomeComponent } from './metronome/metronome.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import {NgOptimizedImage} from "@angular/common";
     TopicChordChangesMenuComponent,
     TopicChordsMenuComponent,
     TopicChordsSelectorDirective,
-    DivToggledDirective
+    DivToggledDirective,
+    MetronomeComponent
   ],
     imports: [
         BrowserModule,

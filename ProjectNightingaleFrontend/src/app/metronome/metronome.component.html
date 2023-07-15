@@ -1,0 +1,17 @@
+<div class="container row mt-sm-4">
+
+  <div class="container border">
+    <p class="my-sm-2">Metronome:</p>
+    <form>
+      <input type="text" class="form-label col-sm-1"
+             #BPMNumberInput
+             (change)="setCurrentBPM(BPMNumberInput.value)" [value]="currentBPM">
+      <input class="form-range"
+             #BPMSlider
+             (input)="setCurrentBPM(BPMSlider.value)"
+             type="range" [min]="minBPMVal" [max]="maxBPMVal" [value]="currentBPM" [step]="1">
+      <button class="btn btn-outline-dark form-control-sm my-sm-2" >Play</button>
+    </form>
+  </div>
+
+</div>
