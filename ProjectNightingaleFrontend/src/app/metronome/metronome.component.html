@@ -5,12 +5,15 @@
     <form>
       <input type="text" class="form-label col-sm-1"
              #BPMNumberInput
-             (change)="setCurrentBPM(BPMNumberInput.value)" [value]="currentBPM">
+             (change)="changeCurrentBPM(BPMNumberInput.value)" [value]="currentBPM">
       <input class="form-range"
              #BPMSlider
-             (input)="setCurrentBPM(BPMSlider.value)"
-             type="range" [min]="minBPMVal" [max]="maxBPMVal" [value]="currentBPM" [step]="1">
-      <button class="btn btn-outline-dark form-control-sm my-sm-2" >Play</button>
+             (input)="changeCurrentBPM(BPMSlider.value)"
+             type="range" [min]="MIN_BPM_VAL" [max]="MAX_BPM_VAL" [value]="currentBPM" [step]="1">
+      <button class="btn btn-outline-dark form-control-sm mx-sm-2 my-sm-2"
+              (click)="playMetronomeSound()">Play</button>
+      <button class="btn btn-outline-danger form-control-sm mx-sm-2 my-sm-2"
+              (click)="stopMetronomeSound()">Stop</button>
     </form>
   </div>
 

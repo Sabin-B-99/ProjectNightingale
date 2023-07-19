@@ -1,5 +1,4 @@
 import {
-  ChangeDetectorRef,
   Component, ComponentRef,
   EventEmitter,
   Input, OnDestroy,
@@ -42,6 +41,7 @@ export class TopicCreatorComponent implements OnDestroy{
   private closeChordChangesMenuSubscription: Subscription;
   private saveChordChangesMenuSubscription: Subscription;
 
+  public showMetronomeMenu: boolean = false;
 
   @ViewChild(TopicChordsSelectorDirective, {static: false})
   chordsMenuHost!: TopicChordsSelectorDirective;
@@ -163,5 +163,14 @@ export class TopicCreatorComponent implements OnDestroy{
 
   deleteStrumPatternInput(i: number) {
     this.strumInputArray.removeAt(i);
+  }
+
+  onAddMetronomeClicked() {
+    this.showMetronomeMenu = true;
+  }
+
+
+  closeMetronomeMenu($event: void) {
+    this.showMetronomeMenu = false;
   }
 }

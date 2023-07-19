@@ -58,13 +58,19 @@
         </div>
         <div class="row">
           <p>Metronome:</p>
-          <button class="col-sm-auto">Add Metronome</button>
+          <button class="col-sm-auto" (click)="onAddMetronomeClicked()">Add Metronome</button>
         </div>
-        <div class="row">
-          <p class="col-sm-auto">Time:</p>
-          <input type="time"
-                 formControlName="topicTime"
-                 class="col-sm-auto"/>
+        <div class="container row border">
+          <p class="col-sm-1">Time:</p>
+          <input type="number" [min]="0" [max]="23"
+                 formControlName="topicTimeDurationHrs"
+                 class="col-sm-1"/>
+          <input type="number" [min]="0" [max]="59"
+                 formGroupName="topicTimeDurationMin"
+                 class="col-sm-1">
+          <input type="number" [min]="30" [max]="59"
+                 formGroupName="topicTimeDurationSec"
+                 class="col-sm-1">
         </div>
       </li>
     </ul>
@@ -74,6 +80,10 @@
   </div>
   <div>
     <ng-template appTopicChordChangesSelector></ng-template>
+  </div>
+  <div>
+    <app-metronome-menu (metronomeMenuClosed)="closeMetronomeMenu($event)"
+                        *ngIf="showMetronomeMenu"></app-metronome-menu>
   </div>
 </div>
 
