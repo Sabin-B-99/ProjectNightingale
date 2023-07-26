@@ -56,21 +56,18 @@
           </div>
           <button type="button" class="col-sm-auto" (click)="onAddStrumPatternInputClicked()">Add</button>
         </div>
-        <div class="row">
+        <div class="container">
           <p>Metronome:</p>
+          <span class="row" *ngIf="topicCreated.metronomeValues">
+            <p class="col-sm-auto">BPM: {{topicCreated.metronomeValues.bpm}}</p>
+            <p class="col-sm-auto">Beats Per Measure: {{topicCreated.metronomeValues.beatsPerMeasure}}</p>
+          </span>
           <button class="col-sm-auto" (click)="onAddMetronomeClicked()">Add Metronome</button>
         </div>
-        <div class="container row border">
-          <p class="col-sm-1">Time:</p>
-          <input type="number" [min]="0" [max]="23"
-                 formControlName="topicTimeDurationHrs"
-                 class="col-sm-1"/>
-          <input type="number" [min]="0" [max]="59"
-                 formGroupName="topicTimeDurationMin"
-                 class="col-sm-1">
-          <input type="number" [min]="30" [max]="59"
-                 formGroupName="topicTimeDurationSec"
-                 class="col-sm-1">
+        <div class="row">
+          <p>Duration: (hh:mm:ss)</p>
+          <input type="text" [defaultValue]="TOPIC_DURATION_DEFAULT_VALUE"
+                 class="col-sm-4">
         </div>
       </li>
     </ul>
@@ -83,6 +80,7 @@
   </div>
   <div>
     <app-metronome-menu (metronomeMenuClosed)="closeMetronomeMenu($event)"
+                        (metronomeMenuSaved)="saveMetronomeValues($event)"
                         *ngIf="showMetronomeMenu"></app-metronome-menu>
   </div>
 </div>

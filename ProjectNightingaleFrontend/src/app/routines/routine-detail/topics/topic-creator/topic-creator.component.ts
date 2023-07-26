@@ -1,12 +1,12 @@
 import {
   Component, ComponentRef,
   EventEmitter,
-  Input, OnDestroy,
+  Input, OnDestroy, OnInit,
   Output,
   ViewChild,
   ViewContainerRef
 } from '@angular/core';
-import {FormArray, FormControl, FormGroup} from "@angular/forms";
+import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
 import {TopicChordChangesSelectorDirective} from "../../../../directives/topic-chord-changes-selector.directive";
 import {TopicChordChangesMenuComponent} from "./topic-chord-changes-menu/topic-chord-changes-menu.component";
 import {TopicChordsSelectorDirective} from "../../../../directives/topic-chords-selector.directive";
@@ -16,13 +16,16 @@ import {Topic} from "../../../../models/topic-model/topic";
 import {Chord} from "../../../../models/chord-model/chord";
 import {TopicCreatorService} from "../../../../services/topic-creator.service";
 import {ChordChange} from "../../../../models/chord-change-model/chord-change";
+import {IMetronomeValues} from "../../../../types/custom-interfaces";
+import {MetronomeService} from "../../../../services/metronome.service";
 
 @Component({
   selector: 'app-topic-creator',
   templateUrl: './topic-creator.component.html',
   styleUrls: ['./topic-creator.component.css']
 })
-export class TopicCreatorComponent implements OnDestroy{
+export class TopicCreatorComponent implements OnInit, OnDestroy{
+  readonly TOPIC_DURATION_DEFAULT_VALUE: string = "00:01:30";
 
   topicCreated: Topic = new Topic('');
 
@@ -38,29 +41,58 @@ export class TopicCreatorComponent implements OnDestroy{
   @ViewChild(TopicChordChangesSelectorDirective, {static: false})
   chordChangesMenuHost!: TopicChordChangesSelectorDirective;
 
-  private closeChordChangesMenuSubscription: Subscription;
-  private saveChordChangesMenuSubscription: Subscription;
-
-  public showMetronomeMenu: boolean = false;
-
   @ViewChild(TopicChordsSelectorDirective, {static: false})
   chordsMenuHost!: TopicChordsSelectorDirective;
-
-  private closeChordsMenuSubscription: Subscription;
-  private saveChordsMenuSubscription: Subscription;
 
   @Output()
   deleteTopicEvent: EventEmitter<number> = new EventEmitter<number>();
 
-  constructor(private topicCreatorService: TopicCreatorService) {
+
+  private closeChordChangesMenuSubscription: Subscription;
+  private saveChordChangesMenuSubscription: Subscription;
+
+  private closeChordsMenuSubscription: Subscription;
+  private saveChordsMenuSubscription: Subscription;
+
+  public showMetronomeMenu: boolean = false;
+
+
+  constructor(private topicCreatorService: TopicCreatorService, private metronomeService: MetronomeService) {
+  }
+
+  ngOnInit(): void {
+    if(this.topicCreated.metronomeValues){
+      this.metronomeService.setSavedMetronomeValuesForEdit(this.topicCreated.metronomeValues);
+    }
+  }
+
+  ngOnDestroy(): void {
+    this.topicCreatorService.addTopic(this.topicCreated);
+
+    if(this.closeChordChangesMenuSubscription){
+      this.closeChordChangesMenuSubscription.unsubscribe();
+    }
+    if(this.closeChordsMenuSubscription){
+      this.closeChordsMenuSubscription.unsubscribe();
+    }
+    if(this.saveChordsMenuSubscription){
+      this.saveChordsMenuSubscription.unsubscribe();
+    }
+    if(this.saveChordChangesMenuSubscription){
+      this.saveChordChangesMenuSubscription.unsubscribe();
+    }
   }
 
   static addTopicForm(): FormGroup{
     return new FormGroup({
       'topicTitle': new FormControl(null),
       'topicSongTitle': new FormControl(null),
+      // 'topicChords': new FormControl(null),
+      //'topicChordChanges': new FormControl(null),
       'topicStrumPattern': new FormControl(null),
-      'topicTime': new FormControl(null),
+      //'topicMetronome' : new FormControl(null),
+      'topicTime': new FormControl(null,
+        [Validators.required, Validators.pattern(new RegExp('^\\d+:\\d{2}:\\d{2}$')) ]),
       'strumPatterns': new FormArray([])
     })
   }
@@ -137,21 +169,6 @@ export class TopicCreatorComponent implements OnDestroy{
     }
   }
 
-  ngOnDestroy(): void {
-    this.topicCreatorService.addTopic(this.topicCreated);
-    if(this.closeChordChangesMenuSubscription){
-      this.closeChordChangesMenuSubscription.unsubscribe();
-    }
-    if(this.closeChordsMenuSubscription){
-      this.closeChordsMenuSubscription.unsubscribe();
-    }
-    if(this.saveChordsMenuSubscription){
-      this.saveChordsMenuSubscription.unsubscribe();
-    }
-    if(this.saveChordChangesMenuSubscription){
-      this.saveChordChangesMenuSubscription.unsubscribe();
-    }
-  }
 
   onAddStrumPatternInputClicked() {
     this.strumInputArray.push(new FormGroup(
@@ -171,6 +188,11 @@ export class TopicCreatorComponent implements OnDestroy{
 
 
   closeMetronomeMenu($event: void) {
+    this.showMetronomeMenu = false;
+  }
+
+  saveMetronomeValues($event: IMetronomeValues) {
+    this.topicCreated.setMetronomeValues($event);
     this.showMetronomeMenu = false;
   }
 }
