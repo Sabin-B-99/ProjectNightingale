@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Metronome} from "../models/metronome-model/metronome";
+import {MetronomeService} from "../services/metronome.service";
 
 @Component({
   selector: 'app-metronome',
@@ -7,51 +9,35 @@ import { Component } from '@angular/core';
 })
 
 //TODO: Properly schedule metronome beat intervals and sounds.
-export class MetronomeComponent {
+export class MetronomeComponent implements OnInit{
+  metronome: Metronome;
 
-  readonly MIN_BPM_VAL: number = 30;
-  readonly MAX_BPM_VAL: number = 230;
-
-  private metronomeAudio: HTMLAudioElement;
-  currentBPM: number;
-
-  private playBeatEveryXMs: number = 0;
-  private metronomeStopped: boolean = false;
-
-  private beatInterval: number;
-
-  constructor() {
-    this.currentBPM = this.MAX_BPM_VAL < this.MIN_BPM_VAL ? this.MIN_BPM_VAL
-      : (this.MAX_BPM_VAL - this.MIN_BPM_VAL) / 2;
-    this.playBeatEveryXMs = Math.floor((60 / this.currentBPM) * 1000);
-    this.metronomeAudio = new Audio();
-    this.metronomeAudio.src = "../assets/sounds/metronome.mp3";
-    this.metronomeAudio.load();
+  constructor(private metronomeService: MetronomeService) {
+    this.metronome = metronomeService.getMetronome();
+  }
+  ngOnInit() {
   }
 
+
   changeCurrentBPM(value: string) {
-    this.currentBPM =  parseInt(value);
-    this.playBeatEveryXMs = Math.floor((60 / this.currentBPM) * 1000);
-    this.stopMetronomeSound();
-    this.playMetronomeSound();
+    this.metronome.changeBPM(+value);
   }
 
   playMetronomeSound() {
-    if(this.currentBPM > this.MAX_BPM_VAL){
-      this.currentBPM = this.MAX_BPM_VAL;
-    }
-    if(this.currentBPM < this.MIN_BPM_VAL){
-      this.currentBPM = this.MIN_BPM_VAL;
-    }
-      this.beatInterval = setInterval( (): void =>{
-        console.log(this.playBeatEveryXMs);
-        this.metronomeAudio.play();
-      }, this.playBeatEveryXMs);
+    this.metronome.start();
   }
 
   stopMetronomeSound() {
-    clearInterval(this.beatInterval);
-    this.metronomeStopped = true;
-    this.metronomeAudio.pause();
+    this.metronome.stop();
+  }
+
+  protected readonly Metronome = Metronome;
+
+  increaseBeatsPerMeasure() {
+    this.metronome.increaseBeatsPerMeasure();
+  }
+
+  decreaseBeatsPerMeasure() {
+    this.metronome.decreaseBeatsPerMeasure();
   }
 }

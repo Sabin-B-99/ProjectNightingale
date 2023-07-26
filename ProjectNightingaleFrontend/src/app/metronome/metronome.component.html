@@ -3,17 +3,34 @@
   <div class="container border">
     <p class="my-sm-2">Metronome:</p>
     <form>
-      <input type="text" class="form-label col-sm-1"
+      <label class="form-label mx-sm-2">BPM:</label>
+      <input type="text" class="col-sm-2"
              #BPMNumberInput
-             (change)="changeCurrentBPM(BPMNumberInput.value)" [value]="currentBPM">
+             (change)="changeCurrentBPM(BPMNumberInput.value)" [value]="this.metronome.getCurrentBPM()">
+
       <input class="form-range"
              #BPMSlider
              (input)="changeCurrentBPM(BPMSlider.value)"
-             type="range" [min]="MIN_BPM_VAL" [max]="MAX_BPM_VAL" [value]="currentBPM" [step]="1">
+             type="range" [min]="Metronome.MIN_BPM_VAL" [max]="Metronome.MAX_BPM_VAL"
+             [value]="this.metronome.getCurrentBPM()" [step]="1">
+
+      <div class="container">
+        <label class="form-label">Beats per measure:</label>
+        <div class="container row">
+          <button class="btn btn-outline-danger col-sm-auto"
+                  (click)="decreaseBeatsPerMeasure()">-</button>
+          <label class="form-label col-sm-auto">{{this.metronome.getCurrentBeatsPerMeasure()}}</label>
+          <button class="btn btn-outline-primary col-sm-auto"
+                  (click)="increaseBeatsPerMeasure()" >+</button>
+        </div>
+      </div>
+
+
       <button class="btn btn-outline-dark form-control-sm mx-sm-2 my-sm-2"
               (click)="playMetronomeSound()">Play</button>
       <button class="btn btn-outline-danger form-control-sm mx-sm-2 my-sm-2"
               (click)="stopMetronomeSound()">Stop</button>
+
     </form>
   </div>
 
