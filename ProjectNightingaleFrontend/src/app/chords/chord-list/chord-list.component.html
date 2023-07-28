@@ -2,6 +2,7 @@
   <p class="row col-8">Select Root Note:</p>
   <div class="row col-8">
     <button class="col col-sm-2 border rounded-pill align-items-start m-sm-1"
+            type="button"
             (click)="setSelectedChordRootNote(chordRootNote)"
             *ngFor="let chordRootNote of chordRootNotes; let i = index"
             [ngStyle]="{'background-color': selectedRootNoteIndex == i ? 'skyblue': ''}"
@@ -12,6 +13,7 @@
   <p class="row col-8">Select Key:</p>
   <div class="row col-8">
     <button class="col col-sm-2 border rounded-pill align-items-start m-sm-1"
+            type="button"
             (click)="setSelectedChordKey(chordKey)"
             *ngFor="let chordKey of chordKeys; let i = index"
             [ngStyle]="{'background-color': selectedKeyNoteIndex == i ? 'skyblue': ''}"

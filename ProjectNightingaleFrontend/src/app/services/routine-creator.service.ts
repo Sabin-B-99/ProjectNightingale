@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import {Routine} from "../models/routine-model/routine";
-import {TopicCreatorService} from "./topic-creator.service";
 
 @Injectable({
   providedIn: 'root'
@@ -8,6 +7,6 @@ import {TopicCreatorService} from "./topic-creator.service";
 export class RoutineCreatorService {
 
   routineCreated: Routine;
-  constructor(public topicCreatorService: TopicCreatorService) {
+  constructor() {
   }
 }

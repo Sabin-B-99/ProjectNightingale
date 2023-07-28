@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {Topic} from "../../../../models/topic-model/topic";
+import {Topic} from "../../../models/topic-model/topic";
 
 @Component({
   selector: 'app-topic-list',

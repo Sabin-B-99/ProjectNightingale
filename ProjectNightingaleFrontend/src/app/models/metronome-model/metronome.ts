@@ -69,6 +69,7 @@ export class Metronome {
     this.currentBPM = newBPM;
     this.validateTempo();
     this.metronomeTimer.updateInterval((60000/this.currentBPM));
+    this.currentBeatCount = 0;
   }
 
  start(){
@@ -104,5 +105,11 @@ export class Metronome {
     this.currentBeatsPerMeasure = newBeatsPerMeasure;
     this.validateBeatsPerMeasure();
     this.currentBeatCount = 0;
+  }
+
+  reset() {
+    this.currentBPM = Metronome.MAX_BPM_VAL < Metronome.MIN_BPM_VAL ? Metronome.MIN_BPM_VAL
+      : (Metronome.MAX_BPM_VAL - Metronome.MIN_BPM_VAL) / 2;
+    this.currentBeatsPerMeasure = 4;
   }
 }
