@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {IMetronomeValues} from "../../../types/custom-interfaces";
+import {IMetronomeValues} from "../../../../types/custom-interfaces";
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 
 @Component({
@@ -71,7 +71,7 @@ export class MetronomeMenuComponent implements ControlValueAccessor, OnInit{
   }
 
   setDisabledState(isDisabled: boolean): void {
-    this.isTouched = isDisabled;
+    this.isDisabled = isDisabled;
   }
 
   private markAsTouched(){

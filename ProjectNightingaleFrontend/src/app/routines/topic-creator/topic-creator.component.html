@@ -30,6 +30,11 @@
               {{chordSelected.chordRoot.rootName | musicNote}}{{chordSelected.chordKey.keyName}}
             </span>
           </div>
+          <app-topic-chords-menu formControlName="topicChords"
+                                 (close)="onCloseChordsMenuButtonClicked()"
+                                 (save)="onSaveChordsMenuButtonClicked($event)"
+                                 [selectedChordsForEdit]="topicCreated.selectedChords"
+                                 *ngIf="showChordsSelectionMenu"></app-topic-chords-menu>
           <button type="button"
                   (click)="onAddChordsButtonClicked()"
                   class="col-sm-auto">Add Chords</button>
@@ -46,8 +51,13 @@
             </p>
             </span>
           </div>
+          <app-topic-chord-changes-menu formControlName="topicChordChanges"
+                                        (close)="onCloseChordChangesMenuButtonClicked()"
+                                        (save)="onSaveChordChangesMenuButtonClicked($event)"
+                                        [chordChangesForEdit]="topicCreated.chordChanges"
+                                        *ngIf="showChordChangesMenu"></app-topic-chord-changes-menu>
           <button type="button"
-                  (click)="onAddChangesButtonClicked()"
+                  (click)="onAddChordChangesButtonClicked()"
                   class="col-sm-auto">Add Changes</button>
         </div>
 
@@ -71,31 +81,21 @@
             <p class="col-sm-auto">BPM: {{topicCreated.metronomeValues.bpm}}</p>
             <p class="col-sm-auto">Beats Per Measure: {{topicCreated.metronomeValues.beatsPerMeasure}}</p>
           </span>
+          <app-metronome-menu formControlName="topicMetronome" (metronomeMenuClosed)="closeMetronomeMenu($event)"
+                              (metronomeMenuSaved)="saveMetronomeValues($event)"
+                              [metronomeValueForEdit]="topicCreated.metronomeValues"
+                              *ngIf="showMetronomeMenu"></app-metronome-menu>
           <button class="col-sm-auto" (click)="onAddMetronomeClicked()">Add Metronome</button>
         </div>
 
         <div class="row">
           <p>Duration: (hh:mm:ss)</p>
-          <input type="text" [defaultValue]="TOPIC_DURATION_DEFAULT_VALUE"
-                 class="col-sm-4">
+          <app-duration-input formControlName="topicTime"></app-duration-input>
         </div>
 
       </li>
     </ul>
 
   </form>
-
-  <div>
-    <ng-template appTopicChordsSelector></ng-template>
-  </div>
-  <div>
-    <ng-template appTopicChordChangesSelector></ng-template>
-  </div>
-  <div>
-    <app-metronome-menu (metronomeMenuClosed)="closeMetronomeMenu($event)"
-                        (metronomeMenuSaved)="saveMetronomeValues($event)"
-                        *ngIf="showMetronomeMenu"></app-metronome-menu>
-  </div>
-
 </div>
 
