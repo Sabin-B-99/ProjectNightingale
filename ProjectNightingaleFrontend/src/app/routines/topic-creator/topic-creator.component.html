@@ -1,14 +1,19 @@
 <div>
   <form [formGroup]="topicForm">
+
     <ul class="list-group">
       <li class="list-group-item">
-        <a><input type="text"
-                  formControlName = "topicTitle"
-                  placeholder="Topic Title"/></a>
-        <button class="btn btn-danger" type="button"
-                *ngIf="totalTopics > 1"
-                (click)="deleteTopic
+
+        <div class="container row">
+          <input  class="col-sm-auto"  type="text"
+                    formControlName = "topicTitle"
+                    placeholder="Topic Title"/>
+          <button class="btn btn-danger mx-sm-auto col-sm-1" type="button"
+                  *ngIf="totalTopics > 1"
+                  (click)="deleteTopic
                 (indexInCurrentRoutine)">X</button>
+        </div>
+
         <div class="row">
           <p class="col-sm-auto">Song:</p>
           <input type="text"
@@ -16,6 +21,7 @@
                  placeholder="song" class="col-sm-auto"/>
           <button type="button" class="col-sm-auto">Save</button>
         </div>
+
         <div class="container row">
           <p>Chords:</p>
           <div class="container row">
@@ -28,6 +34,7 @@
                   (click)="onAddChordsButtonClicked()"
                   class="col-sm-auto">Add Chords</button>
         </div>
+
         <div class="container row">
           <p>Changes:</p>
           <div class="container row">
@@ -43,19 +50,21 @@
                   (click)="onAddChangesButtonClicked()"
                   class="col-sm-auto">Add Changes</button>
         </div>
+
         <div class="container">
           <p class="col-sm-auto">Strum Patterns:</p>
           <div formArrayName="strumPatterns">
             <li class="list-group-item" *ngFor="let strumInput of strumInputArray.controls; let i = index">
               <input type="text"
                      placeholder="DUX(D)U(D)U(X)"
-                     formControlName="topicStrumPattern"
+                     [formControlName]="i"
                      class="col-sm-auto"/>
               <button class="btn btn-outline-danger" (click)="deleteStrumPatternInput(i)">x</button>
             </li>
           </div>
           <button type="button" class="col-sm-auto" (click)="onAddStrumPatternInputClicked()">Add</button>
         </div>
+
         <div class="container">
           <p>Metronome:</p>
           <span class="row" *ngIf="topicCreated.metronomeValues">
@@ -64,14 +73,18 @@
           </span>
           <button class="col-sm-auto" (click)="onAddMetronomeClicked()">Add Metronome</button>
         </div>
+
         <div class="row">
           <p>Duration: (hh:mm:ss)</p>
           <input type="text" [defaultValue]="TOPIC_DURATION_DEFAULT_VALUE"
                  class="col-sm-4">
         </div>
+
       </li>
     </ul>
+
   </form>
+
   <div>
     <ng-template appTopicChordsSelector></ng-template>
   </div>
@@ -83,5 +96,6 @@
                         (metronomeMenuSaved)="saveMetronomeValues($event)"
                         *ngIf="showMetronomeMenu"></app-metronome-menu>
   </div>
+
 </div>
 

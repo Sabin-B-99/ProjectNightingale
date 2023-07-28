@@ -7,17 +7,17 @@ import {
   ViewContainerRef
 } from '@angular/core';
 import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
-import {TopicChordChangesSelectorDirective} from "../../../../directives/topic-chord-changes-selector.directive";
+import {TopicChordChangesSelectorDirective} from "../../directives/topic-chord-changes-selector.directive";
 import {TopicChordChangesMenuComponent} from "./topic-chord-changes-menu/topic-chord-changes-menu.component";
-import {TopicChordsSelectorDirective} from "../../../../directives/topic-chords-selector.directive";
+import {TopicChordsSelectorDirective} from "../../directives/topic-chords-selector.directive";
 import {TopicChordsMenuComponent} from "./topic-chords-menu/topic-chords-menu.component";
 import {Subscription} from "rxjs";
-import {Topic} from "../../../../models/topic-model/topic";
-import {Chord} from "../../../../models/chord-model/chord";
-import {TopicCreatorService} from "../../../../services/topic-creator.service";
-import {ChordChange} from "../../../../models/chord-change-model/chord-change";
-import {IMetronomeValues} from "../../../../types/custom-interfaces";
-import {MetronomeService} from "../../../../services/metronome.service";
+import {Topic} from "../../models/topic-model/topic";
+import {Chord} from "../../models/chord-model/chord";
+import {TopicCreatorService} from "../../services/topic-creator.service";
+import {ChordChange} from "../../models/chord-change-model/chord-change";
+import {IMetronomeValues} from "../../types/custom-interfaces";
+import {MetronomeService} from "../../services/metronome.service";
 
 @Component({
   selector: 'app-topic-creator',
@@ -85,20 +85,25 @@ export class TopicCreatorComponent implements OnInit, OnDestroy{
 
   static addTopicForm(): FormGroup{
     return new FormGroup({
-      'topicTitle': new FormControl(null),
+      'topicTitle': new FormControl(null, [Validators.required]),
       'topicSongTitle': new FormControl(null),
       // 'topicChords': new FormControl(null),
-      //'topicChordChanges': new FormControl(null),
-      'topicStrumPattern': new FormControl(null),
+      // 'topicChordChanges': new FormArray([]),
+      'strumPatterns': new FormArray([]),
       //'topicMetronome' : new FormControl(null),
       'topicTime': new FormControl(null,
         [Validators.required, Validators.pattern(new RegExp('^\\d+:\\d{2}:\\d{2}$')) ]),
-      'strumPatterns': new FormArray([])
     })
   }
 
-  get strumInputArray(): FormArray<FormGroup>{
-    return (<FormArray<FormGroup>>this.topicForm?.get('strumPatterns'));
+  get strumInputArray(): FormArray<FormControl>{
+    return (<FormArray<FormControl>>this.topicForm?.get('strumPatterns'));
+  }
+
+  onAddStrumPatternInputClicked() {
+    this.strumInputArray.push(
+      new FormControl(null)
+    );
   }
 
   deleteTopic(topicIndex: number){
@@ -169,14 +174,6 @@ export class TopicCreatorComponent implements OnInit, OnDestroy{
     }
   }
 
-
-  onAddStrumPatternInputClicked() {
-    this.strumInputArray.push(new FormGroup(
-      {
-        'topicStrumPattern': new FormControl()
-      }
-    ));
-  }
 
   deleteStrumPatternInput(i: number) {
     this.strumInputArray.removeAt(i);

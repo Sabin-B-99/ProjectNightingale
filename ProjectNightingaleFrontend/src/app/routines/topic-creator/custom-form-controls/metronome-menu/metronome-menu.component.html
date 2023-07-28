@@ -3,7 +3,8 @@
     <div class="container border">
       <div class="row">
         <div class="col col-md-7">
-          <app-metronome></app-metronome>
+          <app-metronome [initialMetronomeValues]="metronomeValueForEdit"
+                         (metronomeValuesChanged)="changeMetronomeValue($event)"></app-metronome>
         </div>
       </div>
     </div>
