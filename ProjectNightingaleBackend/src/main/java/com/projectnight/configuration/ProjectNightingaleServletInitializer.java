@@ -10,7 +10,7 @@ public class ProjectNightingaleServletInitializer extends AbstractAnnotationConf
 
     @Override
     protected Class<?>[] getServletConfigClasses() {
-        return new Class[]{AppConfig.class};
+        return new Class[]{ApplicationConfig.class};
     }
 
     @Override
