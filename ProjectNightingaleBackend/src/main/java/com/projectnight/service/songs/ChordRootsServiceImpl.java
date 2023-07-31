@@ -1,4 +1,4 @@
-package com.projectnight.service;
+package com.projectnight.service.songs;
 
 import com.projectnight.entity.ChordRoots;
 import com.projectnight.repository.songs.ChordRootsRepository;
