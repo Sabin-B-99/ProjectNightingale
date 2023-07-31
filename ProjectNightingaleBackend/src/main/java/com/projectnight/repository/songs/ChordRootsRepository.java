@@ -1,4 +1,4 @@
-package com.projectnight.repository;
+package com.projectnight.repository.songs;
 
 import com.projectnight.entity.ChordRoots;
 import org.springframework.data.jpa.repository.JpaRepository;

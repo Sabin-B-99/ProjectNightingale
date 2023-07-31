@@ -2,13 +2,13 @@ package com.projectnight.service;
 
 import com.projectnight.entity.Chords;
 import com.projectnight.entity.primarykeys.ChordsPK;
-import com.projectnight.repository.ChordsRepository;
+import com.projectnight.repository.songs.ChordsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 @Service

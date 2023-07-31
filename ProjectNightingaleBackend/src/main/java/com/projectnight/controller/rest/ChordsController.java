@@ -21,7 +21,6 @@ public class ChordsController {
 
     private final ChordRootsService chordRootsService;
     private final ChordsKeysService chordsKeysService;
-
     private final ChordsService chordsService;
 
 

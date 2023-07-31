@@ -1,4 +1,4 @@
-package com.projectnight.repository;
+package com.projectnight.repository.songs;
 
 import com.projectnight.entity.Chords;
 import com.projectnight.entity.primarykeys.ChordsPK;
