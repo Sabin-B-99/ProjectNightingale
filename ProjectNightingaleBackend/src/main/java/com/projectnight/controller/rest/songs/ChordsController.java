@@ -1,9 +1,9 @@
-package com.projectnight.controller.rest;
+package com.projectnight.controller.rest.songs;
 
-import com.projectnight.entity.ChordKeys;
-import com.projectnight.entity.ChordRoots;
-import com.projectnight.entity.Chords;
-import com.projectnight.entity.primarykeys.ChordsPK;
+import com.projectnight.entity.songs.ChordKeys;
+import com.projectnight.entity.songs.ChordRoots;
+import com.projectnight.entity.songs.Chords;
+import com.projectnight.entity.songs.primarykeys.ChordsPK;
 import com.projectnight.service.songs.ChordRootsService;
 import com.projectnight.service.songs.ChordsKeysService;
 import com.projectnight.service.songs.ChordsService;
