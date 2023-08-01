@@ -1,6 +1,6 @@
 package com.projectnight.service.songs;
 
-import com.projectnight.entity.ChordRoots;
+import com.projectnight.entity.songs.ChordRoots;
 
 import java.util.List;
 

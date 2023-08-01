@@ -1,4 +1,4 @@
-package com.projectnight.entity.primarykeys;
+package com.projectnight.entity.songs.primarykeys;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;

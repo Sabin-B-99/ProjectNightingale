@@ -1,7 +1,7 @@
 package com.projectnight.service.songs;
 
-import com.projectnight.entity.Chords;
-import com.projectnight.entity.primarykeys.ChordsPK;
+import com.projectnight.entity.songs.Chords;
+import com.projectnight.entity.songs.primarykeys.ChordsPK;
 
 import java.util.List;
 

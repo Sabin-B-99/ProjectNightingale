@@ -1,6 +1,6 @@
-package com.projectnight.entity;
+package com.projectnight.entity.songs;
 
-import com.projectnight.entity.primarykeys.ChordsPK;
+import com.projectnight.entity.songs.primarykeys.ChordsPK;
 
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;

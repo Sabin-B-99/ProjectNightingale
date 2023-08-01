@@ -1,6 +1,6 @@
 package com.projectnight.service.songs;
 
-import com.projectnight.entity.ChordRoots;
+import com.projectnight.entity.songs.ChordRoots;
 import com.projectnight.repository.songs.ChordRootsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,7 +21,7 @@ public class ChordRootsServiceImpl implements ChordRootsService{
 
 
     @Override
-    @Transactional
+    @Transactional("songsTransactionManager")
     public ChordRoots getChordRootById(int chordRootId) {
         return this.chordRootsRepository.findById(chordRootId)
                 .orElseThrow(
@@ -32,7 +32,7 @@ public class ChordRootsServiceImpl implements ChordRootsService{
     }
 
     @Override
-    @Transactional
+    @Transactional("songsTransactionManager")
     public List<ChordRoots> getAllChordRoots(){
         return this.chordRootsRepository.findAll();
     }

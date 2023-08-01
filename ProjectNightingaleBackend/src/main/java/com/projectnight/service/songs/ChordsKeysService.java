@@ -1,6 +1,6 @@
 package com.projectnight.service.songs;
 
-import com.projectnight.entity.ChordKeys;
+import com.projectnight.entity.songs.ChordKeys;
 
 import java.util.List;
 

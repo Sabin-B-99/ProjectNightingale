@@ -1,7 +1,7 @@
 package com.projectnight.service.songs;
 
-import com.projectnight.entity.Chords;
-import com.projectnight.entity.primarykeys.ChordsPK;
+import com.projectnight.entity.songs.Chords;
+import com.projectnight.entity.songs.primarykeys.ChordsPK;
 import com.projectnight.repository.songs.ChordsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,7 +22,7 @@ public class ChordsServiceImpl implements ChordsService{
     }
 
     @Override
-    @Transactional
+    @Transactional("songsTransactionManager")
     public Chords getChordById(ChordsPK id) {
         return this.chordsRepository.findById(id)
                 .orElseThrow(
@@ -33,7 +33,7 @@ public class ChordsServiceImpl implements ChordsService{
     }
 
     @Override
-    @Transactional
+    @Transactional("songsTransactionManager")
     public List<Chords> getAllChords() {
         return this.chordsRepository.findAll();
     }

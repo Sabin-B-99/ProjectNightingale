@@ -4,8 +4,8 @@ package com.projectnight.entity.practice;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "metronome")
-public class Metronome {
+@Table(name = "metronomes")
+public class Metronomes {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,7 +18,12 @@ public class Metronome {
     @Column(name = "beats_per_measure")
     private int beatsPerMeasure;
 
-    public Metronome() {
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "topic_id", referencedColumnName = "id")
+    private Topics topics;
+
+    public Metronomes() {
     }
 
     public int getId() {

@@ -63,7 +63,7 @@ public class PracticeDataSourceConfig {
         return localSessionFactoryBean;
     }
 
-    @Bean(name = "practiceRoutineTransactionManager")
+    @Bean(name = "practiceTransactionManager")
     @Primary
     public HibernateTransactionManager practiceRoutineTransactionManager(
             @Qualifier("practiceDataSource") DataSource dataSource,
