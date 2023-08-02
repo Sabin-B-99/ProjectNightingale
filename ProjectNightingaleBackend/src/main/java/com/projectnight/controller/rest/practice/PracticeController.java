@@ -68,12 +68,12 @@ public class PracticeController {
     }
 
 
-    @GetMapping("/strumPatterns/{strumPatternId}")
+    @GetMapping("/strum-patterns/{strumPatternId}")
     public StrumPatterns getStrumPatternById(@PathVariable int strumPatternId){
         return strumPatternService.getStrumPatternById(strumPatternId);
     }
 
-    @GetMapping("/strumPatterns")
+    @GetMapping("/strum-patterns")
     public List<StrumPatterns> getAllStrumPatterns(){
         return strumPatternService.getAllStrumPatterns();
     }

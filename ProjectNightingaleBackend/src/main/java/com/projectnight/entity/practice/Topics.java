@@ -40,6 +40,12 @@ public class Topics {
     )
     private List<Chords> chords;
 
+
+    //unidirectional by design
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "topic_id", referencedColumnName = "id")
+    private List<StrumPatterns> strumPatterns;
+
     @OneToOne(mappedBy = "topics", fetch = FetchType.LAZY)
     private Metronomes metronomes;
 
@@ -102,5 +108,13 @@ public class Topics {
 
     public void setMetronomes(Metronomes metronomes) {
         this.metronomes = metronomes;
+    }
+
+    public List<StrumPatterns> getStrumPatterns() {
+        return strumPatterns;
+    }
+
+    public void setStrumPatterns(List<StrumPatterns> strumPatterns) {
+        this.strumPatterns = strumPatterns;
     }
 }
