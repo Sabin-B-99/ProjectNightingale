@@ -1,6 +1,8 @@
 package com.projectnight.entity.practice;
 
 
+import com.projectnight.entity.songs.Chords;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -22,9 +24,25 @@ public class Topics {
     @Column(name = "time_duration")
     private long timeDuration;
 
+    //unidirectional by design
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "topic_id", referencedColumnName = "id")
     private List<ChordChanges> topicChordChanges;
+
+
+    //Unidirectional by design
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "topic_chords",
+            joinColumns = {@JoinColumn(name = "topic_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "chord_root_order", referencedColumnName = "chord_root_order"),
+                    @JoinColumn(name = "chord_key_id", referencedColumnName = "chord_key_id")}
+    )
+    private List<Chords> chords;
+
+    @OneToOne(mappedBy = "topics", fetch = FetchType.LAZY)
+    private Metronomes metronomes;
+
 
 
     public Topics() {
@@ -68,5 +86,21 @@ public class Topics {
 
     public void setTopicChordChanges(List<ChordChanges> topicChordChanges) {
         this.topicChordChanges = topicChordChanges;
+    }
+
+    public List<Chords> getChords() {
+        return chords;
+    }
+
+    public void setChords(List<Chords> chords) {
+        this.chords = chords;
+    }
+
+    public Metronomes getMetronomes() {
+        return metronomes;
+    }
+
+    public void setMetronomes(Metronomes metronomes) {
+        this.metronomes = metronomes;
     }
 }
