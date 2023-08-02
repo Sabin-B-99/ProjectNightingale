@@ -1,13 +1,7 @@
 package com.projectnight.controller.rest.practice;
 
-import com.projectnight.entity.practice.ChordChanges;
-import com.projectnight.entity.practice.Metronomes;
-import com.projectnight.entity.practice.StrumPatterns;
-import com.projectnight.entity.practice.Topics;
-import com.projectnight.service.practice.ChordChangesService;
-import com.projectnight.service.practice.MetronomeService;
-import com.projectnight.service.practice.StrumPatternService;
-import com.projectnight.service.practice.TopicsService;
+import com.projectnight.entity.practice.*;
+import com.projectnight.service.practice.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,18 +12,22 @@ import java.util.List;
 public class PracticeController {
 
     private final ChordChangesService chordChangesService;
-    private final MetronomeService metronomeService;
+    private final MetronomesService metronomesService;
 
     private final TopicsService topicsService;
     private final StrumPatternService strumPatternService;
 
+    private final RoutinesService routinesService;
+
     @Autowired
-    public PracticeController(ChordChangesService chordChangesService, MetronomeService metronomeService,
-                              TopicsService topicsService, StrumPatternService strumPatternService) {
+    public PracticeController(ChordChangesService chordChangesService, MetronomesService metronomesService,
+                              TopicsService topicsService, StrumPatternService strumPatternService,
+                              RoutinesService routinesService) {
         this.chordChangesService = chordChangesService;
-        this.metronomeService = metronomeService;
+        this.metronomesService = metronomesService;
         this.topicsService = topicsService;
         this.strumPatternService = strumPatternService;
+        this.routinesService = routinesService;
     }
 
     @GetMapping("/topics/{topicId}")
@@ -59,12 +57,12 @@ public class PracticeController {
 
     @GetMapping("/metronomes/{metronomeId}")
     public Metronomes getMetronomeById(@PathVariable int metronomeId){
-        return metronomeService.getMetronomeById(metronomeId);
+        return metronomesService.getMetronomeById(metronomeId);
     }
 
     @GetMapping("/metronomes")
     public List<Metronomes> getAllMetronomes(){
-        return metronomeService.getAllMetronomes();
+        return metronomesService.getAllMetronomes();
     }
 
 
@@ -76,5 +74,16 @@ public class PracticeController {
     @GetMapping("/strum-patterns")
     public List<StrumPatterns> getAllStrumPatterns(){
         return strumPatternService.getAllStrumPatterns();
+    }
+
+
+    @GetMapping("/routines/{routineId}")
+    public Routines getRoutineById(@PathVariable int routineId){
+        return routinesService.getRoutineById(routineId);
+    }
+
+    @GetMapping("/routines")
+    public List<Routines> getAllRoutines(){
+        return routinesService.getAllRoutines();
     }
 }

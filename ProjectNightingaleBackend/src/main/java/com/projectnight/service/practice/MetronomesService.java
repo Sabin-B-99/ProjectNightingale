@@ -4,7 +4,7 @@ import com.projectnight.entity.practice.Metronomes;
 
 import java.util.List;
 
-public interface MetronomeService {
+public interface MetronomesService {
     Metronomes getMetronomeById(int id);
     List<Metronomes> getAllMetronomes();
 }
