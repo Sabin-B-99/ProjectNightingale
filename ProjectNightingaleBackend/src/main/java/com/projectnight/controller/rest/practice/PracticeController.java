@@ -1,11 +1,12 @@
 package com.projectnight.controller.rest.practice;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.projectnight.entity.practice.ChordChanges;
 import com.projectnight.entity.practice.Metronomes;
+import com.projectnight.entity.practice.StrumPatterns;
 import com.projectnight.entity.practice.Topics;
 import com.projectnight.service.practice.ChordChangesService;
 import com.projectnight.service.practice.MetronomeService;
+import com.projectnight.service.practice.StrumPatternService;
 import com.projectnight.service.practice.TopicsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -20,13 +21,15 @@ public class PracticeController {
     private final MetronomeService metronomeService;
 
     private final TopicsService topicsService;
+    private final StrumPatternService strumPatternService;
 
     @Autowired
     public PracticeController(ChordChangesService chordChangesService, MetronomeService metronomeService,
-                              TopicsService topicsService) {
+                              TopicsService topicsService, StrumPatternService strumPatternService) {
         this.chordChangesService = chordChangesService;
         this.metronomeService = metronomeService;
         this.topicsService = topicsService;
+        this.strumPatternService = strumPatternService;
     }
 
     @GetMapping("/topics/{topicId}")
@@ -62,5 +65,16 @@ public class PracticeController {
     @GetMapping("/metronomes")
     public List<Metronomes> getAllMetronomes(){
         return metronomeService.getAllMetronomes();
+    }
+
+
+    @GetMapping("/strumPatterns/{strumPatternId}")
+    public StrumPatterns getStrumPatternById(@PathVariable int strumPatternId){
+        return strumPatternService.getStrumPatternById(strumPatternId);
+    }
+
+    @GetMapping("/strumPatterns")
+    public List<StrumPatterns> getAllStrumPatterns(){
+        return strumPatternService.getAllStrumPatterns();
     }
 }
