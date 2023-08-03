@@ -14,6 +14,9 @@ import java.util.List;
 @Service
 public class ChordsServiceImpl implements ChordsService{
 
+    private static final String CHORD_IMAGE_FILE_EXTENSION = ".png";
+
+    private static final String CHORD_IMAGE_FILE_NAME_DEFAULT =  "Empty diagram" + CHORD_IMAGE_FILE_EXTENSION;
     private final ChordsRepository chordsRepository;
 
     @Autowired
@@ -36,5 +39,17 @@ public class ChordsServiceImpl implements ChordsService{
     @Transactional("songsTransactionManager")
     public List<Chords> getAllChords() {
         return this.chordsRepository.findAll();
+    }
+
+    @Override
+    @Transactional("songsTransactionManager")
+    public String getChordImagePathById(ChordsPK id) {
+        String fileName = chordsRepository.findChordImageByChordOrderAndKey(id);
+        //TODO: remove this absolute path below
+        String path = "/home/sabinbadal/Development/ProjectNightingale/ProjectNightingaleBackend/src/main/resources/static/images/chords-images/";
+        if(fileName == null){
+            return path + CHORD_IMAGE_FILE_NAME_DEFAULT;
+        }
+        return path + fileName + CHORD_IMAGE_FILE_EXTENSION;
     }
 }

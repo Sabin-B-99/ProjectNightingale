@@ -8,14 +8,23 @@ import com.projectnight.service.songs.ChordRootsService;
 import com.projectnight.service.songs.ChordsKeysService;
 import com.projectnight.service.songs.ChordsService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
+import java.io.IOException;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 @RestController
+@CrossOrigin("http://localhost:4200/")
 @RequestMapping("/api/chords")
 public class ChordsController {
 
@@ -39,6 +48,22 @@ public class ChordsController {
         id.setChordKeyId(chordKeyId);
         return this.chordsService.getChordById(id);
     }
+
+    @GetMapping(value = "/{chordRootOrder}/{chordKeyId}/image",
+            produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+    public @ResponseBody Resource getChordImagePath(@PathVariable int chordRootOrder, @PathVariable int chordKeyId){
+        ChordsPK id = new ChordsPK();
+        id.setChordRootOrder(chordRootOrder);
+        id.setChordKeyId(chordKeyId);
+        try {
+            Path imagePath = Paths.get(chordsService.getChordImagePathById(id));
+            return new ByteArrayResource(Files.readAllBytes(imagePath));
+        }catch (Exception e ){
+            e.printStackTrace();
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 
     @GetMapping
     public List<Chords> getAllChords(){

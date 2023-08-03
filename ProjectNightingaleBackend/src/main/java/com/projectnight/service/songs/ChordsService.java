@@ -9,4 +9,6 @@ public interface ChordsService {
 
     Chords getChordById(ChordsPK id);
     List<Chords> getAllChords();
+
+    String getChordImagePathById(ChordsPK id);
 }
