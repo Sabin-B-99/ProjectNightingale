@@ -3,6 +3,19 @@ interface IMetronomeValues {
   beatsPerMeasure: number;
 }
 
+interface IChordRoot{
+  id: number;
+  rootOrder: number;
+  rootName: string;
+}
+
+interface IChordKey{
+  id: number;
+  keyName: string;
+}
+
 export {
-  IMetronomeValues
+  IMetronomeValues,
+  IChordRoot,
+  IChordKey
 }

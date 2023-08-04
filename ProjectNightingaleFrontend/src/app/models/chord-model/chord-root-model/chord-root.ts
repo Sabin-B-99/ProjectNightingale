@@ -1,4 +1,4 @@
 export class ChordRoot{
-  constructor(public rootName: string) {
+  constructor(public rootOrder: number, public rootName: string) {
   }
 }

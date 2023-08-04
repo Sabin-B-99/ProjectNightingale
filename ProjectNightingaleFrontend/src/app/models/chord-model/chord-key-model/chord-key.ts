@@ -1,4 +1,4 @@
 export class ChordKey{
-  constructor(public keyName: string) {
+  constructor(public id: number, public keyName: string) {
   }
 }

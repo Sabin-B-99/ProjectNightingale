@@ -28,6 +28,7 @@ import {NgOptimizedImage} from "@angular/common";
 import { MetronomeComponent } from './metronome/metronome.component';
 import { MetronomeMenuComponent } from './routines/topic-creator/custom-form-controls/metronome-menu/metronome-menu.component';
 import { DurationInputComponent } from './routines/topic-creator/custom-form-controls/duration-input/duration-input.component';
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -61,7 +62,8 @@ import { DurationInputComponent } from './routines/topic-creator/custom-form-con
         AppRoutingModule,
         ReactiveFormsModule,
         FormsModule,
-        NgOptimizedImage
+        HttpClientModule,
+        NgOptimizedImage,
     ],
   providers: [],
   bootstrap: [AppComponent]
