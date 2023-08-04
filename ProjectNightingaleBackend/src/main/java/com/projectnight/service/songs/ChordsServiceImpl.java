@@ -16,7 +16,7 @@ public class ChordsServiceImpl implements ChordsService{
 
     private static final String CHORD_IMAGE_FILE_EXTENSION = ".png";
 
-    private static final String CHORD_IMAGE_FILE_NAME_DEFAULT =  "Empty diagram" + CHORD_IMAGE_FILE_EXTENSION;
+    private static final String CHORD_IMAGE_FILE_NAME_DEFAULT =  "Empty diagram";
     private final ChordsRepository chordsRepository;
 
     @Autowired
@@ -45,10 +45,9 @@ public class ChordsServiceImpl implements ChordsService{
     @Transactional("songsTransactionManager")
     public String getChordImagePathById(ChordsPK id) {
         String fileName = chordsRepository.findChordImageByChordOrderAndKey(id);
-        //TODO: remove this absolute path below
-        String path = "/home/sabinbadal/Development/ProjectNightingale/ProjectNightingaleBackend/src/main/resources/static/images/chords-images/";
+        String path = getClass().getResource("/static/images/chords-images").getPath();
         if(fileName == null){
-            return path + CHORD_IMAGE_FILE_NAME_DEFAULT;
+            return path + CHORD_IMAGE_FILE_NAME_DEFAULT + CHORD_IMAGE_FILE_EXTENSION;
         }
         return path + fileName + CHORD_IMAGE_FILE_EXTENSION;
     }

@@ -58,7 +58,7 @@ public class ChordsController {
         try {
             Path imagePath = Paths.get(chordsService.getChordImagePathById(id));
             return new ByteArrayResource(Files.readAllBytes(imagePath));
-        }catch (Exception e ){
+        }catch (IOException e ){
             e.printStackTrace();
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
