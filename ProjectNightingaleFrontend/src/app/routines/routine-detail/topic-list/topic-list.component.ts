@@ -6,6 +6,6 @@ import {Topic} from "../../../models/topic-model/topic";
   templateUrl: './topic-list.component.html',
   styleUrls: ['./topic-list.component.css']
 })
-export class TopicListComponent {
-  @Input() topics: Topic[];
+export class TopicListComponent{
+  @Input()topics: Topic[];
 }

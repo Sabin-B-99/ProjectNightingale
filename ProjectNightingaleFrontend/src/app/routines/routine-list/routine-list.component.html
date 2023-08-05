@@ -9,7 +9,7 @@
       </div>
       <div class="container mt-sm-2" *ngFor="let routine of routines; let id = index">
         <ul class="list-group col-md-7">
-          <li class="list-group-item" (click)="onRoutineSelected(id)"><a>{{routine.routineTitle}}</a></li>
+          <li class="list-group-item" (click)="onRoutineSelected(routine)"><a>{{routine.routineTitle}}</a></li>
         </ul>
       </div>
     </div>

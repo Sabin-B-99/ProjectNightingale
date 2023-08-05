@@ -1,7 +1,9 @@
 import {Topic} from "../topic-model/topic";
 
 export class Routine{
-  constructor(public routineTitle: String,
+  constructor(public routineId: number,
+              public routineTitle: String,
+              public routineDuration: number,
               private topics?: Topic[]) {
   }
   public getTopics(): Topic[]{
@@ -9,5 +11,9 @@ export class Routine{
       return [];
     }
     return this.topics.slice();
+  }
+
+  public setTopics(topics: Topic[]):void{
+    this.topics = topics;
   }
 }

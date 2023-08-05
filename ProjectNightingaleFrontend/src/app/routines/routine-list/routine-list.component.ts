@@ -1,7 +1,8 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Routine} from "../../models/routine-model/routine";
 import {RoutineService} from "../../services/routine.service";
-import {ActivatedRoute, Params, Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-routine-list',
@@ -12,16 +13,22 @@ export class RoutineListComponent implements OnInit{
 
 
   public routines: Routine[];
+  private routinesListSubscription: Subscription;
+
   constructor(private routineService: RoutineService,
               private route: ActivatedRoute,
               private router: Router) {
   }
   ngOnInit(): void {
-    this.routines = this.routineService.getRoutines();
+   this.routinesListSubscription = this.routineService.loadUserRoutines()
+      .subscribe( (loadedRoutines: Routine[]) =>{
+        this.routines = loadedRoutines;
+      });
   }
 
-  onRoutineSelected(id: number):void {
-    this.router.navigate([id, 'topics'], {relativeTo: this.route});
+  onRoutineSelected(selectedRoutine: Routine):void {
+    this.routineService.setSelectedRoutine(selectedRoutine);
+    this.router.navigate([selectedRoutine.routineId, 'topics'], {relativeTo: this.route});
   }
 
   onAddRoutineButtonClicked(): void{

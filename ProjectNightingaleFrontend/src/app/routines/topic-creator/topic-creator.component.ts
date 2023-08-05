@@ -19,7 +19,7 @@ export class TopicCreatorComponent{
 
   private static readonly TOPIC_DURATION_DEFAULT_VALUE: string = "00:03:00";
 
-  topicCreated: Topic = new Topic('');
+  topicCreated: Topic = new Topic(0, '', 0);
 
   @Input()
   topicForm: FormGroup;

@@ -8,10 +8,11 @@ export class Topic{
   public selectedChords: Chord[] = [];
   public chordChanges: ChordChange[] = [];
   public metronomeValues: IMetronomeValues;
-  constructor(public topicTitle: string,
-              public topicSongTitle?: string,
-              public topicStrumPattern?: string,
-              public topicTime?: string) {
+  public topicStrumPatterns: string[];
+  public topicSongTitle: string;
+  constructor(public topicId: number,
+              public topicTitle: string,
+              public topicTime: number) {
   }
 
   public toString(): string{

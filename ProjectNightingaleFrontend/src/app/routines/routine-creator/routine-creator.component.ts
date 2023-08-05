@@ -21,7 +21,8 @@ export class RoutineCreatorComponent implements OnInit{
   onRoutineSubmitted() {
      const routineTopics: Topic[] = this.routineCreationForm.value.topics;
      const routineTitle: string = this.routineCreationForm.value.routineTitle;
-     this.routineCreatorService.routineCreated = new Routine(routineTitle, routineTopics)
+     //TODO: CHANGE THE HARDCODED id and duration Later 1 and -1 in line below.
+     this.routineCreatorService.routineCreated = new Routine(1, routineTitle, -1, routineTopics);
      console.log(this.routineCreationForm.value);
      this.router.navigate(['/routines']);
   }

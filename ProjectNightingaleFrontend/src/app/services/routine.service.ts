@@ -1,5 +1,8 @@
-import {EventEmitter, Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Routine} from "../models/routine-model/routine";
+import {HttpClient} from "@angular/common/http";
+import {IRoutine, ITopic} from "../types/custom-interfaces";
+import {map, Observable, Subject} from "rxjs";
 import {Topic} from "../models/topic-model/topic";
 
 @Injectable({
@@ -7,30 +10,57 @@ import {Topic} from "../models/topic-model/topic";
 })
 export class RoutineService {
 
-  private routines: Routine[] = [
-    new Routine("Can't help falling in love with you. Chord Progressions",
-      [
-        new Topic('A->B'),
-        new Topic('B->C')
-      ]),
-    new Routine("Sitting in the dock of the bay. Strum Patterns",
-      [
-        new  Topic(' UDDU DU'),
-        new Topic('DXU DXUU DU')
-      ]),
-    new Routine("About You. Chord Perfect",
-      [
-        new Topic('A'),
-        new Topic('B')
-      ])
-  ];
-  constructor() { }
-
-  public getRoutines(){
-    return this.routines.slice();
+  private selectedRoutine: Routine;
+  selectedRoutineChanged: Subject<Routine> = new Subject<Routine>();
+  constructor(private http: HttpClient) {
   }
 
-  getRoutineByID(id: number): Routine {
-    return this.routines[id];
+  public loadUserRoutines(): Observable<Routine[]>{
+    return  this.http.get<IRoutine[]>('http://localhost:8080/ProjectNightingale/api/practice/routines/')
+      .pipe(map( (routines: IRoutine[]) => {
+        const loadedRoutines :Routine[] = [];
+        for (let routine of routines){
+          loadedRoutines.push(new Routine(routine.id,routine.title,routine.duration));
+        }
+        return loadedRoutines;
+      }));
   }
+
+  private loadSelectedRoutineTopicsByRoutineId(routineId: number){
+    this.http.get<ITopic[]>(`http://localhost:8080/ProjectNightingale/api/practice/routines/${routineId}/topics`)
+      .pipe(map( (topics: ITopic[]) =>{
+        const loadedTopics: Topic[] = [];
+        for(let topic of topics){
+          const loadedTopic: Topic = new Topic(topic.id, topic.title, topic.duration);
+          loadedTopic.topicSongTitle = topic.songTitle;
+          loadedTopic.metronomeValues = topic.metronome;
+          loadedTopics.push(loadedTopic);
+        }
+        return loadedTopics;
+      })).subscribe(
+      (topics: Topic[]) =>{
+        this.selectedRoutine.setTopics(topics);
+        this.selectedRoutineChanged.next(this.selectedRoutine);
+      }
+    )
+  }
+
+  public loadRoutineById(routineId: number) {
+    this.http.get<IRoutine>(`http://localhost:8080/ProjectNightingale/api/practice/routines/${routineId}`)
+      .subscribe((routine: IRoutine) =>{
+        if(!this.selectedRoutine){
+          this.selectedRoutine = new Routine(routine.id, routine.title, routine.duration);
+        }
+        this.loadSelectedRoutineTopicsByRoutineId(routine.id);
+      })
+  }
+  setSelectedRoutine(selectedRoutine: Routine) {
+    this.selectedRoutine = selectedRoutine;
+  }
+
+  getSelectedRoutine(){
+    return this.selectedRoutine;
+  }
+
+
 }

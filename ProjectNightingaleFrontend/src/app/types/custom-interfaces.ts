@@ -14,8 +14,24 @@ interface IChordKey{
   keyName: string;
 }
 
+interface IRoutine{
+  id: number;
+  title: string;
+  duration: number;
+}
+
+interface ITopic{
+  id: number;
+  title: string;
+  duration: number;
+  songTitle: string;
+  metronome: IMetronomeValues;
+}
+
 export {
   IMetronomeValues,
   IChordRoot,
-  IChordKey
+  IChordKey,
+  IRoutine,
+  ITopic
 }
