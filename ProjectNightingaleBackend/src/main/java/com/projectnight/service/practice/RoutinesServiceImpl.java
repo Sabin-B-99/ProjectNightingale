@@ -1,6 +1,7 @@
 package com.projectnight.service.practice;
 
 import com.projectnight.entity.practice.Routines;
+import com.projectnight.entity.practice.Topics;
 import com.projectnight.repository.practice.RoutinesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -35,5 +36,11 @@ public class RoutinesServiceImpl implements RoutinesService{
     @Transactional
     public List<Routines> getAllRoutines() {
         return this.routinesRepository.findAll();
+    }
+
+    @Override
+    @Transactional
+    public List<Topics> getRoutineTopicsByRoutineId(int routineId) {
+        return this.routinesRepository.getRoutineTopicsByRoutineId(routineId);
     }
 }

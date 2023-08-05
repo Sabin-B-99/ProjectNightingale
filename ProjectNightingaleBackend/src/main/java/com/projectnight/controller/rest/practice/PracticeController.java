@@ -82,9 +82,13 @@ public class PracticeController {
     public Routines getRoutineById(@PathVariable int routineId){
         return routinesService.getRoutineById(routineId);
     }
-
     @GetMapping("/routines")
     public List<Routines> getAllRoutines(){
         return routinesService.getAllRoutines();
+    }
+
+    @GetMapping("/routines/{routineId}/topics")
+    public List<Topics> getRoutineTopicsByRoutineId(@PathVariable int routineId){
+        return routinesService.getRoutineTopicsByRoutineId(routineId);
     }
 }
