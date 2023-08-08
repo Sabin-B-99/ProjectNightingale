@@ -3,7 +3,6 @@
 
     <ul class="list-group">
       <li class="list-group-item">
-
         <div class="container row">
           <input  class="col-sm-auto"  type="text"
                     formControlName = "topicTitle"
@@ -22,12 +21,15 @@
           <button type="button" class="col-sm-auto">Save</button>
         </div>
 
-        <div class="container row">
-          <p>Chords:</p>
-          <div class="container row">
-            <span *ngFor="let chordSelected of topicCreated.selectedChords"
-                  class="border col-sm-auto">
-              {{chordSelected.chordRoot.rootName | musicNote}}{{chordSelected.chordKey.keyName}}
+        <div class="container row mt-sm-1">
+          <div class="container row"
+               *ngIf="topicCreated.selectedChords.length > 0">
+            <p>Chords:</p>
+            <span class="container row saved-chords-container">
+              <div *ngFor="let chordSelected of topicCreated.selectedChords"
+                   class="border col-sm-auto d-flex justify-content-start h-50 d-inline-block">
+                <p>{{chordSelected.chordRoot.rootName | musicNote}}{{chordSelected.chordKey.keyName}}</p>
+              </div>
             </span>
           </div>
           <app-topic-chords-menu formControlName="topicChords"
@@ -40,15 +42,19 @@
                   class="col-sm-auto">Add Chords</button>
         </div>
 
-        <div class="container row">
-          <p>Changes:</p>
-          <div class="container row">
-            <span *ngFor="let chordChange of topicCreated.chordChanges"
-                  class="border col-sm-auto">
-            <p>
-              {{chordChange.getChordFromRootName() | musicNote}}{{chordChange.getChordFromKeyName()}}
-              -> {{chordChange.getChordToRootName() | musicNote}}{{chordChange.getChordToKeyName()}}
-            </p>
+
+
+        <div class="container row mt-sm-1">
+          <div class="container row" *ngIf="topicCreated.chordChanges.length > 0">
+            <p>Changes:</p>
+            <span class="container row saved-chord-changes-container">
+              <div *ngFor="let chordChange of topicCreated.chordChanges"
+                   class="border col-sm-auto d-flex justify-content-start h-50 d-inline-block">
+                <p>
+                  {{chordChange.getChordFromRootName() | musicNote}}{{chordChange.getChordFromKeyName()}}
+                  -> {{chordChange.getChordToRootName() | musicNote}}{{chordChange.getChordToKeyName()}}
+                </p>
+              </div>
             </span>
           </div>
           <app-topic-chord-changes-menu formControlName="topicChordChanges"

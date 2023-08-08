@@ -1,0 +1,13 @@
+.saved-chord-changes-container{
+  overflow-x: scroll;
+  overflow-y: scroll;
+  height: 4rem;
+  width: 28rem;
+}
+
+.saved-chords-container{
+  overflow-x: scroll;
+  overflow-y: scroll;
+  height: 4rem;
+  width: 28rem;
+}

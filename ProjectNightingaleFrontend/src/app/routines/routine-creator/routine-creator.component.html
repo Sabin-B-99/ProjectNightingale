@@ -1,5 +1,7 @@
-<div class="mt-sm-5">
-  <form class="row-cols-md-auto" [formGroup]="routineCreationForm" (ngSubmit)="onRoutineSubmitted()">
+<div class="mt-sm-1" >
+  <form class="row-cols-md-auto"
+        [formGroup]="routineCreationForm"
+        (ngSubmit)="onRoutineSubmitted()">
     <ul class="list-group container">
       <li class="list-group-item">
         <a>
@@ -8,6 +10,8 @@
                  placeholder="Routine Title">
         </a>
       </li>
+    </ul>
+    <ul class="list-group container topic-form-container" #scrollTopicFormToBottom>
       <li class="list-group-item"
         *ngFor="let topicForm of topicFormArray.controls; let i = index">
         <a>
@@ -19,6 +23,8 @@
           </app-topic-creator>
         </a>
       </li>
+    </ul>
+    <ul class="list-group container">
       <li class="list-group-item">
         <a>
           <button type="submit" class="me-sm-1">Save</button>

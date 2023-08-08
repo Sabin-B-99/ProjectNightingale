@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewChecked, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
 import {TopicCreatorComponent} from "../topic-creator/topic-creator.component";
 import {RoutineCreatorService} from "../../services/routine-creator.service";
@@ -11,11 +11,32 @@ import {Router} from "@angular/router";
   templateUrl: './routine-creator.component.html',
   styleUrls: ['./routine-creator.component.css']
 })
-export class RoutineCreatorComponent implements OnInit{
+export class RoutineCreatorComponent implements OnInit, AfterViewChecked{
+
+  @ViewChild('scrollTopicFormToBottom') topicFormScroller: ElementRef;
 
   routineCreationForm: FormGroup;
 
   constructor(private routineCreatorService: RoutineCreatorService, private router: Router) {
+  }
+
+  ngOnInit(): void {
+    this.routineCreationForm = new FormGroup({
+      'routineTitle': new FormControl(null, [Validators.required]),
+      'topics': new FormArray([
+        TopicCreatorComponent.addTopicForm()
+      ])
+    });
+  }
+  ngAfterViewChecked() {
+    this.scrollTopicFormToBottom();
+  }
+
+  scrollTopicFormToBottom(){
+    try {
+      this.topicFormScroller.nativeElement.scrollTop = this.topicFormScroller.nativeElement.scrollHeight;
+    }catch (err){
+    }
   }
 
   onRoutineSubmitted() {
@@ -30,15 +51,6 @@ export class RoutineCreatorComponent implements OnInit{
 
   onAddTopicClicked(){
     this.topicFormArray?.push(TopicCreatorComponent.addTopicForm());
-  }
-
-  ngOnInit(): void {
-     this.routineCreationForm = new FormGroup({
-       'routineTitle': new FormControl(null, [Validators.required]),
-       'topics': new FormArray([
-         TopicCreatorComponent.addTopicForm()
-       ])
-     });
   }
 
   get topicFormArray(): FormArray<FormGroup>{
