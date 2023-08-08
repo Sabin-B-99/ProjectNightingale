@@ -1,6 +1,4 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {ChordService} from "../../services/chord.service";
-import {Subscription} from "rxjs";
 import {Chord} from "../../models/chord-model/chord";
 
 @Component({
@@ -12,6 +10,12 @@ export class ChordItemComponent implements OnInit, OnDestroy{
 
   @Input()
   selectedChord: Chord | undefined;
+
+  @Input()
+  imageWidth: number = 100;
+
+  @Input()
+  imageHeight: number = 100;
 
   constructor() {
   }

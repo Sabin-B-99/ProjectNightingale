@@ -1,10 +1,10 @@
-<div class="mt-sm-5 container">
+<div class="container border d-flex align-items-start">
   <div class="row">
-    <div class="col-sm">
+    <div class="col col-md-8">
       <app-chord-list (selectedChordChangedEvent)="setSelectedChord($event)"></app-chord-list>
     </div>
-    <div class="col-auto">
-      <app-chord-item [selectedChord]="selectedChord"></app-chord-item>
+    <div class="col col-md-auto">
+      <app-chord-item [selectedChord]="selectedChord" [imageWidth]="200" [imageHeight]="100"></app-chord-item>
     </div>
   </div>
 </div>

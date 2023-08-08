@@ -1,26 +1,39 @@
-<div class="container">
-  <p class="row col-8">Select Root Note:</p>
-  <div class="row col-8">
-    <button class="col col-sm-2 border rounded-pill align-items-start m-sm-1"
-            type="button"
-            (click)="setSelectedChordRootNote(chordRootNote)"
-            *ngFor="let chordRootNote of chordRootNotes; let i = index"
-            [ngStyle]="{'background-color': selectedRootNoteIndex == i ? 'skyblue': ''}"
-            [disabled]="disableAllChordsButton">
-      {{chordRootNote.rootName | musicNote}}
-    </button>
+<div class="d-flex justify-content-start">
+
+  <div class="container col-md-6">
+    <p>Select Root Note:</p>
+    <div class="row row-cols-5">
+      <div class="col col-sm-3"
+           *ngFor="let chordRootNote of chordRootNotes; let i = index">
+        <button class="col col-sm-2 border rounded-pill align-items-start m-sm-1 w-100 h-75"
+                type="button"
+                (click)="setSelectedChordRootNote(chordRootNote)"
+                [ngStyle]="{'background-color': selectedRootNoteIndex == i ? 'skyblue': ''}"
+                [disabled]="disableAllChordsButton">
+          {{chordRootNote.rootName | musicNote}}
+        </button>
+      </div>
+    </div>
   </div>
-  <p class="row col-8">Select Key:</p>
-  <div class="row col-8">
-    <button class="col col-sm-2 border rounded-pill align-items-start m-sm-1"
-            type="button"
-            (click)="setSelectedChordKey(chordKey)"
-            *ngFor="let chordKey of chordKeys; let i = index"
-            [ngStyle]="{'background-color': selectedKeyNoteIndex == i ? 'skyblue': ''}"
-            [disabled]="disableAllChordsButton">
-      {{chordKey.keyName}}
-    </button>
+
+  <hr>
+
+  <div class="container col-md-6">
+    <p>Select Key:</p>
+    <div class="row row-cols-5">
+      <div class="col col-sm-3"
+           *ngFor="let chordKey of chordKeys; let i = index">
+        <button class="border rounded-pill align-items-start m-sm-1 w-100 h-75"
+                type="button"
+                (click)="setSelectedChordKey(chordKey)"
+                [ngStyle]="{'background-color': selectedKeyNoteIndex == i ? 'skyblue': ''}"
+                [disabled]="disableAllChordsButton">
+          {{chordKey.keyName}}
+        </button>
+      </div>
+    </div>
   </div>
+
 </div>
 
 

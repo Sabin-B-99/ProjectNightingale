@@ -3,39 +3,43 @@
 
     <div class="container">
       <div class="row">
-        <div class="col col-md">
+        <div class="col col-md-6">
           <p>From: </p>
           <app-chord-list (selectedChordChangedEvent)="addChordChange($event)"
                           [disableAllChordsButton]="disableFromChords"></app-chord-list>
         </div>
-        <div class="col col-md">
+        <div class="col col-md-6">
           <p>To: </p>
           <app-chord-list (selectedChordChangedEvent)="addChordChange($event)"
                           [disableAllChordsButton]="disableToChords"></app-chord-list>
         </div>
-        <app-chord-item class="col mt-sm-0 col-sm-2 g-0" [selectedChord]="latestSelectedChord">
-        </app-chord-item>
       </div>
     </div>
 
     <hr>
 
-    <div class="container row">
-      <p *ngIf="chordChanges" class="mt-sm-1">Selected Chord Changes:</p>
-      <div class="chord-changes-container row row-cols-3" #scrollToBottom [scrollTop]="scrollToBottom.scrollHeight">
-        <div *ngFor="let chordChange of chordChanges; let i = index"
-             class="col col-md-5 my-sm-1">
-          <div class="border selected-chord-change-container">
-            <a (click)="setLatestChordSelected(chordChange.getFromChord())">
-              {{chordChange.getChordFromRootName() | musicNote}}{{chordChange.getChordFromKeyName()}}
-            </a>
-            ->
-            <a (click)="setLatestChordSelected(chordChange.getToChord())">
-              {{chordChange.getChordToRootName() | musicNote}}{{chordChange.getChordToKeyName()}}
-            </a>
-            <button class="btn btn-outline-danger remove-selected-chord-change"
-                    (click)="removeSelectedChordChange(i)">X</button>
+    <div class="container">
+      <div class="row row-cols-md-2">
+        <div class="chord-changes-container row row-cols-3 col col-md-auto" #scrollToBottom [scrollTop]="scrollToBottom.scrollHeight">
+          <p class="w-100">Selected Chord Changes:</p>
+          <div *ngFor="let chordChange of chordChanges; let i = index"
+               class="col col-md-5">
+            <div class="border selected-chord-change-container">
+              <a (click)="setLatestChordSelected(chordChange.getFromChord())">
+                {{chordChange.getChordFromRootName() | musicNote}}{{chordChange.getChordFromKeyName()}}
+              </a>
+              ->
+              <a (click)="setLatestChordSelected(chordChange.getToChord())">
+                {{chordChange.getChordToRootName() | musicNote}}{{chordChange.getChordToKeyName()}}
+              </a>
+              <button class="btn btn-outline-danger remove-selected-chord-change"
+                      (click)="removeSelectedChordChange(i)">X</button>
+            </div>
           </div>
+        </div>
+        <div class="col col-md-auto">
+          <app-chord-item [imageWidth]="75" [imageHeight]="75" [selectedChord]="latestSelectedChord">
+          </app-chord-item>
         </div>
       </div>
     </div>
