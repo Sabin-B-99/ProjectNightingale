@@ -1,6 +1,7 @@
-import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Chord} from "../../../../models/chord-model/chord";
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
+import {IChords} from "../../../../types/custom-interfaces";
 
 @Component({
   selector: 'app-topic-chords-menu',
@@ -25,11 +26,12 @@ export class TopicChordsMenuComponent implements ControlValueAccessor, OnInit{
   latestChordSelected: Chord | undefined;
 
   selectedChords: Chord[] = [];
+  selectedChordsOrderAndKeyValues: IChords[] = [];
 
   @Input()
   selectedChordsForEdit: Chord[];
 
-  onChange: (selectedChords: Chord[]) => void = (selectedChords: Chord[]): void => {};
+  onChange: (selectedChordsOrderAndKeyValues: IChords[]) => void = (selectedChordsOrderAndKeyValues: IChords[]): void => {};
   onTouched: () => void = ():void =>{};
   isDisabled: boolean = false;
   isTouched: boolean = false;
@@ -40,15 +42,32 @@ export class TopicChordsMenuComponent implements ControlValueAccessor, OnInit{
   ngOnInit():void {
     if(this.selectedChordsForEdit){
       this.selectedChords.push(...this.selectedChordsForEdit);
-      this.onChange(this.selectedChords);
+      this.onChange(this.buildSelectedChordsOrderAndKeysForEdit(this.selectedChords));
     }
+  }
+
+  buildSelectedChordsOrderAndKeysForEdit(selectedChordsForEdit: Chord[]): IChords[]{
+    let selectedChordsOrderAndKeysValues: IChords[] = [];
+    for (let chord of selectedChordsForEdit){
+      selectedChordsOrderAndKeysValues.push(
+        {
+          root_order: chord.chordRoot.rootOrder,
+          key_id: chord.chordKey.id
+        }
+      )
+    }
+    return selectedChordsOrderAndKeysValues;
   }
 
   addChord(selectedChord: Chord):void{
     this.markAsTouched();
     if(!this.isDisabled){
+      let selectedChordOrderAndKey: IChords = {root_order: selectedChord.chordRoot.rootOrder,
+        key_id: selectedChord.chordKey.id
+      };
+      this.selectedChordsOrderAndKeyValues.push(selectedChordOrderAndKey);
       this.selectedChords.push(selectedChord);
-      this.onChange(this.selectedChords);
+      this.onChange(this.selectedChordsOrderAndKeyValues);
       this.setLatestChordSelected(selectedChord);
     }
   }
@@ -56,8 +75,9 @@ export class TopicChordsMenuComponent implements ControlValueAccessor, OnInit{
   removeSelectedChord(indexToRemove: number) {
     this.markAsTouched();
     if(!this.isDisabled){
+      this.selectedChordsOrderAndKeyValues.splice(indexToRemove, 1);
       this.selectedChords.splice(indexToRemove, 1);
-      this.onChange(this.selectedChords);
+      this.onChange(this.selectedChordsOrderAndKeyValues);
     }
   }
 
@@ -74,8 +94,8 @@ export class TopicChordsMenuComponent implements ControlValueAccessor, OnInit{
   }
 
 
-  writeValue(selectedChords: Chord[]): void {
-    this.selectedChords = selectedChords;
+  writeValue(selectedChordsOrderAndKeysValues: IChords[]): void {
+    this.selectedChordsOrderAndKeyValues = selectedChordsOrderAndKeysValues;
   }
   registerOnChange(fn: any): void {
     this.onChange = fn;
