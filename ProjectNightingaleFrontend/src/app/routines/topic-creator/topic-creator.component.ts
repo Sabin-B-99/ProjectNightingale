@@ -5,10 +5,9 @@ import {
   Output,
 } from '@angular/core';
 import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
-import {Topic} from "../../models/topic-model/topic";
 import {Chord} from "../../models/chord-model/chord";
 import {ChordChange} from "../../models/chord-change-model/chord-change";
-import {IMetronomeValues} from "../../types/custom-interfaces";
+import {IChordChanges, IChords, IMetronomeValues, ITopicForm} from "../../types/custom-interfaces";
 
 @Component({
   selector: 'app-topic-creator',
@@ -19,10 +18,13 @@ export class TopicCreatorComponent{
 
   private static readonly TOPIC_DURATION_DEFAULT_VALUE: string = "00:03:00";
 
-  topicCreated: Topic = new Topic(0, '', 0);
+
+  selectedChordChanges: ChordChange[] = [];
+  selectedChords: Chord[] = [];
+  selectedMetronomeValues: IMetronomeValues = {bpm: 100, beatsPerMeasure: 4};
 
   @Input()
-  topicForm: FormGroup;
+  topicForm: FormGroup<ITopicForm>;
 
   @Input()
   indexInCurrentRoutine: number;
@@ -42,27 +44,26 @@ export class TopicCreatorComponent{
   constructor() {
   }
 
-  static addTopicForm(): FormGroup{
-    return new FormGroup({
-      'topicTitle': new FormControl(null, [Validators.required]),
-      'topicSongTitle': new FormControl(null),
-      'topicChords': new FormControl([]),
-      'topicChordChanges': new FormControl([]),
-      'strumPatterns': new FormArray([]),
-      'topicMetronome' : new FormControl(),
-      'topicTime': new FormControl( this.TOPIC_DURATION_DEFAULT_VALUE,
+  static addTopicForm(): FormGroup<ITopicForm>{
+    return new FormGroup<ITopicForm>({
+      'topicTitle': new FormControl<string>('', [Validators.required]),
+      'topicSongTitle': new FormControl<string>(''),
+      'topicChords': new FormControl<IChords[]>([]),
+      'topicChordChanges': new FormControl<IChordChanges[]>([]),
+      'strumPatterns': new FormArray<FormControl<string | null>>([]),
+      'topicMetronome' : new FormControl<IMetronomeValues>({bpm: 100, beatsPerMeasure: 4}),
+      'topicTime': new FormControl<string>( this.TOPIC_DURATION_DEFAULT_VALUE,
         [Validators.pattern(new RegExp("^\\d+:\\d{2}:\\d{2}$"))])
     })
   }
 
-  get strumInputArray(): FormArray<FormControl>{
-    return (<FormArray<FormControl>>this.topicForm?.get('strumPatterns'));
+  get strumInputArray(): FormArray<FormControl<string | null>>{
+    return (<FormArray<FormControl<string | null>>>this.topicForm?.get('strumPatterns'));
   }
 
   onAddStrumPatternInputClicked() {
     this.strumInputArray.push(
-      new FormControl(null)
-    );
+      new FormControl<string | null>(''));
   }
 
   deleteTopic(topicIndex: number){
@@ -83,7 +84,7 @@ export class TopicCreatorComponent{
   }
 
   saveMetronomeValues($event: IMetronomeValues) {
-    this.topicCreated.setMetronomeValues($event);
+    this.selectedMetronomeValues = $event;
     this.showMetronomeMenu = false;
   }
 
@@ -96,7 +97,7 @@ export class TopicCreatorComponent{
   }
 
   onSaveChordsMenuButtonClicked($event: Chord[]) {
-    this.topicCreated.setSelectedChords($event);
+    this.selectedChords = $event;
     this.showChordsSelectionMenu = false;
   }
 
@@ -105,7 +106,7 @@ export class TopicCreatorComponent{
   }
 
   onSaveChordChangesMenuButtonClicked($event: ChordChange[]){
-    this.topicCreated.setChordChanges($event);
+    this.selectedChordChanges = $event;
     this.showChordChangesMenu = false;
   }
   onCloseChordChangesMenuButtonClicked() : void{

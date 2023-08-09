@@ -23,10 +23,10 @@
 
         <div class="container row mt-sm-1">
           <div class="container row"
-               *ngIf="topicCreated.selectedChords.length > 0">
+               *ngIf="selectedChords.length > 0">
             <p>Chords:</p>
             <span class="container row saved-chords-container">
-              <div *ngFor="let chordSelected of topicCreated.selectedChords"
+              <div *ngFor="let chordSelected of selectedChords"
                    class="border col-sm-auto d-flex justify-content-start h-50 d-inline-block">
                 <p>{{chordSelected.chordRoot.rootName | musicNote}}{{chordSelected.chordKey.keyName}}</p>
               </div>
@@ -35,7 +35,7 @@
           <app-topic-chords-menu formControlName="topicChords"
                                  (close)="onCloseChordsMenuButtonClicked()"
                                  (save)="onSaveChordsMenuButtonClicked($event)"
-                                 [selectedChordsForEdit]="topicCreated.selectedChords"
+                                 [selectedChordsForEdit]="selectedChords"
                                  *ngIf="showChordsSelectionMenu"></app-topic-chords-menu>
           <button type="button"
                   (click)="onAddChordsButtonClicked()"
@@ -45,10 +45,10 @@
 
 
         <div class="container row mt-sm-1">
-          <div class="container row" *ngIf="topicCreated.chordChanges.length > 0">
+          <div class="container row" *ngIf="selectedChordChanges.length > 0">
             <p>Changes:</p>
             <span class="container row saved-chord-changes-container">
-              <div *ngFor="let chordChange of topicCreated.chordChanges"
+              <div *ngFor="let chordChange of selectedChordChanges"
                    class="border col-sm-auto d-flex justify-content-start h-50 d-inline-block">
                 <p>
                   {{chordChange.getChordFromRootName() | musicNote}}{{chordChange.getChordFromKeyName()}}
@@ -60,7 +60,7 @@
           <app-topic-chord-changes-menu formControlName="topicChordChanges"
                                         (close)="onCloseChordChangesMenuButtonClicked()"
                                         (save)="onSaveChordChangesMenuButtonClicked($event)"
-                                        [chordChangesForEdit]="topicCreated.chordChanges"
+                                        [chordChangesForEdit]="selectedChordChanges"
                                         *ngIf="showChordChangesMenu"></app-topic-chord-changes-menu>
           <button type="button"
                   (click)="onAddChordChangesButtonClicked()"
@@ -83,13 +83,13 @@
 
         <div class="container">
           <p>Metronome:</p>
-          <span class="row" *ngIf="topicCreated.metronomeValues">
-            <p class="col-sm-auto">BPM: {{topicCreated.metronomeValues.bpm}}</p>
-            <p class="col-sm-auto">Beats Per Measure: {{topicCreated.metronomeValues.beatsPerMeasure}}</p>
+          <span class="row" *ngIf="selectedMetronomeValues">
+            <p class="col-sm-auto">BPM: {{selectedMetronomeValues.bpm}}</p>
+            <p class="col-sm-auto">Beats Per Measure: {{selectedMetronomeValues.beatsPerMeasure}}</p>
           </span>
           <app-metronome-menu formControlName="topicMetronome" (metronomeMenuClosed)="closeMetronomeMenu($event)"
                               (metronomeMenuSaved)="saveMetronomeValues($event)"
-                              [metronomeValueForEdit]="topicCreated.metronomeValues"
+                              [metronomeValueForEdit]="selectedMetronomeValues"
                               *ngIf="showMetronomeMenu"></app-metronome-menu>
           <button class="col-sm-auto" (click)="onAddMetronomeClicked()">Add Metronome</button>
         </div>

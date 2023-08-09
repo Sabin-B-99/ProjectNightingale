@@ -10,9 +10,10 @@ export class Topic{
   public metronomeValues: IMetronomeValues;
   public topicStrumPatterns: string[];
   public topicSongTitle: string;
+  public topicDuration: number;
+  public topicTime: string;
   constructor(public topicId: number,
-              public topicTitle: string,
-              public topicTime: number) {
+              public topicTitle: string) {
   }
 
   public toString(): string{

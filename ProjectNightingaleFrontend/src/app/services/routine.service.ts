@@ -31,7 +31,7 @@ export class RoutineService {
       .pipe(map( (topics: ITopic[]) =>{
         const loadedTopics: Topic[] = [];
         for(let topic of topics){
-          const loadedTopic: Topic = new Topic(topic.id, topic.title, topic.duration);
+          const loadedTopic: Topic = new Topic(topic.id, topic.title);
           loadedTopic.topicSongTitle = topic.songTitle;
           loadedTopic.metronomeValues = topic.metronome;
           loadedTopics.push(loadedTopic);

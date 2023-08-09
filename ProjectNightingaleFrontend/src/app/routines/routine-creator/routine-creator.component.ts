@@ -2,9 +2,8 @@ import {AfterViewChecked, Component, ElementRef, OnInit, ViewChild} from '@angul
 import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
 import {TopicCreatorComponent} from "../topic-creator/topic-creator.component";
 import {RoutineCreatorService} from "../../services/routine-creator.service";
-import {Routine} from "../../models/routine-model/routine";
-import {Topic} from "../../models/topic-model/topic";
 import {Router} from "@angular/router";
+import {IRoutineForm, ITopicForm} from "../../types/custom-interfaces";
 
 @Component({
   selector: 'app-routine-creator',
@@ -15,15 +14,15 @@ export class RoutineCreatorComponent implements OnInit, AfterViewChecked{
 
   @ViewChild('scrollTopicFormToBottom') topicFormScroller: ElementRef;
 
-  routineCreationForm: FormGroup;
+  routineCreationForm: FormGroup<IRoutineForm>;
 
   constructor(private routineCreatorService: RoutineCreatorService, private router: Router) {
   }
 
   ngOnInit(): void {
-    this.routineCreationForm = new FormGroup({
-      'routineTitle': new FormControl(null, [Validators.required]),
-      'topics': new FormArray([
+    this.routineCreationForm = new FormGroup<IRoutineForm>({
+      'routineTitle': new FormControl<string>('', [Validators.required]),
+      'topics': new FormArray<FormGroup<ITopicForm>>([
         TopicCreatorComponent.addTopicForm()
       ])
     });
@@ -40,11 +39,7 @@ export class RoutineCreatorComponent implements OnInit, AfterViewChecked{
   }
 
   onRoutineSubmitted() {
-     const routineTopics: Topic[] = this.routineCreationForm.value.topics;
-     const routineTitle: string = this.routineCreationForm.value.routineTitle;
-     //TODO: CHANGE THE HARDCODED id and duration Later 1 and -1 in line below.
-     this.routineCreatorService.routineCreated = new Routine(1, routineTitle, -1, routineTopics);
-     console.log(this.routineCreationForm.value);
+     this.routineCreatorService.buildAndSaveRoutine(this.routineCreationForm.controls);
      this.router.navigate(['/routines']);
   }
 
@@ -53,8 +48,8 @@ export class RoutineCreatorComponent implements OnInit, AfterViewChecked{
     this.topicFormArray?.push(TopicCreatorComponent.addTopicForm());
   }
 
-  get topicFormArray(): FormArray<FormGroup>{
-    return (<FormArray<FormGroup>>this.routineCreationForm?.get('topics'));
+  get topicFormArray(): FormArray<FormGroup<ITopicForm>>{
+    return (<FormArray<FormGroup<ITopicForm>>>this.routineCreationForm?.get('topics'));
   }
 
   deleteTopic(topicIndex: number){
