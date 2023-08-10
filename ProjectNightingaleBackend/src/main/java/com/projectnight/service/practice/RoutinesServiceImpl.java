@@ -3,6 +3,7 @@ package com.projectnight.service.practice;
 import com.projectnight.entity.practice.Routines;
 import com.projectnight.entity.practice.Topics;
 import com.projectnight.repository.practice.RoutinesRepository;
+import com.projectnight.repository.practice.TopicsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -15,10 +16,13 @@ import java.util.List;
 public class RoutinesServiceImpl implements RoutinesService{
 
     private final RoutinesRepository routinesRepository;
+    private final TopicsRepository topicsRepository;
 
     @Autowired
-    public RoutinesServiceImpl(RoutinesRepository routinesRepository) {
+    public RoutinesServiceImpl(RoutinesRepository routinesRepository,
+                               TopicsRepository topicsRepository) {
         this.routinesRepository = routinesRepository;
+        this.topicsRepository = topicsRepository;
     }
 
     @Override
@@ -42,5 +46,23 @@ public class RoutinesServiceImpl implements RoutinesService{
     @Transactional
     public List<Topics> getRoutineTopicsByRoutineId(int routineId) {
         return this.routinesRepository.getRoutineTopicsByRoutineId(routineId);
+    }
+
+    @Override
+    @Transactional
+    public Routines saveRoutine(Routines routine) {
+        return this.routinesRepository.save(routine);
+    }
+
+    @Override
+    @Transactional
+    public Topics saveTopic(int routineId, Topics topic) {
+        Routines routine = this.routinesRepository.findById(routineId)
+                .orElseThrow(() ->{
+                    throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                            "Routine with the given id not found");
+                });
+        topic.setRoutine(routine);
+        return this.topicsRepository.save(topic);
     }
 }

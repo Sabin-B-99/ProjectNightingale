@@ -10,4 +10,8 @@ public interface RoutinesService {
     List<Routines> getAllRoutines();
 
     List<Topics> getRoutineTopicsByRoutineId(int routineId);
+
+    Routines saveRoutine(Routines routine);
+
+    Topics saveTopic(int routineId, Topics topic);
 }

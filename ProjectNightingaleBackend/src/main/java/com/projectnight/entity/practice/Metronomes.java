@@ -49,4 +49,12 @@ public class Metronomes {
     public void setBeatsPerMeasure(int beatsPerMeasure) {
         this.beatsPerMeasure = beatsPerMeasure;
     }
+
+    public Topics getTopics() {
+        return topics;
+    }
+
+    public void setTopics(Topics topics) {
+        this.topics = topics;
+    }
 }

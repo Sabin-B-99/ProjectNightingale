@@ -24,9 +24,11 @@ public class Topics {
     @Column(name = "time_duration")
     private long timeDuration;
 
-    //unidirectional by design
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "topic_id", referencedColumnName = "id")
+    @ManyToOne
+    @JoinColumn(name = "routine_id", referencedColumnName = "id")
+    private Routines routine;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "topic")
     private List<ChordChanges> topicChordChanges;
 
 
@@ -41,13 +43,8 @@ public class Topics {
     private List<Chords> chords;
 
 
-    //unidirectional by design
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "topic_id", referencedColumnName = "id")
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "topic")
     private List<StrumPatterns> strumPatterns;
-
-    @OneToOne(mappedBy = "topics", fetch = FetchType.LAZY)
-    private Metronomes metronomes;
 
 
 
@@ -102,19 +99,19 @@ public class Topics {
         this.chords = chords;
     }
 
-    public Metronomes getMetronomes() {
-        return metronomes;
-    }
-
-    public void setMetronomes(Metronomes metronomes) {
-        this.metronomes = metronomes;
-    }
-
     public List<StrumPatterns> getStrumPatterns() {
         return strumPatterns;
     }
 
     public void setStrumPatterns(List<StrumPatterns> strumPatterns) {
         this.strumPatterns = strumPatterns;
+    }
+
+    public Routines getRoutine() {
+        return routine;
+    }
+
+    public void setRoutine(Routines routine) {
+        this.routine = routine;
     }
 }

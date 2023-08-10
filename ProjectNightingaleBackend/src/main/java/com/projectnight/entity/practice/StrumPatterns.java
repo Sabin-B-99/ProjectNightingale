@@ -14,6 +14,10 @@ public class StrumPatterns {
     @Column(name = "pattern")
     private String pattern;
 
+    @ManyToOne
+    @JoinColumn(name = "topic_id", referencedColumnName = "id")
+    private Topics topic;
+
     public StrumPatterns() {
     }
 
@@ -31,5 +35,13 @@ public class StrumPatterns {
 
     public void setPattern(String pattern) {
         this.pattern = pattern;
+    }
+
+    public Topics getTopic() {
+        return topic;
+    }
+
+    public void setTopic(Topics topic) {
+        this.topic = topic;
     }
 }

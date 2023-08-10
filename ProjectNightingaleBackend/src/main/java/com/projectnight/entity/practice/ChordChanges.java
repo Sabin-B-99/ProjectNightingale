@@ -28,6 +28,10 @@ public class ChordChanges {
     private Chords changeTo;
 
 
+    @ManyToOne
+    @JoinColumn(name = "topic_id", referencedColumnName = "id")
+    private Topics topic;
+
     public ChordChanges() {
     }
 
@@ -53,5 +57,13 @@ public class ChordChanges {
 
     public void setChangeTo(Chords changeTo) {
         this.changeTo = changeTo;
+    }
+
+    public Topics getTopic() {
+        return topic;
+    }
+
+    public void setTopic(Topics topic) {
+        this.topic = topic;
     }
 }
