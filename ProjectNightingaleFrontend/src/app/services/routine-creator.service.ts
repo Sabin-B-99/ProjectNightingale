@@ -1,6 +1,14 @@
 import { Injectable } from '@angular/core';
-import {IRoutine, ITopic, IRoutineForm, ITopicForm} from "../types/custom-interfaces";
+import {
+  IRoutine,
+  ITopic,
+  IRoutineForm,
+  ITopicForm,
+  IStrumPatterns,
+  IChords, IChordChanges, IMetronomeValues, ITopicDTO
+} from "../types/custom-interfaces";
 import {FormArray, FormGroup} from "@angular/forms";
+import {HttpClient} from "@angular/common/http";
 
 
 @Injectable({
@@ -9,22 +17,105 @@ import {FormArray, FormGroup} from "@angular/forms";
 export class RoutineCreatorService {
 
   routineCreated: IRoutine = {
-    id: -1,
     title: '',
     topics: [],
-    duration: -1
+    duration: 0
   };
+
+  private autoGenIdForRoutine: number = -1;
+
   private totalRoutineDuration: number = 0;
-  constructor() {
+  constructor(private http: HttpClient) {
   }
 
   buildAndSaveRoutine(controls: IRoutineForm) {
-    this.routineCreated.id = -1;
     this.routineCreated.title = controls.routineTitle.value || '';
-    this.routineCreated.topics = this.buildTopics(controls.topics);
-    this.routineCreated.duration = this.calculateRoutineTotalDuration(this.routineCreated.topics);
-    console.log(this.routineCreated);
+    let routineTopics: ITopic[] = this.buildTopics(controls.topics);
+    this.routineCreated.duration = this.calculateRoutineTotalDuration(routineTopics);
+
+    this.saveRoutine(this.routineCreated)
+      .subscribe(
+        (routine: IRoutine) =>{
+          if(routine.id){
+            this.autoGenIdForRoutine = routine.id;
+            this.saveAllTopics(this.autoGenIdForRoutine, routineTopics);
+          }
+        });
   }
+
+  private saveRoutine(routine: IRoutine){
+    return  this.http.post<IRoutine>('http://localhost:8080/ProjectNightingale/api/practice/routines/', routine);
+  }
+
+
+  private saveAllTopics(routineId: number, topics: ITopic[]){
+    if(routineId !== -1){
+      for (let topic of topics){
+        this.saveTopic(routineId, topic);
+      }
+    }
+  }
+
+  private saveTopic(routineId: number, topic: ITopic){
+    let topicChords: IChords[] = topic.chords;
+    let topicChordChanges: IChordChanges[] = topic.topicChordChanges;
+    let topicStrumPatterns: IStrumPatterns[] = topic.strumPatterns;
+    let topicMetronome: IMetronomeValues = topic.metronomes;
+
+    let topicToSave: ITopicDTO = {title: topic.title,
+      songTitle: topic.songTitle, timeDuration: topic.timeDuration, routineId: routineId};
+      return this.http.post<ITopicDTO>(`http://localhost:8080/ProjectNightingale/api/practice/routines/${routineId}/topics`,
+        topicToSave).subscribe(
+        (topic: ITopicDTO) =>{
+          if(topic.id){
+            this.saveTopicChords(topic.id, topicChords);
+            this.saveTopicChordChanges(topic.id, topicChordChanges);
+            this.saveTopicStrumPatterns(topic.id, topicStrumPatterns);
+            this.saveTopicMetronomeValues(topic.id, topicMetronome);
+          }
+        }
+      );
+  }
+
+  private saveTopicChords(topicId: number, chords: IChords[]){
+    for (let chord of chords){
+      this.saveTopicChord(topicId, chord);
+    }
+  }
+
+  private saveTopicChord(topicId: number, chord: IChords){
+    this.http.post<IChords>(`http://localhost:8080/ProjectNightingale/api/practice/topics/${topicId}/chords`,
+        chord).subscribe();
+  }
+
+  private saveTopicChordChanges(topicId: number, chordChanges: IChordChanges[]){
+    for (let chordChange of chordChanges){
+      let changeFrom: IChords = chordChange.changeFrom;
+      let changeTo: IChords = chordChange.changeTo;
+      let chordChangesChordsPrimaryKeys: IChords[] = [changeFrom, changeTo];
+      this.saveTopicChordChange(topicId, chordChangesChordsPrimaryKeys);
+    }
+  }
+  private saveTopicChordChange(topicId: number, chordChangeChordsPrimaryKeys: IChords[]){
+    this.http.post<IChords[]>(`http://localhost:8080/ProjectNightingale/api/practice/topics/${topicId}/chords-changes`,
+      chordChangeChordsPrimaryKeys).subscribe();
+  }
+
+  private saveTopicMetronomeValues(topicId: number, metronome: IMetronomeValues){
+    this.http.post<IMetronomeValues>(`http://localhost:8080/ProjectNightingale/api/practice/topics/${topicId}/metronomes`,
+      metronome).subscribe();
+  }
+
+  private saveTopicStrumPatterns(topicId: number, strumPatterns: IStrumPatterns[]){
+    for (let pattern of strumPatterns){
+      this.saveTopicStrumPattern(topicId, pattern);
+    }
+  }
+  private saveTopicStrumPattern(topicId: number, pattern: IStrumPatterns){
+    this.http.post<IStrumPatterns>(`http://localhost:8080/ProjectNightingale/api/practice/topics/${topicId}/strum-patterns`,
+      pattern).subscribe();
+  }
+
 
   private buildTopics(topicsControls: FormArray<FormGroup<ITopicForm>>): ITopic[] {
     let topics: ITopic[] = [];
@@ -33,14 +124,13 @@ export class RoutineCreatorService {
 
       topics.push(
         {
-          id: -1,
           title: topicControlValue.topicTitle || '',
           songTitle: topicControlValue.topicSongTitle || '',
-          chordChanges: topicControlValue.topicChordChanges || [],
-          topicChords: topicControlValue.topicChords || [],
-          metronome: topicControlValue.topicMetronome || {bpm: -1, beatsPerMeasure: -1},
+          topicChordChanges: topicControlValue.topicChordChanges || [],
+          chords: topicControlValue.topicChords || [],
+          metronomes: topicControlValue.topicMetronome || {bpm: -1, beatsPerMeasure: -1},
           strumPatterns: this.buildStrumPatterns(topicControlValue.strumPatterns),
-          duration: this.buildTopicTime(topicControlValue.topicTime || '00:00:00')
+          timeDuration: this.buildTopicTime(topicControlValue.topicTime || '00:00:00')
         }
       )
     }
@@ -48,70 +138,17 @@ export class RoutineCreatorService {
   }
 
 
-  buildStrumPatterns(strumPatterns: (string|null)[] | undefined): string[]{
-    let addedStrumPatterns: string[] = [];
+  buildStrumPatterns(strumPatterns: (string|null)[] | undefined): IStrumPatterns[]{
+    let addedStrumPatterns: IStrumPatterns[] = [];
     if(strumPatterns){
       for (let strumPattern of strumPatterns){
-        addedStrumPatterns.push(strumPattern || '')
+        addedStrumPatterns.push({
+          pattern: strumPattern || ''
+        })
       }
     }
     return addedStrumPatterns;
   }
-
-
-  // buildTopics(routineTopics: Topic[]): ITopic[]{
-  //   let topics: ITopic[] = [];
-  //   for (let topic of routineTopics){
-  //     let selectedChords: IChords[] = this.separateTopicChords(topic.selectedChords);
-  //     let selectedChordChanges: IChordChanges[] = this.separateTopicChordChanges(topic.chordChanges);
-  //     let topicTime: number = this.buildTopicTime(topic.topicTime);
-  //     topics.push(
-  //       {
-  //         id: -1,
-  //         title: topic.topicTitle,
-  //         songTitle: topic.topicSongTitle,
-  //         topicChords: selectedChords,
-  //         chordChanges: selectedChordChanges,
-  //         strumPatterns: topic.topicStrumPatterns,
-  //         metronome: topic.metronomeValues,
-  //         duration: topicTime
-  //       }
-  //     );
-  //   }
-  //   return topics;
-  // }
-  // private separateTopicChords(selectedChords: Chord[]): IChords[] {
-  //   let topicChords: IChords[] =[];
-  //   if(selectedChords){
-  //     for (let chord of selectedChords){
-  //       topicChords.push(
-  //         {
-  //           root_order: chord.chordRoot.rootOrder,
-  //           key_id: chord.chordKey.id
-  //         }
-  //       )
-  //     }
-  //   }
-  //   return topicChords;
-  // }
-  //
-  // private separateTopicChordChanges(chordChanges: ChordChange[]): IChordChanges[] {
-  //   let topicChordChange: IChordChanges[] = [];
-  //   if(chordChanges){
-  //     for(let chordChange of chordChanges){
-  //       topicChordChange.push(
-  //         {
-  //           change_from_root_order: chordChange.getFromChord().chordRoot.rootOrder,
-  //           change_from_key_id: chordChange.getFromChord().chordKey.id,
-  //           change_to_root_order: chordChange.getToChord().chordRoot.rootOrder,
-  //           change_to_key_id: chordChange.getToChord().chordKey.id
-  //         }
-  //       )
-  //     }
-  //   }
-  //   return topicChordChange;
-  // }
-
 
   private buildTopicTime(topicTime: string): number {
     let hhMmSs: string[] =  topicTime.split(":");
@@ -124,7 +161,7 @@ export class RoutineCreatorService {
     let totalDuration: number = 0;
     if(topics){
       for (let topic of topics){
-        totalDuration += topic.duration;
+        totalDuration += topic.timeDuration;
       }
     }
     return totalDuration;

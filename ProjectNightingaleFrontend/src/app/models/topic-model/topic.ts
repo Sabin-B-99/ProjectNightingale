@@ -12,7 +12,7 @@ export class Topic{
   public topicSongTitle: string;
   public topicDuration: number;
   public topicTime: string;
-  constructor(public topicId: number,
+  constructor(public topicId: number = -1,
               public topicTitle: string) {
   }
 

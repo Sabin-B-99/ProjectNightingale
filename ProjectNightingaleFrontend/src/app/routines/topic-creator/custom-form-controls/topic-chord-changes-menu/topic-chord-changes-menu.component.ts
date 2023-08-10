@@ -57,10 +57,11 @@ export class TopicChordChangesMenuComponent  implements OnInit, ControlValueAcce
     for (let chordChange of selectedChordChangesForEdit){
       selectedChordChangesOrderAndKeyForEdit.push(
         {
-          change_from_root_order: chordChange.getFromChord().chordRoot.rootOrder,
-          change_from_key_id: chordChange.getFromChord().chordKey.id,
-          change_to_root_order: chordChange.getToChord().chordRoot.rootOrder,
-          change_to_key_id: chordChange.getToChord().chordKey.id
+          changeFrom: {chordRootOrder: chordChange.getFromChord().chordRoot.rootOrder,
+            chordKeyId: chordChange.getFromChord().chordKey.id},
+
+          changeTo: {chordRootOrder: chordChange.getToChord().chordRoot.rootOrder,
+            chordKeyId: chordChange.getToChord().chordKey.id}
         }
       )
     }
@@ -72,10 +73,11 @@ export class TopicChordChangesMenuComponent  implements OnInit, ControlValueAcce
     this.markAsTouched();
     if(chordChange && !this.isDisabled){
       let chordChangeOrderAndKeyValues: IChordChanges = {
-        change_from_root_order: chordChange.getFromChord().chordRoot.rootOrder,
-        change_from_key_id: chordChange.getFromChord().chordKey.id,
-        change_to_root_order: chordChange.getToChord().chordRoot.rootOrder,
-        change_to_key_id: chordChange.getToChord().chordKey.id
+        changeFrom: {chordRootOrder: chordChange.getFromChord().chordRoot.rootOrder,
+          chordKeyId: chordChange.getFromChord().chordKey.id},
+
+        changeTo: {chordRootOrder: chordChange.getToChord().chordRoot.rootOrder,
+          chordKeyId: chordChange.getToChord().chordKey.id}
       };
       this.chordChanges.push(chordChange);
       this.selectedChordChangesOrderKeyValues.push(chordChangeOrderAndKeyValues);

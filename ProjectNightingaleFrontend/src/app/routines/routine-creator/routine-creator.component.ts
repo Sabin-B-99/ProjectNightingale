@@ -1,20 +1,25 @@
-import {AfterViewChecked, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {AfterViewChecked, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
 import {TopicCreatorComponent} from "../topic-creator/topic-creator.component";
 import {RoutineCreatorService} from "../../services/routine-creator.service";
 import {Router} from "@angular/router";
 import {IRoutineForm, ITopicForm} from "../../types/custom-interfaces";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-routine-creator',
   templateUrl: './routine-creator.component.html',
   styleUrls: ['./routine-creator.component.css']
 })
-export class RoutineCreatorComponent implements OnInit, AfterViewChecked{
+export class RoutineCreatorComponent implements OnInit, OnDestroy ,AfterViewChecked{
 
   @ViewChild('scrollTopicFormToBottom') topicFormScroller: ElementRef;
 
   routineCreationForm: FormGroup<IRoutineForm>;
+
+  private saveRoutineSubscription: Subscription;
+
+  formSaveStatus: boolean = false;
 
   constructor(private routineCreatorService: RoutineCreatorService, private router: Router) {
   }
@@ -27,6 +32,13 @@ export class RoutineCreatorComponent implements OnInit, AfterViewChecked{
       ])
     });
   }
+
+  ngOnDestroy() {
+    if (this.saveRoutineSubscription){
+      this.saveRoutineSubscription.unsubscribe();
+    }
+  }
+
   ngAfterViewChecked() {
     this.scrollTopicFormToBottom();
   }
@@ -39,8 +51,8 @@ export class RoutineCreatorComponent implements OnInit, AfterViewChecked{
   }
 
   onRoutineSubmitted() {
-     this.routineCreatorService.buildAndSaveRoutine(this.routineCreationForm.controls);
-     this.router.navigate(['/routines']);
+    //this.formSaveStatus = true;
+    this.routineCreatorService.buildAndSaveRoutine(this.routineCreationForm.controls);
   }
 
 

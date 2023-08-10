@@ -26,14 +26,14 @@ export class RoutineService {
       }));
   }
 
-  private loadSelectedRoutineTopicsByRoutineId(routineId: number){
+  private loadSelectedRoutineTopicsByRoutineId(routineId: number = -1){
     this.http.get<ITopic[]>(`http://localhost:8080/ProjectNightingale/api/practice/routines/${routineId}/topics`)
       .pipe(map( (topics: ITopic[]) =>{
         const loadedTopics: Topic[] = [];
         for(let topic of topics){
           const loadedTopic: Topic = new Topic(topic.id, topic.title);
           loadedTopic.topicSongTitle = topic.songTitle;
-          loadedTopic.metronomeValues = topic.metronome;
+          loadedTopic.metronomeValues = topic.metronomes;
           loadedTopics.push(loadedTopic);
         }
         return loadedTopics;

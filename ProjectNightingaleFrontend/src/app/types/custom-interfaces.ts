@@ -17,10 +17,10 @@ interface IChordKey{
 }
 
 interface IRoutine{
-  id: number;
+  id?: number;
   title: string;
   duration: number;
-  topics: ITopic[];
+  topics?: ITopic[];
 }
 
 interface IRoutineForm {
@@ -29,14 +29,22 @@ interface IRoutineForm {
 }
 
 interface ITopic{
-  id: number;
+  id?: number;
   title: string;
-  duration: number;
   songTitle: string;
-  strumPatterns: string[];
-  chordChanges: IChordChanges[];
-  topicChords: IChords[];
-  metronome: IMetronomeValues;
+  timeDuration: number;
+  chords: IChords[];
+  topicChordChanges: IChordChanges[];
+  strumPatterns: IStrumPatterns[];
+  metronomes: IMetronomeValues;
+}
+
+interface ITopicDTO{
+  id?: number,
+  title: string,
+  songTitle?: string,
+  timeDuration: number,
+  routineId: number
 }
 
 interface ITopicForm {
@@ -50,15 +58,18 @@ interface ITopicForm {
 }
 
 interface IChordChanges{
-  change_from_root_order: number;
-  change_from_key_id: number;
-  change_to_root_order: number;
-  change_to_key_id: number;
+  changeFrom: IChords,
+  changeTo: IChords
+}
+
+
+interface IStrumPatterns{
+  pattern: string
 }
 
 interface IChords{
-  root_order: number;
-  key_id: number;
+  chordRootOrder: number,
+  chordKeyId: number
 }
 
 export {
@@ -70,5 +81,7 @@ export {
   ITopic,
   ITopicForm,
   IChords,
-  IChordChanges
+  IChordChanges,
+  IStrumPatterns,
+  ITopicDTO
 }

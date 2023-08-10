@@ -1,7 +1,7 @@
 import {Topic} from "../topic-model/topic";
 
 export class Routine{
-  constructor(public routineId: number,
+  constructor(public routineId: number = -1,
               public routineTitle: String,
               public routineDuration: number,
               private topics?: Topic[]) {
