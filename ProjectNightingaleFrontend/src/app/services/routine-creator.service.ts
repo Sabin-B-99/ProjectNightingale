@@ -9,6 +9,7 @@ import {
 } from "../types/custom-interfaces";
 import {FormArray, FormGroup} from "@angular/forms";
 import {HttpClient} from "@angular/common/http";
+import {map, Observable} from "rxjs";
 
 
 @Injectable({
@@ -28,19 +29,21 @@ export class RoutineCreatorService {
   constructor(private http: HttpClient) {
   }
 
-  buildAndSaveRoutine(controls: IRoutineForm) {
+  buildAndSaveRoutine(controls: IRoutineForm): Observable<boolean> {
     this.routineCreated.title = controls.routineTitle.value || '';
     let routineTopics: ITopic[] = this.buildTopics(controls.topics);
     this.routineCreated.duration = this.calculateRoutineTotalDuration(routineTopics);
 
-    this.saveRoutine(this.routineCreated)
-      .subscribe(
-        (routine: IRoutine) =>{
-          if(routine.id){
-            this.autoGenIdForRoutine = routine.id;
-            this.saveAllTopics(this.autoGenIdForRoutine, routineTopics);
-          }
-        });
+    return  this.saveRoutine(this.routineCreated).
+      pipe(map((routine: IRoutine) =>{
+        let routineSaved: boolean = false;
+        if(routine.id){
+          this.autoGenIdForRoutine = routine.id;
+          this.saveAllTopics(this.autoGenIdForRoutine, routineTopics);
+          routineSaved = true;
+        }
+        return routineSaved;
+      }));
   }
 
   private saveRoutine(routine: IRoutine){

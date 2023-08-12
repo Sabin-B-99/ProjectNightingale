@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {Routine} from "../models/routine-model/routine";
 import {RoutineService} from "../services/routine.service";
 
 @Component({
@@ -13,6 +12,5 @@ export class RoutinesComponent implements OnInit{
   constructor(private routineService: RoutineService) {
   }
   ngOnInit(): void {
-
   }
 }

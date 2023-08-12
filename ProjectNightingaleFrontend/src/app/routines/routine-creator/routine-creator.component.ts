@@ -52,15 +52,17 @@ export class RoutineCreatorComponent implements OnInit, OnDestroy ,AfterViewChec
   }
 
   onRoutineSubmitted() {
-    //this.formSaveStatus = true;
-    //this.routineCreatorService.buildAndSaveRoutine(this.routineCreationForm.controls);
-    // console.log(this.routineCreationForm);
-    // console.log(this.routineCreationForm.get('topics'));
+    this.formSaveStatus = true;
     if(this.routineCreationForm.valid){
-      console.log('Saving... Saved')
-    }else {
-      console.log('Fill all requried fields.');
+      this.routineCreatorService.buildAndSaveRoutine(this.routineCreationForm.controls)
+        .subscribe(
+          (routineSaved: boolean) =>{
+            if(routineSaved){
+              this.router.navigate(['routines']);
+            }
+          });
     }
+    this.formSaveStatus = false;
   }
 
 
