@@ -5,6 +5,7 @@ import {RoutineCreatorService} from "../../services/routine-creator.service";
 import {Router} from "@angular/router";
 import {IRoutineForm, ITopicForm} from "../../types/custom-interfaces";
 import {Subscription} from "rxjs";
+import {noWhiteSpaceValidator} from "../../validators/no-white-space-validator.directive";
 
 @Component({
   selector: 'app-routine-creator',
@@ -26,7 +27,7 @@ export class RoutineCreatorComponent implements OnInit, OnDestroy ,AfterViewChec
 
   ngOnInit(): void {
     this.routineCreationForm = new FormGroup<IRoutineForm>({
-      'routineTitle': new FormControl<string>('', [Validators.required]),
+      'routineTitle': new FormControl<string>('', [Validators.required, noWhiteSpaceValidator()]),
       'topics': new FormArray<FormGroup<ITopicForm>>([
         TopicCreatorComponent.addTopicForm()
       ])
@@ -52,7 +53,14 @@ export class RoutineCreatorComponent implements OnInit, OnDestroy ,AfterViewChec
 
   onRoutineSubmitted() {
     //this.formSaveStatus = true;
-    this.routineCreatorService.buildAndSaveRoutine(this.routineCreationForm.controls);
+    //this.routineCreatorService.buildAndSaveRoutine(this.routineCreationForm.controls);
+    // console.log(this.routineCreationForm);
+    // console.log(this.routineCreationForm.get('topics'));
+    if(this.routineCreationForm.valid){
+      console.log('Saving... Saved')
+    }else {
+      console.log('Fill all requried fields.');
+    }
   }
 
 

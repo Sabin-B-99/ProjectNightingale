@@ -1,11 +1,7 @@
 import { Component } from '@angular/core';
 import {
-  AbstractControl,
   ControlValueAccessor,
-  NG_VALIDATORS,
   NG_VALUE_ACCESSOR,
-  ValidationErrors,
-  Validators
 } from "@angular/forms";
 
 @Component({
@@ -32,7 +28,7 @@ export class DurationInputComponent implements ControlValueAccessor{
   isTouched: boolean = false
 
   changeDuration($event: Event) {
-    const duration: string = (<HTMLInputElement>$event.target).value;
+    const duration: string = (<HTMLInputElement>$event.target).value.trim();
     this.markAsTouched();
     if(!this.isDisabled){
       this.duration = duration;
@@ -60,15 +56,4 @@ export class DurationInputComponent implements ControlValueAccessor{
       this.isTouched = true;
     }
   }
-
-  // validate(control: AbstractControl): ValidationErrors | null{
-  //   const value: string = control.value;
-  //   if(!value.match(new RegExp("^\\d+:\\d{2}:\\d{2}$"))){
-  //     return {
-  //       invalidDurationInput:{ value}
-  //     }
-  //   }
-  //   return null;
-  // }
-
 }

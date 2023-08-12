@@ -55,7 +55,7 @@ import {HttpClientModule} from "@angular/common/http";
     DivToggledDirective,
     MetronomeComponent,
     MetronomeMenuComponent,
-    DurationInputComponent
+    DurationInputComponent,
   ],
     imports: [
         BrowserModule,

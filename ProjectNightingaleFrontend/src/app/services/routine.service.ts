@@ -57,10 +57,4 @@ export class RoutineService {
   setSelectedRoutine(selectedRoutine: Routine) {
     this.selectedRoutine = selectedRoutine;
   }
-
-  getSelectedRoutine(){
-    return this.selectedRoutine;
-  }
-
-
 }

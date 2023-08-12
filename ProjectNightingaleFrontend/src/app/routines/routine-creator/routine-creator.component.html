@@ -8,6 +8,10 @@
           <input type="text"
                  formControlName="routineTitle"
                  placeholder="Routine Title">
+          <div *ngIf="!routineCreationForm.get('routineTitle')?.valid"
+               class="form-text text-danger">
+             *Routine title is required
+          </div>
         </a>
       </li>
     </ul>
@@ -21,6 +25,13 @@
             [indexInCurrentRoutine]="i"
             (deleteTopicEvent)="deleteTopic($event)">
           </app-topic-creator>
+          <div *ngIf="topicForm.errors?.['topicFormInvalid']"
+               class="form-text text-danger">
+            *Select at least either a song, chords, chord changes or strum patterns
+          </div>
+          <div *ngIf="routineCreationForm.errors?.['whitespaceValidationFailed']" class="form-text text-danger">
+            *Field cannot be empty
+          </div>
         </a>
       </li>
     </ul>

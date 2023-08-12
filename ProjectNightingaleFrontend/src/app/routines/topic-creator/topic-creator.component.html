@@ -7,6 +7,14 @@
           <input  class="col-sm-auto"  type="text"
                     formControlName = "topicTitle"
                     placeholder="Topic Title"/>
+          <div *ngIf="!topicForm.get('topicTitle')?.valid"
+               class="form-text text-danger">
+            *Topic Title required
+          </div>
+          <div *ngIf="topicForm.get('topicTitle')?.errors?.['whitespaceValidationFailed']
+            && topicForm.get('topicTitle')?.touched" class="form-text text-danger">
+            *Field cannot be empty
+          </div>
           <button class="btn btn-danger mx-sm-auto col-sm-1" type="button"
                   *ngIf="totalTopics > 1"
                   (click)="deleteTopic
@@ -76,6 +84,10 @@
                      [formControlName]="i"
                      class="col-sm-auto"/>
               <button class="btn btn-outline-danger" (click)="deleteStrumPatternInput(i)">x</button>
+              <div *ngIf="!strumInput.valid && strumInput.touched"
+                   class="text-danger form-text">
+                *Strum Pattern input field cannot be empty.
+              </div>
             </li>
           </div>
           <button type="button" class="col-sm-auto" (click)="onAddStrumPatternInputClicked()">Add</button>
@@ -97,11 +109,16 @@
         <div class="row">
           <p>Duration: (hh:mm:ss)</p>
           <app-duration-input formControlName="topicTime"></app-duration-input>
+          <div></div>
+          <div *ngIf="!topicForm.get('topicTime')?.valid  && topicForm.get('topicTime')?.touched"
+               class="form-text text-danger">
+            *Invalid duration format entered: <br> Please use the
+            following format(hh:mm:ss) <br> [Ex: 00:04:30]
+          </div>
         </div>
 
       </li>
     </ul>
-
   </form>
 </div>
 
