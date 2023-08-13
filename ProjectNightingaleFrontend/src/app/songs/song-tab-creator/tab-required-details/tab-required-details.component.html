@@ -1,0 +1,53 @@
+<form [formGroup]="tabRequiredDetailForm">
+  <ul class="list-group">
+    <li class="list-group-item">
+      <div class="d-flex flex-row ">
+        <span>
+          <label class="form-label mx-sm-1">Song</label>
+          <input class="form-text" formControlName="songTitle">
+        </span>
+        <span>
+          <label class="form-label mx-sm-1">Artist</label>
+          <input class="form-text" formControlName="artistName">
+        </span>
+      </div>
+      <div class="d-flex flex-row">
+        <div class="flex-column align-content-center me-sm-3">
+          <label class="form-label col-form-label-sm">Join Phrase:</label>
+          <select class="form-select" formControlName="otherArtistsJoinPhrase">
+            <option *ngFor="let joinPhrase of otherArtistJoinPhrase">{{joinPhrase}}</option>
+          </select>
+        </div>
+        <div class="d-flex flex-column" formArrayName="otherArtistsNames">
+          <a *ngFor="let otherArtistNameInput of otherArtistsNameInputArray.controls; let i= index">
+            <input class="form-text" [formControlName]="i">
+            <button class="btn btn-outline-danger btn-sm" (click)="removeArtistNameInputArray(i)">X</button>
+          </a>
+          <span>
+          <button class="btn btn-outline-dark btn-sm my-sm-1"
+                  (click)="addOtherArtistsInput()">Add other artists</button>
+        </span>
+        </div>
+      </div>
+
+      <div class="flex-row d-flex">
+        <span>
+          <label class="form-label col-form-label-sm">Add Tuning: </label>
+          <select class="form-select" formControlName="tuningType">
+            <option *ngFor="let tuningName of tuningTypes">{{tuningName}}</option>
+          </select>
+        </span>
+        <span class="mx-sm-1">
+          <label class="form-label col-form-label-sm">Select Difficulty:</label>
+          <select class="form-select" formControlName="difficulty">
+            <option *ngFor="let difficulty of difficultyLevels">{{difficulty}}</option>
+          </select>
+        </span>
+      </div>
+
+      <button type="button" (click)="addSongChords()"
+              class="btn btn-outline-dark btn-sm mt-sm-1">Add chords</button>
+    </li>
+  </ul>
+
+</form>

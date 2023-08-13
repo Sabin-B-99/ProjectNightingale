@@ -1,0 +1,26 @@
+<div>
+  <form [formGroup]="tabCreationForm"
+        (ngSubmit)="onTabCreationFormSubmitted()">
+    <ul class="list-group">
+      <li class="list-group-item">
+        <a>
+          <app-tab-required-details [tabRequiredDetailForm]="getTabRequiredDetailsForm()">
+          </app-tab-required-details>
+        </a>
+      </li>
+      <li class="list-group-item">
+        <a>
+          <textarea [rows]="20" [cols]="30"
+                    class="form-text"
+                    formControlName="tabLyricsArea">
+          </textarea>
+        </a>
+      </li>
+      <li class="list-group-item">
+        <a>
+          <button class="btn btn-outline-primary">Submit</button>
+        </a>
+      </li>
+    </ul>
+  </form>
+</div>

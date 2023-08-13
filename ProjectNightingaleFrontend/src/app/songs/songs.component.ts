@@ -1,6 +1,6 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {Song} from "../models/song-model/song";
+import {Component, OnInit} from '@angular/core';
 import {SongService} from "../services/song.service";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-songs',
@@ -9,8 +9,14 @@ import {SongService} from "../services/song.service";
   providers: [SongService]
 })
 export class SongsComponent implements OnInit{
-  constructor() {
+  songTabCreationFormShown: boolean  = false;
+  constructor(private router: Router, private route: ActivatedRoute) {
   }
   ngOnInit(): void {
+  }
+
+  showTabCreationForm() {
+    this.songTabCreationFormShown = true;
+    this.router.navigate(['create'], {relativeTo: this.route});
   }
 }

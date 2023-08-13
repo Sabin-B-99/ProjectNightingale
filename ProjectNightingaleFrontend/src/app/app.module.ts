@@ -15,7 +15,7 @@ import { RoutineDetailComponent } from './routines/routine-detail/routine-detail
 import { RoutineCreatorComponent } from './routines/routine-creator/routine-creator.component';
 import {TopicCreatorComponent} from "./routines/topic-creator/topic-creator.component";
 import { SongDetailComponent } from './songs/song-detail/song-detail.component';
-import { TopSongListComponent } from './songs/top-song-list/top-song-list.component';
+import { SongListComponent } from './songs/song-list/song-list.component';
 import {AppRoutingModule} from "./app-routing.module";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { ChordListComponent } from './chords/chord-list/chord-list.component';
@@ -29,6 +29,8 @@ import { MetronomeComponent } from './metronome/metronome.component';
 import { MetronomeMenuComponent } from './routines/topic-creator/custom-form-controls/metronome-menu/metronome-menu.component';
 import { DurationInputComponent } from './routines/topic-creator/custom-form-controls/duration-input/duration-input.component';
 import {HttpClientModule} from "@angular/common/http";
+import { SongTabCreatorComponent } from './songs/song-tab-creator/song-tab-creator.component';
+import { TabRequiredDetailsComponent } from './songs/song-tab-creator/tab-required-details/tab-required-details.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +48,7 @@ import {HttpClientModule} from "@angular/common/http";
     RoutineCreatorComponent,
     TopicCreatorComponent,
     SongDetailComponent,
-    TopSongListComponent,
+    SongListComponent,
     ChordListComponent,
     MusicNotePipe,
     ChordItemComponent,
@@ -56,6 +58,8 @@ import {HttpClientModule} from "@angular/common/http";
     MetronomeComponent,
     MetronomeMenuComponent,
     DurationInputComponent,
+    SongTabCreatorComponent,
+    TabRequiredDetailsComponent,
   ],
     imports: [
         BrowserModule,

@@ -1,16 +1,20 @@
+<div class="mt-sm-0">
+  <ul class="btn-group-sm">
+    <button class="btn btn-sm btn-outline-dark" (click)="showTabCreationForm()">Add Tab</button>
+  </ul>
+</div>
 
 <div class="container row mt-5">
-  <div class="row-cols-auto">
+  <div class="row-cols-auto" *ngIf="!songTabCreationFormShown">
     <form class="d-flex" role="search">
       <input class="form-control me-2" type="search" placeholder="Song" aria-label="Search">
       <button class="btn btn-outline-success" type="submit">Search</button>
     </form>
   </div>
 
-
   <div class="row mt-sm-5">
-    <div class="col-md-auto">
-      <app-top-song-list></app-top-song-list>
+    <div class="col-md-auto" *ngIf="!songTabCreationFormShown">
+      <app-song-list listName="Top Songs"></app-song-list>
     </div>
     <div class="col-md-auto">
       <router-outlet></router-outlet>
