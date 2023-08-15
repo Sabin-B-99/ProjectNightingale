@@ -9,12 +9,23 @@
         </a>
       </li>
       <li class="list-group-item">
-        <a>
-          <textarea [rows]="20" [cols]="30"
-                    class="form-text"
-                    formControlName="tabLyricsArea">
-          </textarea>
-        </a>
+        <div class="container">
+          <div class="row">
+            <a class="col col-md-auto">
+              <textarea [rows]="20" [cols]="30"
+                        class="form-text"
+                       formControlName="tabLyricsArea">
+              </textarea>
+            </a>
+            <div class="col row-cols-2 col-md-4">
+              <button type="button" *ngFor="let selectedChord of selectedChordsForTab"
+                      class="btn btn-outline-dark btn-sm"
+                      (click)="addSelectedChordInTab(selectedChord)">
+                {{selectedChord.chordRoot.rootName | musicNote}}{{selectedChord.chordKey.keyName}}
+              </button>
+            </div>
+          </div>
+        </div>
       </li>
       <li class="list-group-item">
         <a>

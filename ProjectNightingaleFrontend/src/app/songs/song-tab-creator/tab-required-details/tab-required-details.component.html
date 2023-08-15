@@ -45,9 +45,15 @@
         </span>
       </div>
 
-      <button type="button" (click)="addSongChords()"
+      <button type="button" (click)="onOpenChordSelectionMenu()"
               class="btn btn-outline-dark btn-sm mt-sm-1">Add chords</button>
     </li>
   </ul>
+
+  <div *ngIf="chordSelectionMenuOpened">
+    <app-topic-chords-menu [selectedChordsForEdit]="selectedChordsForTabCreation"
+                           (close)="onCloseChordSelectionMenu()"
+                           (save)="onChordsSaved($event)"></app-topic-chords-menu>
+  </div>
 
 </form>

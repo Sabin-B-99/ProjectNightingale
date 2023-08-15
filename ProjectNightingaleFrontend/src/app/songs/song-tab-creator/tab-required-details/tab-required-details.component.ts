@@ -1,6 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {FormArray, FormArrayName, FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
 import {IChords} from "../../../types/custom-interfaces";
+import {Chord} from "../../../models/chord-model/chord";
+import {TabCreatorService} from "../../../services/tab-creator.service";
 
 @Component({
   selector: 'app-tab-required-details',
@@ -20,7 +22,10 @@ export class TabRequiredDetailsComponent implements OnInit{
     'Tune 3',
     'Tune 4'
   ]
-  constructor() {
+
+  chordSelectionMenuOpened: boolean = false;
+  selectedChordsForTabCreation: Chord[] = [];
+  constructor(private tabCreatorService: TabCreatorService) {
   }
 
   ngOnInit() {
@@ -43,10 +48,6 @@ export class TabRequiredDetailsComponent implements OnInit{
     return <FormArray>(this.tabRequiredDetailForm?.get('otherArtistsNames'));
   }
 
-
-  addSongChords() {
-  }
-
   addOtherArtistsInput() {
     this.otherArtistsNameInputArray.push(
       new FormControl<string>('', [Validators.required])
@@ -55,5 +56,19 @@ export class TabRequiredDetailsComponent implements OnInit{
 
   removeArtistNameInputArray(index: number) {
     this.otherArtistsNameInputArray.removeAt(index);
+  }
+
+  onOpenChordSelectionMenu(){
+    this.chordSelectionMenuOpened = true;
+  }
+
+  onCloseChordSelectionMenu(){
+    this.chordSelectionMenuOpened = false;
+  }
+
+  onChordsSaved($event: Chord[]) {
+    this.chordSelectionMenuOpened = false;
+    this.selectedChordsForTabCreation = $event;
+    this.tabCreatorService.setSelectedChords(this.selectedChordsForTabCreation.slice());
   }
 }
