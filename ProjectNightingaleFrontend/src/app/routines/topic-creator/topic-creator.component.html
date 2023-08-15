@@ -4,7 +4,7 @@
     <ul class="list-group">
       <li class="list-group-item">
         <div class="container row">
-          <input  class="col-sm-auto"  type="text"
+          <input  class="col-sm-auto form-text form-control-sm"  type="text"
                     formControlName = "topicTitle"
                     placeholder="Topic Title"/>
           <div *ngIf="!topicForm.get('topicTitle')?.valid"
@@ -22,11 +22,11 @@
         </div>
 
         <div class="row">
-          <p class="col-sm-auto">Song:</p>
+          <label class="form-label col-form-label-sm col-sm-auto">Song:</label>
           <input type="text"
                  formControlName="topicSongTitle"
-                 placeholder="song" class="col-sm-auto"/>
-          <button type="button" class="col-sm-auto">Save</button>
+                 placeholder="song" class="col-sm-auto form-text form-control-sm me-sm-1"/>
+          <button type="button" class="btn btn-outline-dark btn-sm col-sm-auto">Save</button>
         </div>
 
         <div class="container row mt-sm-1">
@@ -47,7 +47,7 @@
                                  *ngIf="showChordsSelectionMenu"></app-topic-chords-menu>
           <button type="button"
                   (click)="onAddChordsButtonClicked()"
-                  class="col-sm-auto">Add Chords</button>
+                  class="col-sm-auto btn-sm btn btn-outline-dark">Add Chords</button>
         </div>
 
 
@@ -72,11 +72,11 @@
                                         *ngIf="showChordChangesMenu"></app-topic-chord-changes-menu>
           <button type="button"
                   (click)="onAddChordChangesButtonClicked()"
-                  class="col-sm-auto">Add Changes</button>
+                  class="col-sm-auto btn btn-sm btn-outline-dark">Add Changes</button>
         </div>
 
         <div class="container">
-          <p class="col-sm-auto">Strum Patterns:</p>
+          <label class="col-sm-auto form-label col-form-label-sm">Strum Patterns:</label>
           <div formArrayName="strumPatterns">
             <li class="list-group-item" *ngFor="let strumInput of strumInputArray.controls; let i = index">
               <input type="text"
@@ -90,24 +90,26 @@
               </div>
             </li>
           </div>
-          <button type="button" class="col-sm-auto" (click)="onAddStrumPatternInputClicked()">Add</button>
+          <button type="button" class="col-sm-auto btn btn-sm btn-outline-dark"
+                  (click)="onAddStrumPatternInputClicked()">Add</button>
         </div>
 
         <div class="container">
-          <p>Metronome:</p>
+          <label class="form-label col-form-label-sm">Metronome:</label>
           <span class="row" *ngIf="selectedMetronomeValues">
-            <p class="col-sm-auto">BPM: {{selectedMetronomeValues.bpm}}</p>
-            <p class="col-sm-auto">Beats Per Measure: {{selectedMetronomeValues.beatsPerMeasure}}</p>
+            <label class="form-label col-form-label-sm col-sm-auto">BPM: {{selectedMetronomeValues.bpm}}</label>
+            <label class="form-label col-form-label-sm col-sm-auto">Beats Per Measure: {{selectedMetronomeValues.beatsPerMeasure}}</label>
           </span>
           <app-metronome-menu formControlName="topicMetronome" (metronomeMenuClosed)="closeMetronomeMenu($event)"
                               (metronomeMenuSaved)="saveMetronomeValues($event)"
                               [metronomeValueForEdit]="selectedMetronomeValues"
                               *ngIf="showMetronomeMenu"></app-metronome-menu>
-          <button class="col-sm-auto" (click)="onAddMetronomeClicked()">Add Metronome</button>
+          <button class="col-sm-auto btn btn-sm btn-outline-dark"
+                  (click)="onAddMetronomeClicked()">Add Metronome</button>
         </div>
 
         <div class="row">
-          <p>Duration: (hh:mm:ss)</p>
+          <label class="form-label col-form-label-sm">Duration: (hh:mm:ss)</label>
           <app-duration-input formControlName="topicTime"></app-duration-input>
           <div></div>
           <div *ngIf="!topicForm.get('topicTime')?.valid  && topicForm.get('topicTime')?.touched"

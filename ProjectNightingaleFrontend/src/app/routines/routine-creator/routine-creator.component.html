@@ -6,6 +6,7 @@
       <li class="list-group-item">
         <a>
           <input type="text"
+                 class="form-text form-control-sm"
                  formControlName="routineTitle"
                  placeholder="Routine Title">
           <div *ngIf="!routineCreationForm.get('routineTitle')?.valid"
@@ -38,8 +39,10 @@
     <ul class="list-group container">
       <li class="list-group-item">
         <a>
-          <button type="submit" class="me-sm-1" [disabled]="formSaveStatus">Save</button>
-          <button type="button" class="ms-sm-1" [disabled]="formSaveStatus" (click)="onAddTopicClicked()">Add Topic</button>
+          <button type="submit" class="btn btn-sm btn-outline-primary me-sm-1"
+                  [disabled]="formSaveStatus">Save</button>
+          <button type="button" class="btn btn-sm btn-outline-secondary ms-sm-1"
+                  [disabled]="formSaveStatus" (click)="onAddTopicClicked()">Add Topic</button>
         </a>
         <p *ngIf="formSaveStatus">Saving...</p>
       </li>
