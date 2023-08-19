@@ -51,16 +51,46 @@ export class TabCreatorService {
     return totalNumberOfChars;
   }
 
-  public calculateWordsInLyricsTab(tabTextAreaValue: string): number{
-    let texAfterWhiteSpaceRemoval: string = this.removeBlankLinesAfterRemovingTextsInParenthesis(tabTextAreaValue);
-    console.log(texAfterWhiteSpaceRemoval);
-    let totalWords: number = 0
-    let tabLines: string[] =  texAfterWhiteSpaceRemoval.split('\n');
+  getLyricsLines(tabTextAreaValue: string): Map<number,string>{
+    let textAfterWhiteSpaceRemoval: string = this.removeBlankLinesAfterRemovingTextsInParenthesis(tabTextAreaValue);
+    let tabLines: string[] = textAfterWhiteSpaceRemoval.split('\n');
+    let lines: Map<number, string> = new Map<number, string>();
+    let lineNo: number = 1;
     for (const line of tabLines) {
-        totalWords += this.calculateTotalWordsInALine(line);
+      lines.set(lineNo, line);
+      lineNo++;
     }
-    return totalWords;
+    return lines;
   }
+
+  calcLengthOfLongestLine(tabTextAreaValue: string): number{
+    let textAfterWhiteSpaceRemoval: string = this.removeBlankLinesAfterRemovingTextsInParenthesis(tabTextAreaValue);
+    let tabLines: string[] = textAfterWhiteSpaceRemoval.split('\n');
+    let longestLen: number = 0;
+    for (const tabLine of tabLines) {
+      let lenOfCurrentLine: number = this.calculateTotalWordsInALine(tabLine);
+      if(lenOfCurrentLine > longestLen){
+        longestLen = lenOfCurrentLine;
+      }
+    }
+    return longestLen;
+  }
+
+  calculateNumberOfLinesAfterWhiteSpaceRemoval(tabTextAreaValue: string): number{
+    let textAfterWhiteSpaceRemoval: string = this.removeBlankLinesAfterRemovingTextsInParenthesis(tabTextAreaValue);
+    let tabLines: string[] = textAfterWhiteSpaceRemoval.split('\n');
+    return tabLines.length;
+  }
+
+  // public calculateWordsInLyricsTab(tabTextAreaValue: string): number{
+  //   let texAfterWhiteSpaceRemoval: string = this.removeBlankLinesAfterRemovingTextsInParenthesis(tabTextAreaValue);
+  //   let totalWords: number = 0
+  //   let tabLines: string[] =  texAfterWhiteSpaceRemoval.split('\n');
+  //   for (const line of tabLines) {
+  //       totalWords += this.calculateTotalWordsInALine(line);
+  //   }
+  //   return totalWords;
+  // }
 
   private removeWordsInsideParenthesis(line: string): string{
     return line.replace(/\s*\([^()]*\)$/, '');

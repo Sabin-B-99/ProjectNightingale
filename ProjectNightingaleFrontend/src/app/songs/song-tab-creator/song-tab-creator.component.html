@@ -2,14 +2,23 @@
   <form [formGroup]="tabCreationForm"
         (ngSubmit)="onTabCreationFormSubmitted()">
     <ul class="list-group">
+      <li class="list-group-item align-items-end">
+        <div class="btn-group btn-group-sm" role="group">
+          <button (click)="onGuitarTabSelected()" type="button" class="btn btn-outline-dark btn-sm">Guitar</button>
+          <button (click)="onHarmonicaTabSelected()" type="button" class="btn btn-outline-dark btn-sm">Harmonica</button>
+        </div>
+      </li>
       <li class="list-group-item">
         <a>
-          <app-tab-required-details [tabRequiredDetailForm]="getTabRequiredDetailsForm()">
+          <app-tab-required-details
+            [harmonicaTabSelected]="harmonicaTabSelected"
+            [guitarTabSelected]="guitarTabSelected"
+            [tabRequiredDetailForm]="getTabRequiredDetailsForm()">
           </app-tab-required-details>
         </a>
       </li>
       <li class="list-group-item">
-        <div class="container">
+        <div *ngIf="!harmonicaTabTextAreaShown" class="container">
           <div class="row">
             <a class="col col-md-auto">
               <textarea [rows]="LYRICS_AREA_NO_OF_ROWS" [cols]="LYRICS_AREA_NO_OF_COLS" #lyricsTabArea
@@ -26,10 +35,37 @@
             </div>
           </div>
         </div>
+
+        <div *ngIf="harmonicaTabTextAreaShown">
+          <div formArrayName="harmonicaTabArea">
+              <span *ngFor="let inputRow of harmonicaTabInputRow.controls; let i = index">
+                <div class="container container-fluid" [formArrayName]="i">
+                  <span class="flex-row"
+                        *ngFor="let inputRowInputControl of inputRow.controls; let j = index">
+<!--                    TODO: Remove debug placeholder form the cells-->
+                    <input type="text"
+                           class="col col-sm-2"
+                           [placeholder]="i + ',' + j"
+                           [formControlName]="j">
+                  </span>
+                </div>
+              </span>
+          </div>
+        </div>
+
       </li>
       <li class="list-group-item">
-        <a>
-          <button class="btn btn-outline-primary">Submit</button>
+        <a *ngIf="guitarTabSelected || harmonicaTabTextAreaShown">
+          <span class="btn-group btn-group-sm">
+            <button class="btn btn-outline-primary">Submit</button>
+            <button *ngIf="harmonicaTabTextAreaShown"
+                    (click)="onHarmonicTabBackBtnClicked()"
+                    class="btn btn-outline-secondary">Back</button>
+          </span>
+        </a>
+        <a *ngIf="harmonicaTabSelected && !harmonicaTabTextAreaShown">
+          <button type="button" (click)="createHarmonicaTabInputTextArea()"
+                  class="btn btn-outline-secondary">Next</button>
         </a>
       </li>
     </ul>

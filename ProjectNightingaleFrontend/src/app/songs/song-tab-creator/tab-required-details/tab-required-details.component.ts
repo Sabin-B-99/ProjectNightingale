@@ -14,6 +14,12 @@ export class TabRequiredDetailsComponent implements OnInit{
   @Input()
   tabRequiredDetailForm: FormGroup;
 
+  @Input()
+  harmonicaTabSelected: boolean;
+
+  @Input()
+  guitarTabSelected: boolean;
+
   difficultyLevels: string[] = ['Easy', 'Intermediate', 'Hard']
   otherArtistJoinPhrase: string[] = ['feat.', 'with'];
   tuningTypes: string[] = [
@@ -22,6 +28,16 @@ export class TabRequiredDetailsComponent implements OnInit{
     'Tune 3',
     'Tune 4'
   ]
+
+  harmonicaTypes: string[] = [
+    'Chromatic',
+    'Diatonic'
+  ]
+
+  harmonicaKeyTypes: string[] = [
+    'A', 'B', 'C', 'D', 'E', 'F'
+  ]
+
 
   chordSelectionMenuOpened: boolean = false;
   selectedChordsForTabCreation: Chord[] = [];
@@ -38,12 +54,12 @@ export class TabRequiredDetailsComponent implements OnInit{
       'artistName': new FormControl<string>('', Validators.required),
       'otherArtistsJoinPhrase': new FormControl('', Validators.required),
       'otherArtistsNames': new FormArray<FormControl<string>>([]),
-      'tuningType': new FormControl<string>('', [Validators.required]),
+      'tuningOrHarmonicaType': new FormControl<string>('', [Validators.required]),
       'difficulty': new FormControl<string>('', [Validators.required]),
       'chords': new FormControl<IChords[]>([]),
+      'harmonicaKey': new FormControl<string>('')
     });
   }
-
   get otherArtistsNameInputArray(){
     return <FormArray>(this.tabRequiredDetailForm?.get('otherArtistsNames'));
   }

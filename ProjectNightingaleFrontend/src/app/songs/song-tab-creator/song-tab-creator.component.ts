@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
 import {TabRequiredDetailsComponent} from "./tab-required-details/tab-required-details.component";
 import {TabCreatorService} from "../../services/tab-creator.service";
 import {Subscription} from "rxjs";
@@ -19,6 +19,10 @@ export class SongTabCreatorComponent implements OnInit, OnDestroy, AfterViewInit
   readonly LYRICS_AREA_NO_OF_ROWS: number = 20;
   readonly LYRICS_AREA_NO_OF_COLS: number = 30;
 
+  guitarTabSelected: boolean = true;
+  harmonicaTabSelected: boolean = false;
+  harmonicaTabTextAreaShown: boolean = false;
+
   tabCreationForm: FormGroup;
 
 
@@ -32,7 +36,8 @@ export class SongTabCreatorComponent implements OnInit, OnDestroy, AfterViewInit
   ngOnInit(): void {
     this.tabCreationForm = new FormGroup({
       'tabRequiredDetails': TabRequiredDetailsComponent.getTabRequiredDetailForm(),
-      'tabLyricsArea': new FormControl<string>('', [Validators.required])
+      'tabLyricsArea': new FormControl<string>('', [Validators.required]),
+      'harmonicaTabArea': new FormArray<FormArray<FormControl<string>>>([])
     });
 
     this.selectedChordsForTabSubscription = this.tabCreatorService.selectedChordsChangedEvenEmitter
@@ -56,8 +61,6 @@ export class SongTabCreatorComponent implements OnInit, OnDestroy, AfterViewInit
   }
 
   onTabCreationFormSubmitted(){
-    let totalWords: number = this.tabCreatorService.calculateWordsInLyricsTab(this.tabCreationForm.get('tabLyricsArea')?.value);
-    console.log(totalWords);
   }
 
   getTabRequiredDetailsForm(): FormGroup{
@@ -84,5 +87,60 @@ export class SongTabCreatorComponent implements OnInit, OnDestroy, AfterViewInit
       this.lyricsTabTextArea.nativeElement.value += `${word}`;
       this.tabCreatorService.addLineBreaks(this.lyricsTabTextArea, this.LYRICS_TEMPLATE_WORDS_SEP_LINES);
     }
+  }
+
+  onGuitarTabSelected() {
+    this.harmonicaTabSelected = false;
+    this.harmonicaTabTextAreaShown = false;
+    this.guitarTabSelected = true;
+  }
+
+  onHarmonicaTabSelected() {
+    this.guitarTabSelected = false;
+    this.harmonicaTabSelected = true;
+  }
+
+  createHarmonicaTabInputTextArea() {
+    this.harmonicaTabTextAreaShown = true;
+
+    let lyricsTabValue: string = this.tabCreationForm.get('tabLyricsArea')?.value;
+    let totalNumOfLinesInTab: number = this.tabCreatorService.calculateNumberOfLinesAfterWhiteSpaceRemoval(lyricsTabValue);
+    let numOfWordsInLongestLine: number = this.tabCreatorService.calcLengthOfLongestLine(lyricsTabValue);
+    //let lines: Map<number, string> = this.tabCreatorService.getLyricsLines(lyricsTabValue);
+
+    this.addHarmonicaTabInputRow(totalNumOfLinesInTab * 2,
+      numOfWordsInLongestLine + 2);
+
+    //
+    // console.log(totalNumOfLinesInTab);
+    // console.log(numOfWordsInLongestLine);
+    // console.log(lines);
+  }
+
+  private addHarmonicaTabInputRow(numOfRowsToAdd: number, numOfColInEachRow: number){
+    let harmonicaTabInput: FormArray<FormArray<FormControl<string>>> =
+      (<FormArray<FormArray<FormControl<string>>>>this.tabCreationForm.get('harmonicaTabArea'));
+
+    let harmonicaTabInputRowInputElems: FormArray<FormControl<string>>;
+
+    for (let i = 0; i < numOfRowsToAdd; i++) {
+
+      harmonicaTabInput.push(
+        new FormArray<FormControl<string>>([])
+      );
+
+      harmonicaTabInputRowInputElems = harmonicaTabInput.at(i);
+      for (let j = 0; j < numOfColInEachRow; j++) {
+        harmonicaTabInputRowInputElems.push(new FormControl());
+      }
+    }
+  }
+
+  get harmonicaTabInputRow(): FormArray<FormArray<FormControl<string>>>{
+    return (<FormArray<FormArray<FormControl<string>>>>this.tabCreationForm.get('harmonicaTabArea'));
+  }
+
+  onHarmonicTabBackBtnClicked() {
+    this.harmonicaTabTextAreaShown = false;
   }
 }

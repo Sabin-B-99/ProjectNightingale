@@ -31,10 +31,22 @@
       </div>
 
       <div class="flex-row d-flex">
-        <span>
+        <span class="mx-sm-1" *ngIf="guitarTabSelected">
           <label class="form-label col-form-label-sm">Add Tuning: </label>
-          <select class="form-select" formControlName="tuningType">
+          <select class="form-select" formControlName="tuningOrHarmonicaType">
             <option *ngFor="let tuningName of tuningTypes">{{tuningName}}</option>
+          </select>
+        </span>
+        <span class="mx-sm-1" *ngIf="harmonicaTabSelected">
+          <label class="form-label col-form-label-sm">Harmonica Type: </label>
+          <select class="form-select" formControlName="tuningOrHarmonicaType">
+            <option *ngFor="let harmonicaType of harmonicaTypes">{{harmonicaType}}</option>
+          </select>
+        </span>
+        <span class="mx-sm-1" *ngIf="harmonicaTabSelected">
+          <label class="form-label col-form-label-sm">Harmonica Key: </label>
+          <select class="form-select" formControlName="harmonicaKey">
+            <option *ngFor="let harmonicaKey of harmonicaKeyTypes">{{harmonicaKey}}</option>
           </select>
         </span>
         <span class="mx-sm-1">
@@ -45,7 +57,7 @@
         </span>
       </div>
 
-      <button type="button" (click)="onOpenChordSelectionMenu()"
+      <button *ngIf="guitarTabSelected" type="button" (click)="onOpenChordSelectionMenu()"
               class="btn btn-outline-dark btn-sm mt-sm-1">Add chords</button>
     </li>
   </ul>
