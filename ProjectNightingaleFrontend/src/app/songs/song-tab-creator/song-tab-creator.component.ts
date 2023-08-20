@@ -37,7 +37,7 @@ export class SongTabCreatorComponent implements OnInit, OnDestroy, AfterViewInit
     this.tabCreationForm = new FormGroup({
       'tabRequiredDetails': TabRequiredDetailsComponent.getTabRequiredDetailForm(),
       'tabLyricsArea': new FormControl<string>('', [Validators.required]),
-      'harmonicaTabArea': new FormArray<FormArray<FormControl<string>>>([])
+      'harmonicaTabArea': new FormArray<FormArray<FormControl<string | null>>>([])
     });
 
     this.selectedChordsForTabSubscription = this.tabCreatorService.selectedChordsChangedEvenEmitter
@@ -106,32 +106,56 @@ export class SongTabCreatorComponent implements OnInit, OnDestroy, AfterViewInit
     let lyricsTabValue: string = this.tabCreationForm.get('tabLyricsArea')?.value;
     let totalNumOfLinesInTab: number = this.tabCreatorService.calculateNumberOfLinesAfterWhiteSpaceRemoval(lyricsTabValue);
     let numOfWordsInLongestLine: number = this.tabCreatorService.calcLengthOfLongestLine(lyricsTabValue);
-    //let lines: Map<number, string> = this.tabCreatorService.getLyricsLines(lyricsTabValue);
+    let lines: Map<number, string> = this.tabCreatorService.getLyricsLines(lyricsTabValue);
 
     this.addHarmonicaTabInputRow(totalNumOfLinesInTab * 2,
-      numOfWordsInLongestLine + 2);
-
-    //
-    // console.log(totalNumOfLinesInTab);
-    // console.log(numOfWordsInLongestLine);
-    // console.log(lines);
+      numOfWordsInLongestLine + 2, lines);
   }
 
-  private addHarmonicaTabInputRow(numOfRowsToAdd: number, numOfColInEachRow: number){
-    let harmonicaTabInput: FormArray<FormArray<FormControl<string>>> =
-      (<FormArray<FormArray<FormControl<string>>>>this.tabCreationForm.get('harmonicaTabArea'));
+  private addHarmonicaTabInputRow(numOfRowsToAdd: number, numOfColInEachRow: number, lyricLines: Map<number, string>){
+    let harmonicaTabInput: FormArray<FormArray<FormControl<string | null>>> =
+      (<FormArray<FormArray<FormControl<string | null>>>>this.tabCreationForm.get('harmonicaTabArea'));
 
-    let harmonicaTabInputRowInputElems: FormArray<FormControl<string>>;
+    let harmonicaTabInputRowInputElems: FormArray<FormControl<string | null>>;
 
     for (let i = 0; i < numOfRowsToAdd; i++) {
-
       harmonicaTabInput.push(
-        new FormArray<FormControl<string>>([])
+        new FormArray<FormControl<string | null>>([])
       );
-
       harmonicaTabInputRowInputElems = harmonicaTabInput.at(i);
       for (let j = 0; j < numOfColInEachRow; j++) {
         harmonicaTabInputRowInputElems.push(new FormControl());
+        if(i % 2 !== 0){
+          harmonicaTabInputRowInputElems.disable();
+        }
+      }
+    }
+    this.initializeCellsWithLyrics(harmonicaTabInput ,lyricLines);
+  }
+
+  private initializeCellsWithLyrics(harmonicaTabInput: FormArray<FormArray<FormControl<string | null>>>,
+                                    lines: Map<number, string>){
+    let totalNumOfLinesInTab: number = lines.size;
+    let currentLine: string;
+    let wordsInCurrentLine: string[];
+    let harmonicaTabInputRowInputElems: FormArray<FormControl<string | null>>;
+    let currentInputElement: FormControl<string|null>;
+
+    let j: number;
+    for (let i = 0; i < totalNumOfLinesInTab; i++) {
+      harmonicaTabInputRowInputElems = harmonicaTabInput.at(((i + 1) * 2) - 1);
+      currentLine = lines.get(i) || '';
+      j = 0;
+      if(currentLine.trim().length > 0 && harmonicaTabInputRowInputElems){
+        wordsInCurrentLine  = this.tabCreatorService.getWordsInLine(currentLine);
+        for (const word of wordsInCurrentLine) {
+          currentInputElement = harmonicaTabInputRowInputElems.at(j+1);
+          if(currentInputElement){
+            currentInputElement.setValue(word);
+            currentInputElement.disable();
+          }
+          j++;
+        }
       }
     }
   }

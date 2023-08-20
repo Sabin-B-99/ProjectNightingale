@@ -42,10 +42,8 @@
                 <div class="container container-fluid" [formArrayName]="i">
                   <span class="flex-row"
                         *ngFor="let inputRowInputControl of inputRow.controls; let j = index">
-<!--                    TODO: Remove debug placeholder form the cells-->
                     <input type="text"
                            class="col col-sm-2"
-                           [placeholder]="i + ',' + j"
                            [formControlName]="j">
                   </span>
                 </div>

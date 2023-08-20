@@ -1,4 +1,4 @@
-import {ElementRef, EventEmitter, Injectable} from '@angular/core';
+import {ElementRef, Injectable} from '@angular/core';
 import {Chord} from "../models/chord-model/chord";
 import {Subject} from "rxjs";
 
@@ -55,7 +55,7 @@ export class TabCreatorService {
     let textAfterWhiteSpaceRemoval: string = this.removeBlankLinesAfterRemovingTextsInParenthesis(tabTextAreaValue);
     let tabLines: string[] = textAfterWhiteSpaceRemoval.split('\n');
     let lines: Map<number, string> = new Map<number, string>();
-    let lineNo: number = 1;
+    let lineNo: number = 0;
     for (const line of tabLines) {
       lines.set(lineNo, line);
       lineNo++;
@@ -108,5 +108,9 @@ export class TabCreatorService {
       }
     }
     return remLinesAfterRemoval.join('\n');
+  }
+
+  getWordsInLine(line: string): string[] {
+    return line.split(/\b\s+/);
   }
 }
