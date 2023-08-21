@@ -40,18 +40,6 @@
         </div>
 
         <div *ngIf="harmonicaTabTextAreaShown">
-<!--          <div formArrayName="harmonicaTabArea">-->
-<!--              <span *ngFor="let inputRow of harmonicaTabInputRow.controls; let i = index">-->
-<!--                <div class="container container-fluid" [formArrayName]="i">-->
-<!--                  <span class="flex-row"-->
-<!--                        *ngFor="let inputRowInputControl of inputRow.controls; let j = index">-->
-<!--                    <input type="text"-->
-<!--                           class="col col-sm-2"-->
-<!--                           [formControlName]="j">-->
-<!--                  </span>-->
-<!--                </div>-->
-<!--              </span>-->
-<!--          </div>-->
           <app-harmonica-tab-input-array [numOfRows]="numOfRowsHarmonicaInputArray"
                                          [numOfCols]="numOfColsHarmonicaInputArray"
                                          [lyricLines]="harmonicaLyricsLines"
