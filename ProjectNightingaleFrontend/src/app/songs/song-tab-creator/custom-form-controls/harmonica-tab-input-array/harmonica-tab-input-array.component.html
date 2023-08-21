@@ -1,0 +1,14 @@
+<div>
+  <span *ngFor="let inputRow of harmonicaTabInputRow; let i = index">
+    <div class="container container-fluid">
+      <span class="flex-row"
+            *ngFor="let inputRowInputControl of inputRow; let j = index">
+        <input type="text"
+               [ngModel]="getWordForInputCellIfRequiredAt(i,j)"
+               [disabled]="disable(i)"
+               (change)="addCellValue($event, i, j)"
+               class="col col-sm-2">
+      </span>
+    </div>
+  </span>
+</div>

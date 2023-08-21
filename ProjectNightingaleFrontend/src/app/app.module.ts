@@ -31,6 +31,7 @@ import { DurationInputComponent } from './routines/topic-creator/custom-form-con
 import {HttpClientModule} from "@angular/common/http";
 import { SongTabCreatorComponent } from './songs/song-tab-creator/song-tab-creator.component';
 import { TabRequiredDetailsComponent } from './songs/song-tab-creator/tab-required-details/tab-required-details.component';
+import { HarmonicaTabInputArrayComponent } from './songs/song-tab-creator/custom-form-controls/harmonica-tab-input-array/harmonica-tab-input-array.component';
 
 @NgModule({
   declarations: [
@@ -60,6 +61,7 @@ import { TabRequiredDetailsComponent } from './songs/song-tab-creator/tab-requir
     DurationInputComponent,
     SongTabCreatorComponent,
     TabRequiredDetailsComponent,
+    HarmonicaTabInputArrayComponent,
   ],
     imports: [
         BrowserModule,

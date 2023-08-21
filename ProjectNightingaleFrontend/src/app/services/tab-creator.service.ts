@@ -43,6 +43,14 @@ export class TabCreatorService {
     }
   }
 
+  public appendLineBreaks(strToAppendTo: string, numOfBreaks: number){
+    let stringAfterAppendingLineBreaks: string = strToAppendTo;
+    for (let i = 0; i < numOfBreaks; i++) {
+      stringAfterAppendingLineBreaks += '\n';
+    }
+    return stringAfterAppendingLineBreaks;
+  }
+
   public findNumberOfCharacters(lines: string[]): number{
     let totalNumberOfChars: number = 0;
     for (const line of lines) {

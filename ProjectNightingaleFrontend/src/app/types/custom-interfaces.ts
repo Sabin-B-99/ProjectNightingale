@@ -72,6 +72,16 @@ interface IChords{
   chordKeyId: number
 }
 
+interface ICellNumber{
+  row: number,
+  col: number
+}
+
+interface ITableFormCellValue{
+  value: string,
+  cellNum: ICellNumber
+}
+
 export {
   IMetronomeValues,
   IChordRoot,
@@ -83,5 +93,7 @@ export {
   IChords,
   IChordChanges,
   IStrumPatterns,
-  ITopicDTO
+  ITopicDTO,
+  ICellNumber,
+  ITableFormCellValue
 }

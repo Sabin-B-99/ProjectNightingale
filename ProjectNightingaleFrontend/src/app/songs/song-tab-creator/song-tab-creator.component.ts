@@ -4,6 +4,7 @@ import {TabRequiredDetailsComponent} from "./tab-required-details/tab-required-d
 import {TabCreatorService} from "../../services/tab-creator.service";
 import {Subscription} from "rxjs";
 import {Chord} from "../../models/chord-model/chord";
+import {ITableFormCellValue} from "../../types/custom-interfaces";
 
 @Component({
   selector: 'app-song-tab-creator',
@@ -29,6 +30,9 @@ export class SongTabCreatorComponent implements OnInit, OnDestroy, AfterViewInit
   selectedChordsForTabSubscription: Subscription;
   selectedChordsForTab: Chord[] = [];
 
+  numOfRowsHarmonicaInputArray: number;
+  numOfColsHarmonicaInputArray: number;
+  harmonicaLyricsLines: Map<number, string>;
 
   constructor(private tabCreatorService: TabCreatorService) {
   }
@@ -37,7 +41,8 @@ export class SongTabCreatorComponent implements OnInit, OnDestroy, AfterViewInit
     this.tabCreationForm = new FormGroup({
       'tabRequiredDetails': TabRequiredDetailsComponent.getTabRequiredDetailForm(),
       'tabLyricsArea': new FormControl<string>('', [Validators.required]),
-      'harmonicaTabArea': new FormArray<FormArray<FormControl<string | null>>>([])
+      // 'harmonicaTabArea': new FormArray<FormArray<FormControl<string | null>>>([])
+      'harmonicaTabArea': new FormControl<ITableFormCellValue[]>([])
     });
 
     this.selectedChordsForTabSubscription = this.tabCreatorService.selectedChordsChangedEvenEmitter
@@ -50,7 +55,6 @@ export class SongTabCreatorComponent implements OnInit, OnDestroy, AfterViewInit
   }
 
   ngAfterViewInit() {
-    this.createTabTemplate();
     this.tabCreatorService.setCursorAt(this.lyricsTabTextArea,2,0);
   }
 
@@ -61,6 +65,7 @@ export class SongTabCreatorComponent implements OnInit, OnDestroy, AfterViewInit
   }
 
   onTabCreationFormSubmitted(){
+    console.log(this.tabCreationForm.getRawValue());
   }
 
   getTabRequiredDetailsForm(): FormGroup{
@@ -82,11 +87,15 @@ export class SongTabCreatorComponent implements OnInit, OnDestroy, AfterViewInit
     }
   }
 
-  private createTabTemplate(){
+  createTabTemplate(): string{
+    let templateString: string = '';
     for (let word of this.LYRICS_TEMPLATE_WORDS) {
-      this.lyricsTabTextArea.nativeElement.value += `${word}`;
-      this.tabCreatorService.addLineBreaks(this.lyricsTabTextArea, this.LYRICS_TEMPLATE_WORDS_SEP_LINES);
+      templateString += `${word}`;
+      for (let i = 0; i < this.LYRICS_TEMPLATE_WORDS_SEP_LINES; i++) {
+        templateString += '\n';
+      }
     }
+    return templateString;
   }
 
   onGuitarTabSelected() {
@@ -101,15 +110,19 @@ export class SongTabCreatorComponent implements OnInit, OnDestroy, AfterViewInit
   }
 
   createHarmonicaTabInputTextArea() {
-    this.harmonicaTabTextAreaShown = true;
 
     let lyricsTabValue: string = this.tabCreationForm.get('tabLyricsArea')?.value;
     let totalNumOfLinesInTab: number = this.tabCreatorService.calculateNumberOfLinesAfterWhiteSpaceRemoval(lyricsTabValue);
     let numOfWordsInLongestLine: number = this.tabCreatorService.calcLengthOfLongestLine(lyricsTabValue);
     let lines: Map<number, string> = this.tabCreatorService.getLyricsLines(lyricsTabValue);
 
-    this.addHarmonicaTabInputRow(totalNumOfLinesInTab * 2,
-      numOfWordsInLongestLine + 2, lines);
+    // this.addHarmonicaTabInputRow(totalNumOfLinesInTab * 2,
+    //   numOfWordsInLongestLine + 2, lines);
+
+    this.numOfRowsHarmonicaInputArray = totalNumOfLinesInTab * 2;
+    this.numOfColsHarmonicaInputArray = numOfWordsInLongestLine + 2;
+    this.harmonicaLyricsLines = lines;
+    this.harmonicaTabTextAreaShown = true;
   }
 
   private addHarmonicaTabInputRow(numOfRowsToAdd: number, numOfColInEachRow: number, lyricLines: Map<number, string>){
@@ -151,8 +164,7 @@ export class SongTabCreatorComponent implements OnInit, OnDestroy, AfterViewInit
         for (const word of wordsInCurrentLine) {
           currentInputElement = harmonicaTabInputRowInputElems.at(j+1);
           if(currentInputElement){
-            currentInputElement.setValue(word);
-            currentInputElement.disable();
+            currentInputElement.patchValue(word);
           }
           j++;
         }

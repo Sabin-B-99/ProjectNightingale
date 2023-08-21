@@ -21,7 +21,10 @@
         <div *ngIf="!harmonicaTabTextAreaShown" class="container">
           <div class="row">
             <a class="col col-md-auto">
-              <textarea [rows]="LYRICS_AREA_NO_OF_ROWS" [cols]="LYRICS_AREA_NO_OF_COLS" #lyricsTabArea
+              <textarea [rows]="LYRICS_AREA_NO_OF_ROWS"
+                        [cols]="LYRICS_AREA_NO_OF_COLS"
+                        #lyricsTabArea
+                        [ngModel]="createTabTemplate()"
                         class="form-text"
                        formControlName="tabLyricsArea">
               </textarea>
@@ -37,18 +40,23 @@
         </div>
 
         <div *ngIf="harmonicaTabTextAreaShown">
-          <div formArrayName="harmonicaTabArea">
-              <span *ngFor="let inputRow of harmonicaTabInputRow.controls; let i = index">
-                <div class="container container-fluid" [formArrayName]="i">
-                  <span class="flex-row"
-                        *ngFor="let inputRowInputControl of inputRow.controls; let j = index">
-                    <input type="text"
-                           class="col col-sm-2"
-                           [formControlName]="j">
-                  </span>
-                </div>
-              </span>
-          </div>
+<!--          <div formArrayName="harmonicaTabArea">-->
+<!--              <span *ngFor="let inputRow of harmonicaTabInputRow.controls; let i = index">-->
+<!--                <div class="container container-fluid" [formArrayName]="i">-->
+<!--                  <span class="flex-row"-->
+<!--                        *ngFor="let inputRowInputControl of inputRow.controls; let j = index">-->
+<!--                    <input type="text"-->
+<!--                           class="col col-sm-2"-->
+<!--                           [formControlName]="j">-->
+<!--                  </span>-->
+<!--                </div>-->
+<!--              </span>-->
+<!--          </div>-->
+          <app-harmonica-tab-input-array [numOfRows]="numOfRowsHarmonicaInputArray"
+                                         [numOfCols]="numOfColsHarmonicaInputArray"
+                                         [lyricLines]="harmonicaLyricsLines"
+                                         formControlName="harmonicaTabArea">
+          </app-harmonica-tab-input-array>
         </div>
 
       </li>
