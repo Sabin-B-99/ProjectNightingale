@@ -3,6 +3,7 @@ import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
 import {IChords} from "../../../types/custom-interfaces";
 import {Chord} from "../../../models/chord-model/chord";
 import {TabCreatorService} from "../../../services/tab-creator.service";
+import {noWhiteSpaceValidator} from "../../../validators/no-white-space-validator.directive";
 
 @Component({
   selector: 'app-tab-required-details',
@@ -19,7 +20,6 @@ export class TabRequiredDetailsComponent implements OnInit{
 
   @Input()
   guitarTabSelected: boolean;
-
   difficultyLevels: string[] = ['Easy', 'Intermediate', 'Hard']
   otherArtistJoinPhrase: string[] = ['feat.', 'with'];
   tuningTypes: string[] = [
@@ -30,8 +30,8 @@ export class TabRequiredDetailsComponent implements OnInit{
   ]
 
   harmonicaTypes: string[] = [
-    'Chromatic',
-    'Diatonic'
+    'Diatonic',
+    'Chromatic'
   ]
 
   harmonicaKeyTypes: string[] = [
@@ -50,14 +50,14 @@ export class TabRequiredDetailsComponent implements OnInit{
 
   static getTabRequiredDetailForm(): FormGroup{
     return new FormGroup({
-      'songTitle': new FormControl<string>('', Validators.required),
-      'artistName': new FormControl<string>('', Validators.required),
-      'otherArtistsJoinPhrase': new FormControl('', Validators.required),
+      'songTitle': new FormControl<string>('', [Validators.required, noWhiteSpaceValidator()]),
+      'artistName': new FormControl<string>('', [Validators.required, noWhiteSpaceValidator()]),
+      'otherArtistsJoinPhrase': new FormControl(''),
       'otherArtistsNames': new FormArray<FormControl<string>>([]),
       'tuningOrHarmonicaType': new FormControl<string>('', [Validators.required]),
-      'difficulty': new FormControl<string>('', [Validators.required]),
+      'difficulty': new FormControl<string>('' , [Validators.required]),
       'chords': new FormControl<IChords[]>([]),
-      'harmonicaKey': new FormControl<string>('')
+      'harmonicaKey': new FormControl<string>('', [Validators.required])
     });
   }
   get otherArtistsNameInputArray(){
@@ -66,7 +66,7 @@ export class TabRequiredDetailsComponent implements OnInit{
 
   addOtherArtistsInput() {
     this.otherArtistsNameInputArray.push(
-      new FormControl<string>('', [Validators.required])
+      new FormControl<string>('', [Validators.required, noWhiteSpaceValidator()])
     )
   }
 
