@@ -1,0 +1,14 @@
+.input-array-cells{
+  width: 5rem;
+}
+
+.input-array-cells-container{
+  height: 50rem;
+  width: 40rem;
+  overflow-x: scroll;
+  overflow-y: scroll;
+}
+
+.input-array-row-cells-container{
+  white-space: nowrap;
+}
