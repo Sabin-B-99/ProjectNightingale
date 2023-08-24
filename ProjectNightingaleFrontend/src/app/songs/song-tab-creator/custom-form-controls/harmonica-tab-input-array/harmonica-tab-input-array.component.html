@@ -1,9 +1,9 @@
 <div class="input-array-cells-container">
   <div class="input-array-row-cells-container" *ngFor="let inputRow of harmonicaTabInputRow; let i = index">
-    <input type="text" class="input-array-cells"
+    <input type="text" class="input-array-cells required-empty"
            *ngFor="let inputRowInputControl of inputRow; let j = index"
            (change)="addCellValue($event, i, j)"
-           [disabled]="disable(i)"
+           [disabled]="disable(i,j)"
            [ngModel]="getWordForInputCellIfRequiredAt(i,j)">
   </div>
 </div>

@@ -1,4 +1,4 @@
-import {FormArray, FormControl, FormGroup} from "@angular/forms";
+import {Form, FormArray, FormControl, FormGroup} from "@angular/forms";
 
 interface IMetronomeValues {
   bpm: number;
@@ -57,6 +57,23 @@ interface ITopicForm {
   topicTime: FormControl<string | null>
 }
 
+interface ISongTabCreationForm{
+  tabRequiredDetails: FormGroup<ISongTabCreationRequiredDetailsForm>,
+  tabLyricsArea: FormControl<string | null>,
+  harmonicaTabArea: FormControl<ITableFormCellValue[] | null>
+}
+
+interface ISongTabCreationRequiredDetailsForm{
+  songTitle: FormControl<string | null>,
+  artistName: FormControl<string | null>,
+  otherArtistsJoinPhrase: FormControl<string | null>,
+  otherArtistsNames: FormArray<FormControl<string>>,
+  tuningOrHarmonicaType: FormControl<string | null>,
+  difficulty: FormControl<string | null>,
+  harmonicaKey: FormControl<string | null>,
+  capoFret: FormControl<string| null>
+}
+
 interface IChordChanges{
   changeFrom: IChords,
   changeTo: IChords
@@ -95,5 +112,7 @@ export {
   IStrumPatterns,
   ITopicDTO,
   ICellNumber,
-  ITableFormCellValue
+  ITableFormCellValue,
+  ISongTabCreationForm,
+  ISongTabCreationRequiredDetailsForm
 }

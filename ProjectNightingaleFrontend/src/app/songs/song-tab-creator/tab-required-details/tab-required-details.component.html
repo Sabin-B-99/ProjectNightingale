@@ -4,15 +4,13 @@
       <div class="d-flex flex-row ">
         <span>
           <label class="form-label mx-sm-1">Song</label>
-          <label *ngIf="tabRequiredDetailForm.get('songTitle')?.touched
-          && !tabRequiredDetailForm.get('songTitle')?.valid"
+          <label *ngIf="!tabRequiredDetailForm.get('songTitle')?.valid"
                  class="form-label text-danger">*</label>
           <input class="form-text" formControlName="songTitle">
         </span>
         <span>
           <label class="form-label mx-sm-1">Artist</label>
-          <label *ngIf="tabRequiredDetailForm.get('artistName')?.touched
-          && !tabRequiredDetailForm.get('artistName')?.valid"
+          <label *ngIf="!tabRequiredDetailForm.get('artistName')?.valid"
                  class="form-label text-danger">*</label>
           <input class="form-text" formControlName="artistName">
         </span>
@@ -27,7 +25,7 @@
         </div>
         <div class="d-flex flex-column" formArrayName="otherArtistsNames">
           <a *ngFor="let otherArtistNameInput of otherArtistsNameInputArray.controls; let i= index">
-            <label *ngIf="otherArtistsNameInputArray.at(i)?.touched && !otherArtistsNameInputArray.at(i)?.valid"
+            <label *ngIf="!otherArtistsNameInputArray.at(i)?.valid"
                    class="form-label text-danger">*</label>
             <input class="form-text" [formControlName]="i">
             <button class="btn btn-outline-danger btn-sm" (click)="removeArtistNameInputArray(i)">X</button>
@@ -39,42 +37,40 @@
         </div>
       </div>
 
-      <div class="flex-row d-flex">
+      <div *ngIf="!lyricsSelected">
+        <div class="flex-row d-flex">
         <span class="mx-sm-1" *ngIf="guitarTabSelected">
           <label class="form-label col-form-label-sm">Add Tuning: </label>
           <select [ngModel]="tuningTypes.at(0)" class="form-select" formControlName="tuningOrHarmonicaType">
             <option *ngFor="let tuningName of tuningTypes">{{tuningName}}</option>
           </select>
         </span>
-        <span class="mx-sm-1" *ngIf="harmonicaTabSelected">
+          <span class="mx-sm-1" *ngIf="guitarTabSelected">
+          <label class="form-label col-form-label-sm">Capo: </label>
+          <select [ngModel]="capos.at(0)" class="form-select" formControlName="capoFret">
+            <option *ngFor="let capo of capos">{{capo}}</option>
+          </select>
+        </span>
+          <span class="mx-sm-1" *ngIf="harmonicaTabSelected">
           <label class="form-label col-form-label-sm">Harmonica Type: </label>
           <select [ngModel]="harmonicaTypes.at(0)" class="form-select" formControlName="tuningOrHarmonicaType">
             <option *ngFor="let harmonicaType of harmonicaTypes">{{harmonicaType}}</option>
           </select>
         </span>
-        <span class="mx-sm-1" *ngIf="harmonicaTabSelected">
+          <span class="mx-sm-1" *ngIf="harmonicaTabSelected">
           <label class="form-label col-form-label-sm">Harmonica Key: </label>
           <select [ngModel]="harmonicaKeyTypes.at(0)" class="form-select" formControlName="harmonicaKey">
             <option *ngFor="let harmonicaKey of harmonicaKeyTypes">{{harmonicaKey}}</option>
           </select>
         </span>
-        <span class="mx-sm-1">
+          <span class="mx-sm-1">
           <label class="form-label col-form-label-sm">Select Difficulty:</label>
           <select [ngModel]="difficultyLevels.at(0)" class="form-select" formControlName="difficulty">
             <option *ngFor="let difficulty of difficultyLevels">{{difficulty}}</option>
           </select>
         </span>
+        </div>
       </div>
-
-      <button *ngIf="guitarTabSelected" type="button" (click)="onOpenChordSelectionMenu()"
-              class="btn btn-outline-dark btn-sm mt-sm-1">Add chords</button>
     </li>
   </ul>
-
-  <div *ngIf="chordSelectionMenuOpened">
-    <app-topic-chords-menu [selectedChordsForEdit]="selectedChordsForTabCreation"
-                           (close)="onCloseChordSelectionMenu()"
-                           (save)="onChordsSaved($event)"></app-topic-chords-menu>
-  </div>
-
 </form>

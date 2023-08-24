@@ -7,6 +7,26 @@ import {Subject} from "rxjs";
 })
 export class TabCreatorService {
 
+  private difficultyLevels: string[] = ['Easy', 'Intermediate', 'Hard']
+  private otherArtistJoinPhrase: string[] = ['feat.', 'with'];
+  private tuningTypes: string[] = [
+    'Standard',
+    'Not Standard',
+    'Tune 3',
+    'Tune 4'
+  ]
+  private harmonicaTypes: string[] = [
+    'Diatonic',
+    'Chromatic'
+  ]
+  private harmonicaKeyTypes: string[] = [
+    'A', 'B', 'C', 'D', 'E', 'F'
+  ]
+
+  private capos: string[] = [
+    '1st fret', '2nd fret', '3rd fret', '4th fret'
+  ];
+
   selectedChordsForTabs: Chord[] = [];
   selectedChordsChangedEvenEmitter: Subject<Chord[]> = new Subject<Chord[]>();
   constructor() { }
@@ -118,7 +138,31 @@ export class TabCreatorService {
     return remLinesAfterRemoval.join('\n');
   }
 
-  getWordsInLine(line: string): string[] {
-    return line.split(/\b\s+/);
+  // getWordsInLine(line: string): string[] {
+  //   return line.split(/\b\s+/);
+  // }
+
+
+  getOtherArtistsJoinPhrase(){
+    return this.otherArtistJoinPhrase.slice();
+  }
+
+  getTuningTypes(){
+    return this.tuningTypes.slice();
+  }
+
+  getHarmonicaTypes(){
+    return this.harmonicaTypes.slice();
+  }
+  getDifficultyLevels(){
+    return this.difficultyLevels.slice();
+  }
+
+  getHarmonicaKeyTypes(){
+    return this.harmonicaKeyTypes.slice();
+  }
+
+  getCapos() {
+    return this.capos.slice();
   }
 }

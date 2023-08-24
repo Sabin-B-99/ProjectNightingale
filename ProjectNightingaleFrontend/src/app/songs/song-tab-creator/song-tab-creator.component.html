@@ -6,6 +6,7 @@
         <div class="btn-group btn-group-sm" role="group">
           <button (click)="onGuitarTabSelected()" type="button" class="btn btn-outline-dark btn-sm">Guitar</button>
           <button (click)="onHarmonicaTabSelected()" type="button" class="btn btn-outline-dark btn-sm">Harmonica</button>
+          <button (click)="onLyricsSelected()" type="button" class="btn btn-outline-dark btn-sm">Lyrics</button>
         </div>
       </li>
       <li class="list-group-item">
@@ -13,6 +14,7 @@
           <app-tab-required-details
             [harmonicaTabSelected]="harmonicaTabSelected"
             [guitarTabSelected]="guitarTabSelected"
+            [lyricsSelected]="lyricsSelected"
             [tabRequiredDetailForm]="getTabRequiredDetailsForm()">
           </app-tab-required-details>
         </a>
@@ -20,7 +22,7 @@
       <li class="list-group-item">
         <div *ngIf="!harmonicaTabTextAreaShown" class="container">
           <div class="row">
-            <a class="col col-md-auto">
+            <div class="col col-md-auto">
               <textarea [rows]="LYRICS_AREA_NO_OF_ROWS"
                         [cols]="LYRICS_AREA_NO_OF_COLS"
                         #lyricsTabArea
@@ -28,7 +30,12 @@
                         class="form-text"
                        formControlName="tabLyricsArea">
               </textarea>
-            </a>
+              <div>
+                <label *ngIf="tabCreationForm.get('tabLyricsArea')?.errors?.['bracketsMismatch']"
+                       class="form-label text-danger">*Unbalanced brackets</label>
+              </div>
+            </div>
+
             <div class="col row-cols-2 col-md-4">
               <button type="button" *ngFor="let selectedChord of selectedChordsForTab"
                       class="btn btn-outline-dark btn-sm"
@@ -45,11 +52,12 @@
                                          [lyricLines]="harmonicaLyricsLines"
                                          formControlName="harmonicaTabArea">
           </app-harmonica-tab-input-array>
+          <label *ngIf="tabCreationForm.get('harmonicaTabArea')?.errors?.['requiredCellsEmpty']"
+                 class="form-label text-danger">*Cell above any cell with word/s should not be empty.</label>
         </div>
-
       </li>
       <li class="list-group-item">
-        <a *ngIf="guitarTabSelected || harmonicaTabTextAreaShown">
+        <a *ngIf="guitarTabSelected || harmonicaTabTextAreaShown || lyricsSelected">
           <span class="btn-group btn-group-sm">
             <button class="btn btn-outline-primary">Submit</button>
             <button *ngIf="harmonicaTabTextAreaShown"

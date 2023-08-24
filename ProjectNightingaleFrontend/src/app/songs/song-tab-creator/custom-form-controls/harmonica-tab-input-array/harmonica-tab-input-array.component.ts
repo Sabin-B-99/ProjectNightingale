@@ -1,18 +1,32 @@
 import {AfterContentInit, Component, Input, OnInit} from '@angular/core';
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
+import {
+  AbstractControl,
+  ControlValueAccessor,
+  NG_VALIDATORS,
+  NG_VALUE_ACCESSOR,
+  ValidationErrors,
+  Validator
+} from "@angular/forms";
 import {ICellNumber, ITableFormCellValue} from "../../../../types/custom-interfaces";
 
 @Component({
   selector: 'app-harmonica-tab-input-array',
   templateUrl: './harmonica-tab-input-array.component.html',
   styleUrls: ['./harmonica-tab-input-array.component.css'],
-  providers:[{
+  providers:[
+    {
     provide: NG_VALUE_ACCESSOR,
     multi: true,
     useExisting: HarmonicaTabInputArrayComponent
-  }]
+    },
+    {
+      provide: NG_VALIDATORS,
+      multi: true,
+      useExisting: HarmonicaTabInputArrayComponent
+    }
+  ]
 })
-export class HarmonicaTabInputArrayComponent implements ControlValueAccessor, OnInit, AfterContentInit{
+export class HarmonicaTabInputArrayComponent implements ControlValueAccessor, OnInit, AfterContentInit, Validator{
 
   @Input() numOfRows: number;
   @Input() numOfCols: number;
@@ -21,6 +35,9 @@ export class HarmonicaTabInputArrayComponent implements ControlValueAccessor, On
 
   harmonicaTabInput: number[][] = [];
   harmonicaLyricsWordsInEachLine: string[][];
+
+  private lastColNum: number = 0;
+  private numOfRequiredCellsEmpty: number = 0;
 
 
 
@@ -38,11 +55,17 @@ export class HarmonicaTabInputArrayComponent implements ControlValueAccessor, On
   ngOnInit() {
     if(this.lyricLines){
       this.harmonicaLyricsWordsInEachLine = this.buildLyricsWords(this.lyricLines);
+      this.numOfRequiredCellsEmpty = this.harmonicaLyricsWordsInEachLine.reduce(
+        (currentCount: number, row: string[]) => currentCount + row.length , 0
+      )
     }
     for (let i = 0; i < this.numOfRows; i++) {
       this.harmonicaTabInput.push([]);
       for (let j = 0; j < this.numOfCols; j++) {
         this.harmonicaTabInput.at(i)?.push(j);
+        if(this.lastColNum < j){
+          this.lastColNum = j;
+        }
       }
     }
   }
@@ -90,7 +113,11 @@ export class HarmonicaTabInputArrayComponent implements ControlValueAccessor, On
     const cellValue: string = (<HTMLInputElement>$event.target).value;
     this.markAsTouched();
     if(!this.isDisabled){
-      if(cellValue.trim().length > 0 && !this.findIfExistsAndReplaceValueAt(row, col, cellValue)){
+      let replaced: boolean = this.findIfExistsAndReplaceValueAt(row, col, cellValue);
+      if(replaced){
+        this.numOfRequiredCellsEmpty--;
+      }
+      if(cellValue.trim().length > 0 && !replaced){
         this.tableValues.push(
           {
             value: cellValue,
@@ -100,11 +127,14 @@ export class HarmonicaTabInputArrayComponent implements ControlValueAccessor, On
             }
           }
         );
+        this.numOfRequiredCellsEmpty--;
       }
 
       if(cellValue.trim().length === 0){
-        this.remCellsReplacedWithWhiteSpaceVal(row,col);
+        this.removeCellsReplacedWithWhiteSpaceVal(row,col);
+        this.numOfRequiredCellsEmpty++;
       }
+
       this.onChange(this.tableValues);
     }
   }
@@ -120,7 +150,7 @@ export class HarmonicaTabInputArrayComponent implements ControlValueAccessor, On
     return replaced;
   }
 
-  private remCellsReplacedWithWhiteSpaceVal(row: number, col: number){
+  private removeCellsReplacedWithWhiteSpaceVal(row: number, col: number){
     let indexToRemove: number = 0;
     for (const cellValue of this.tableValues) {
       if(cellValue.cellNum.row === row && cellValue.cellNum.col === col){
@@ -179,8 +209,16 @@ export class HarmonicaTabInputArrayComponent implements ControlValueAccessor, On
     }
     return wordToAdd;
   }
-  disable(row: number): boolean {
-    return row % 2 === 1;
+  disable(row: number, col: number): boolean {
+    let actualRowInLyrics: ICellNumber = this.findInverseActualRowInVIew(row, col);
+    if(col === 0 || col === this.lastColNum){
+      return false;
+    }
+    if(row % 2 === 1){
+      return true;
+    }else {
+      return !(this.getWordAt(actualRowInLyrics.row + 1, actualRowInLyrics.col).trim().length > 0);
+    }
   }
 
   private findActualRowAndColInTableInView(row: number, col: number): ICellNumber{
@@ -203,5 +241,14 @@ export class HarmonicaTabInputArrayComponent implements ControlValueAccessor, On
       row:inverseRow,
       col:inverseCol
     }
+  }
+
+  validate(control: AbstractControl): ValidationErrors | null {
+    if(this.numOfRequiredCellsEmpty > 0){
+      return {
+        'requiredCellsEmpty': true
+      }
+    }
+    return null;
   }
 }

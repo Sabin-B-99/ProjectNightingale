@@ -1,7 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
-import {IChords} from "../../../types/custom-interfaces";
-import {Chord} from "../../../models/chord-model/chord";
+import {ISongTabCreationRequiredDetailsForm} from "../../../types/custom-interfaces";
 import {TabCreatorService} from "../../../services/tab-creator.service";
 import {noWhiteSpaceValidator} from "../../../validators/no-white-space-validator.directive";
 
@@ -13,51 +12,47 @@ import {noWhiteSpaceValidator} from "../../../validators/no-white-space-validato
 export class TabRequiredDetailsComponent implements OnInit{
 
   @Input()
-  tabRequiredDetailForm: FormGroup;
+  tabRequiredDetailForm: FormGroup<ISongTabCreationRequiredDetailsForm>;
 
   @Input()
   harmonicaTabSelected: boolean;
 
   @Input()
   guitarTabSelected: boolean;
-  difficultyLevels: string[] = ['Easy', 'Intermediate', 'Hard']
-  otherArtistJoinPhrase: string[] = ['feat.', 'with'];
-  tuningTypes: string[] = [
-    'Standard',
-    'Not Standard',
-    'Tune 3',
-    'Tune 4'
-  ]
 
-  harmonicaTypes: string[] = [
-    'Diatonic',
-    'Chromatic'
-  ]
+  @Input()
+  lyricsSelected: boolean;
 
-  harmonicaKeyTypes: string[] = [
-    'A', 'B', 'C', 'D', 'E', 'F'
-  ]
+  difficultyLevels: string[] = []
+  otherArtistJoinPhrase: string[] = [];
+  tuningTypes: string[] = []
+  harmonicaTypes: string[] = [];
+  harmonicaKeyTypes: string[] = [];
+  capos: string[] = [];
 
-
-  chordSelectionMenuOpened: boolean = false;
-  selectedChordsForTabCreation: Chord[] = [];
   constructor(private tabCreatorService: TabCreatorService) {
   }
 
   ngOnInit() {
+    this.harmonicaTypes = this.tabCreatorService.getHarmonicaTypes();
+    this.harmonicaKeyTypes = this.tabCreatorService.getHarmonicaKeyTypes();
+    this.difficultyLevels = this.tabCreatorService.getDifficultyLevels();
+    this.otherArtistJoinPhrase = this.tabCreatorService.getOtherArtistsJoinPhrase();
+    this.tuningTypes = this.tabCreatorService.getTuningTypes();
+    this.capos = this.tabCreatorService.getCapos();
   }
 
 
-  static getTabRequiredDetailForm(): FormGroup{
-    return new FormGroup({
+  static getTabRequiredDetailForm(): FormGroup<ISongTabCreationRequiredDetailsForm> {
+    return new FormGroup<ISongTabCreationRequiredDetailsForm>({
       'songTitle': new FormControl<string>('', [Validators.required, noWhiteSpaceValidator()]),
       'artistName': new FormControl<string>('', [Validators.required, noWhiteSpaceValidator()]),
       'otherArtistsJoinPhrase': new FormControl(''),
       'otherArtistsNames': new FormArray<FormControl<string>>([]),
       'tuningOrHarmonicaType': new FormControl<string>('', [Validators.required]),
       'difficulty': new FormControl<string>('' , [Validators.required]),
-      'chords': new FormControl<IChords[]>([]),
-      'harmonicaKey': new FormControl<string>('', [Validators.required])
+      'harmonicaKey': new FormControl<string>('', [Validators.required]),
+      'capoFret': new FormControl<string>('', [Validators.required])
     });
   }
   get otherArtistsNameInputArray(){
@@ -72,19 +67,5 @@ export class TabRequiredDetailsComponent implements OnInit{
 
   removeArtistNameInputArray(index: number) {
     this.otherArtistsNameInputArray.removeAt(index);
-  }
-
-  onOpenChordSelectionMenu(){
-    this.chordSelectionMenuOpened = true;
-  }
-
-  onCloseChordSelectionMenu(){
-    this.chordSelectionMenuOpened = false;
-  }
-
-  onChordsSaved($event: Chord[]) {
-    this.chordSelectionMenuOpened = false;
-    this.selectedChordsForTabCreation = $event;
-    this.tabCreatorService.setSelectedChords(this.selectedChordsForTabCreation.slice());
   }
 }
