@@ -1,6 +1,4 @@
 import {ElementRef, Injectable} from '@angular/core';
-import {Chord} from "../models/chord-model/chord";
-import {Subject} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -27,15 +25,8 @@ export class TabCreatorService {
     '1st fret', '2nd fret', '3rd fret', '4th fret'
   ];
 
-  selectedChordsForTabs: Chord[] = [];
-  selectedChordsChangedEvenEmitter: Subject<Chord[]> = new Subject<Chord[]>();
   constructor() { }
 
-  setSelectedChords(selectedChords: Chord[]){
-    this.selectedChordsForTabs = selectedChords;
-    this.selectedChordsChangedEvenEmitter.next(this.selectedChordsForTabs.slice());
-    this.selectedChordsForTabs.splice(0, this.selectedChordsForTabs.length);
-  }
   public setCursorAt(textArea: ElementRef<HTMLTextAreaElement>, lineNo:number, col: number){
     let startPos: number = textArea.nativeElement.selectionStart;
 
@@ -143,26 +134,40 @@ export class TabCreatorService {
   // }
 
 
-  getOtherArtistsJoinPhrase(){
+  getOtherArtistsJoinPhrase(): string[]{
     return this.otherArtistJoinPhrase.slice();
   }
 
-  getTuningTypes(){
+  getTuningTypes(): string[]{
     return this.tuningTypes.slice();
   }
 
-  getHarmonicaTypes(){
+  getHarmonicaTypes(): string[]{
     return this.harmonicaTypes.slice();
   }
-  getDifficultyLevels(){
+  getDifficultyLevels(): string[]{
     return this.difficultyLevels.slice();
   }
 
-  getHarmonicaKeyTypes(){
+  getHarmonicaKeyTypes(): string[]{
     return this.harmonicaKeyTypes.slice();
   }
 
-  getCapos() {
+  getCapos(): string[] {
     return this.capos.slice();
+  }
+
+
+  extractChordsFromLyrics(lyrics: string): string[] {
+    let extractedChords: string[] = [];
+    let extractedChord: string = '';
+    let text: string[] = lyrics.split('[');
+    for (let i = 0; i < text.length; i++) {
+      extractedChord = text[i].split(']')[0];
+      if(extractedChord !== text[i] && extractedChord.trim().length  > 0){
+        extractedChords.push(extractedChord);
+      }
+    }
+    return extractedChords;
   }
 }
