@@ -10,6 +10,7 @@ export function lyricsBracketsValidation(): ValidatorFn {
     let currentCharIsClosingBracket: boolean = false;
 
     let numberOfUnbalancedBrackets: number = 0;
+    let numberOfClosingBracketsWithNoOpenings: number = 0;
     let parenthesisMatch: boolean = false;
 
     for (let i = 0; i < lyrics.length; i++) {
@@ -20,25 +21,28 @@ export function lyricsBracketsValidation(): ValidatorFn {
       if (currentCharIsOpeningBracket){
         bracketsStack.push(currentChar);
         numberOfUnbalancedBrackets  += 1;
+        if(numberOfClosingBracketsWithNoOpenings > bracketsStack.length){
+          numberOfClosingBracketsWithNoOpenings -= 1;
+        }
       }
       if(currentCharIsClosingBracket){
          poppedChar = bracketsStack.pop() || '';
-
-         if(poppedChar === '(' && currentChar === ')'){
-          parenthesisMatch = true;
-         }else if( poppedChar === '{' && currentChar === '}'){
-          parenthesisMatch = true;
-         }else if(poppedChar === '[' && currentChar === ']') {
-           parenthesisMatch = true;
+         if(poppedChar !== ''){
+           if(poppedChar === '(' && currentChar === ')'){
+             parenthesisMatch = true;
+           }else if( poppedChar === '{' && currentChar === '}'){
+             parenthesisMatch = true;
+           }else {
+             parenthesisMatch = (poppedChar === '[' && currentChar === ']');
+           }
+           if (parenthesisMatch){
+             numberOfUnbalancedBrackets -= 1;
+           }
          }else {
-           parenthesisMatch = (poppedChar.trim().length === 0);
-         }
-
-         if (parenthesisMatch){
-           numberOfUnbalancedBrackets -= 1;
+           numberOfClosingBracketsWithNoOpenings += 1;
          }
       }
     }
-    return ((numberOfUnbalancedBrackets === 0) ? null:  {bracketsMismatch: true});
+    return ((numberOfUnbalancedBrackets === 0 && numberOfClosingBracketsWithNoOpenings === 0) ? null:  {bracketsMismatch: true});
   }
 }
