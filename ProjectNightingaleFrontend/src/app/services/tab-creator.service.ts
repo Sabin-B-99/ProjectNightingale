@@ -25,6 +25,13 @@ export class TabCreatorService {
     '1st fret', '2nd fret', '3rd fret', '4th fret'
   ];
 
+  private validChords: string[] = [
+    'A', 'B', 'C', 'D', 'E', 'F', 'G',
+    'Am', 'Bm', 'Cm', 'Dm', 'Em', 'Fm', 'Gm',
+    'Ab', 'Bb', 'Cb', 'Db', 'Eb', 'Fb', 'Gb',
+    'A#', 'B#', 'C#', 'D#', 'E#', 'F#', 'G#'
+  ]
+
   constructor() { }
 
   public setCursorAt(textArea: ElementRef<HTMLTextAreaElement>, lineNo:number, col: number){
@@ -157,7 +164,6 @@ export class TabCreatorService {
     return this.capos.slice();
   }
 
-
   extractChordsFromLyrics(lyrics: string): string[] {
     let extractedChords: string[] = [];
     let extractedChord: string = '';
@@ -169,5 +175,9 @@ export class TabCreatorService {
       }
     }
     return extractedChords;
+  }
+
+  getValidChords() {
+    return this.validChords;
   }
 }

@@ -2,10 +2,9 @@ import {AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild} from
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {TabRequiredDetailsComponent} from "./tab-required-details/tab-required-details.component";
 import {TabCreatorService} from "../../services/tab-creator.service";
-import {Subscription} from "rxjs";
-import {Chord} from "../../models/chord-model/chord";
 import {ISongTabCreationForm, ITableFormCellValue} from "../../types/custom-interfaces";
 import {lyricsBracketsValidation} from "../../validators/tab-lyrics-text-brackets-validator.directive";
+import {chordsValidator} from "../../validators/valid-chords-validator.directive";
 
 @Component({
   selector: 'app-song-tab-creator',
@@ -29,30 +28,24 @@ export class SongTabCreatorComponent implements OnInit, OnDestroy, AfterViewInit
   tabCreationForm: FormGroup<ISongTabCreationForm>;
 
 
-  selectedChordsForTabSubscription: Subscription;
-  selectedChordsForTab: Chord[] = [];
-
   numOfRowsHarmonicaInputArray: number;
   numOfColsHarmonicaInputArray: number;
   harmonicaLyricsLines: Map<number, string>;
+
+  validChords: string[] = [];
 
   constructor(private tabCreatorService: TabCreatorService) {
   }
 
   ngOnInit(): void {
+    this.validChords = this.tabCreatorService.getValidChords();
+
     this.tabCreationForm = new FormGroup<ISongTabCreationForm>({
       'tabRequiredDetails': TabRequiredDetailsComponent.getTabRequiredDetailForm(),
-      'tabLyricsArea': new FormControl<string>('', [Validators.required, lyricsBracketsValidation()]),
+      'tabLyricsArea': new FormControl<string>('', [Validators.required,
+        lyricsBracketsValidation(), chordsValidator(this.validChords.slice())]),
       'harmonicaTabArea': new FormControl<ITableFormCellValue[]>([])
     });
-
-    this.selectedChordsForTabSubscription = this.tabCreatorService.selectedChordsChangedEvenEmitter
-      .subscribe(
-        (selectedChords: Chord[]) =>{
-          this.selectedChordsForTab = selectedChords
-        }
-      );
-
   }
 
   ngAfterViewInit() {
@@ -60,33 +53,30 @@ export class SongTabCreatorComponent implements OnInit, OnDestroy, AfterViewInit
   }
 
   ngOnDestroy() {
-    if(this.selectedChordsForTabSubscription){
-      this.selectedChordsForTabSubscription.unsubscribe();
-    }
   }
 
   onTabCreationFormSubmitted(){
-    console.log(this.tabCreationForm.getRawValue());
+    let lyrics: string = this.tabCreationForm.get('tabLyricsArea')?.value || '';
   }
 
   getTabRequiredDetailsForm(): FormGroup{
     return <FormGroup>this.tabCreationForm.get('tabRequiredDetails')
   }
 
-  addSelectedChordInTab(selectedChord: Chord) {
-    let chordName: string = `${selectedChord.chordRoot.rootName}${selectedChord.chordKey.keyName}`;
-    if(this.lyricsTabTextArea.nativeElement.selectionStart || this.lyricsTabTextArea.nativeElement.selectionStart === 0){
-      let startPos: number =  this.lyricsTabTextArea.nativeElement.selectionStart;
-      let endPos: number = this.lyricsTabTextArea.nativeElement.selectionEnd;
-      this.lyricsTabTextArea.nativeElement.value = this.lyricsTabTextArea.nativeElement.value.substring(0, startPos) +
-        `[${chordName}]` + this.lyricsTabTextArea.nativeElement.value.substring(endPos,
-          this.lyricsTabTextArea.nativeElement.value.length);
-      this.lyricsTabTextArea.nativeElement.selectionStart = startPos + chordName.length;
-      this.lyricsTabTextArea.nativeElement.selectionEnd = endPos + chordName.length;
-    }else{
-      this.lyricsTabTextArea.nativeElement.value += this.lyricsTabTextArea.nativeElement.value;
-    }
-  }
+  // addSelectedChordInTab(selectedChord: Chord) {
+  //   let chordName: string = `${selectedChord.chordRoot.rootName}${selectedChord.chordKey.keyName}`;
+  //   if(this.lyricsTabTextArea.nativeElement.selectionStart || this.lyricsTabTextArea.nativeElement.selectionStart === 0){
+  //     let startPos: number =  this.lyricsTabTextArea.nativeElement.selectionStart;
+  //     let endPos: number = this.lyricsTabTextArea.nativeElement.selectionEnd;
+  //     this.lyricsTabTextArea.nativeElement.value = this.lyricsTabTextArea.nativeElement.value.substring(0, startPos) +
+  //       `[${chordName}]` + this.lyricsTabTextArea.nativeElement.value.substring(endPos,
+  //         this.lyricsTabTextArea.nativeElement.value.length);
+  //     this.lyricsTabTextArea.nativeElement.selectionStart = startPos + chordName.length;
+  //     this.lyricsTabTextArea.nativeElement.selectionEnd = endPos + chordName.length;
+  //   }else{
+  //     this.lyricsTabTextArea.nativeElement.value += this.lyricsTabTextArea.nativeElement.value;
+  //   }
+  // }
 
   createTabTemplate(): string{
     let templateString: string = '';
@@ -134,4 +124,6 @@ export class SongTabCreatorComponent implements OnInit, OnDestroy, AfterViewInit
   onHarmonicTabBackBtnClicked() {
     this.harmonicaTabTextAreaShown = false;
   }
+
+
 }

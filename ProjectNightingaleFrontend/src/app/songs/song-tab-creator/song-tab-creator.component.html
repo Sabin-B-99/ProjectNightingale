@@ -33,15 +33,14 @@
               <div>
                 <label *ngIf="tabCreationForm.get('tabLyricsArea')?.errors?.['bracketsMismatch']"
                        class="form-label text-danger">*Unbalanced brackets</label>
+                <div *ngIf="tabCreationForm.get('tabLyricsArea')?.errors?.['invalidChordsInLyrics']">
+                  <p class="form-label text-danger d-block" >Invalid Chords:</p>
+                  <p *ngFor="let invalidChord of tabCreationForm.get('tabLyricsArea')?.errors?.['invalidChordsInLyrics']"
+                         class="form-label text-danger">
+                    {{invalidChord}}
+                  </p>
+                </div>
               </div>
-            </div>
-
-            <div class="col row-cols-2 col-md-4">
-              <button type="button" *ngFor="let selectedChord of selectedChordsForTab"
-                      class="btn btn-outline-dark btn-sm"
-                      (click)="addSelectedChordInTab(selectedChord)">
-                {{selectedChord.chordRoot.rootName | musicNote}}{{selectedChord.chordKey.keyName}}
-              </button>
             </div>
           </div>
         </div>
