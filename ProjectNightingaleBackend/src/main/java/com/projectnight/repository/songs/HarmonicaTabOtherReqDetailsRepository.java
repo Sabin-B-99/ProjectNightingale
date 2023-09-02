@@ -1,9 +1,9 @@
 package com.projectnight.repository.songs;
 
 import com.projectnight.entity.songs.HarmonicaTabOtherReqDetails;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.UUID;
 
-public interface HarmonicaTabOtherReqDetailsRepository extends CrudRepository<HarmonicaTabOtherReqDetails, UUID> {
+public interface HarmonicaTabOtherReqDetailsRepository extends JpaRepository<HarmonicaTabOtherReqDetails, UUID> {
 }
