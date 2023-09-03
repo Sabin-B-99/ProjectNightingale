@@ -15,9 +15,9 @@ const appRoutes: Routes = [
   {path: 'song-book', component: SongbooksComponent},
   {path: 'songs', component: SongsComponent,
     children: [
-      {path: 'create', component: SongTabCreatorComponent},
       {path: ':id', component: SongDetailComponent}
     ]},
+  {path: 'create-tab', component: SongTabCreatorComponent},
   {path: 'chords', component: ChordsComponent},
   {path: 'metronome', component: MetronomeComponent},
   {path: 'routines', component: RoutinesComponent,

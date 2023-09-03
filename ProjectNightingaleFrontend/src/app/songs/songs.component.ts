@@ -9,14 +9,8 @@ import {ActivatedRoute, Router} from "@angular/router";
   providers: [SongService]
 })
 export class SongsComponent implements OnInit{
-  songTabCreationFormShown: boolean  = false;
-  constructor(private router: Router, private route: ActivatedRoute) {
+  constructor() {
   }
   ngOnInit(): void {
-  }
-
-  showTabCreationForm() {
-    this.songTabCreationFormShown = true;
-    this.router.navigate(['create'], {relativeTo: this.route});
   }
 }

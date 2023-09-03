@@ -2,7 +2,11 @@ import {AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild} from
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {TabRequiredDetailsComponent} from "./tab-required-details/tab-required-details.component";
 import {TabCreatorService} from "../../services/tab-creator.service";
-import {ISongTabCreationForm, ITableFormCellValue} from "../../types/custom-interfaces";
+import {
+  ISongTabCreationForm,
+  ISongTabCreationRequiredDetailsForm,
+  ITableFormCellValue
+} from "../../types/custom-interfaces";
 import {lyricsBracketsValidation} from "../../validators/tab-lyrics-text-brackets-validator.directive";
 import {chordsValidator} from "../../validators/valid-chords-validator.directive";
 
@@ -18,12 +22,13 @@ export class SongTabCreatorComponent implements OnInit, OnDestroy, AfterViewInit
   readonly LYRICS_TEMPLATE_WORDS: string[] = ['(Intro)', '(Verse 1)', '(Verse 2)',
     '(Chorus)', '(Bridge)', '(Chorus)'];
   readonly LYRICS_AREA_NO_OF_ROWS: number = 20;
-  readonly LYRICS_AREA_NO_OF_COLS: number = 30;
+  readonly LYRICS_AREA_NO_OF_COLS: number = 50;
 
   guitarTabSelected: boolean = true;
   harmonicaTabSelected: boolean = false;
-  harmonicaTabTextAreaShown: boolean = false;
   lyricsSelected: boolean = false;
+
+  harmonicaTabTextAreaShown: boolean = false;
 
   tabCreationForm: FormGroup<ISongTabCreationForm>;
 
@@ -56,11 +61,19 @@ export class SongTabCreatorComponent implements OnInit, OnDestroy, AfterViewInit
   }
 
   onTabCreationFormSubmitted(){
-    let lyrics: string = this.tabCreationForm.get('tabLyricsArea')?.value || '';
+    if(this.tabCreationForm.valid){
+      if(this.guitarTabSelected){
+        this.tabCreatorService.saveGuitarTab(this.tabCreationForm);
+      }else if(this.harmonicaTabSelected){
+        this.tabCreatorService.saveHarmonicaTab(this.tabCreationForm);
+      }else {
+        this.tabCreatorService.saveLyrics(this.tabCreationForm);
+      }
+    }
   }
 
-  getTabRequiredDetailsForm(): FormGroup{
-    return <FormGroup>this.tabCreationForm.get('tabRequiredDetails')
+  getTabRequiredDetailsForm(): FormGroup<ISongTabCreationRequiredDetailsForm>{
+    return <FormGroup<ISongTabCreationRequiredDetailsForm>>this.tabCreationForm.get('tabRequiredDetails')
   }
 
   // addSelectedChordInTab(selectedChord: Chord) {
@@ -90,6 +103,8 @@ export class SongTabCreatorComponent implements OnInit, OnDestroy, AfterViewInit
   }
 
   onGuitarTabSelected() {
+    this.disableHarmonicaTabRelatedControls();
+    this.enableGuitarTabRelatedControls();
     this.harmonicaTabSelected = false;
     this.lyricsSelected = false;
     this.harmonicaTabTextAreaShown = false;
@@ -97,12 +112,16 @@ export class SongTabCreatorComponent implements OnInit, OnDestroy, AfterViewInit
   }
 
   onHarmonicaTabSelected() {
+    this.disableGuitarTabRelatedControls();
+    this.enableHarmonicaTabRelatedControls();
     this.guitarTabSelected = false;
     this.lyricsSelected = false;
     this.harmonicaTabSelected = true;
   }
 
   onLyricsSelected(){
+    this.disableGuitarTabRelatedControls();
+    this.disableHarmonicaTabRelatedControls();
     this.lyricsSelected = true;
     this.guitarTabSelected = false;
     this.harmonicaTabSelected = false;
@@ -125,5 +144,49 @@ export class SongTabCreatorComponent implements OnInit, OnDestroy, AfterViewInit
     this.harmonicaTabTextAreaShown = false;
   }
 
+  disableHarmonicaTabRelatedControls(){
+    if(this.getTabRequiredDetailsForm()){
+      this.resetArtistsAndTitleNameControls();
+      this.tabCreationForm.get('harmonicaTabArea')?.disable();
+      this.getTabRequiredDetailsForm().get('harmonicaType')?.disable();
+      this.getTabRequiredDetailsForm().get('harmonicaKey')?.disable();
+    }
+  }
 
+  enableHarmonicaTabRelatedControls(){
+    if(this.getTabRequiredDetailsForm()){
+      this.resetArtistsAndTitleNameControls();
+      this.tabCreationForm.get('harmonicaTabArea')?.enable();
+      this.getTabRequiredDetailsForm().get('harmonicaType')?.enable();
+      this.getTabRequiredDetailsForm().get('harmonicaKey')?.enable();
+    }
+  }
+
+  disableGuitarTabRelatedControls(){
+    if(this.getTabRequiredDetailsForm()){
+      this.resetArtistsAndTitleNameControls();
+      this.getTabRequiredDetailsForm().get('tuningType')?.disable();
+      this.getTabRequiredDetailsForm().get('capoFret')?.disable();
+    }
+  }
+
+  enableGuitarTabRelatedControls(){
+    if(this.getTabRequiredDetailsForm()){
+      this.resetArtistsAndTitleNameControls();
+      this.getTabRequiredDetailsForm().get('tuningType')?.enable();
+      this.getTabRequiredDetailsForm().get('capoFret')?.enable();
+    }
+  }
+
+  private resetRequiredDetailsFormValue(controlName: string){
+    if(this.getTabRequiredDetailsForm()){
+      this.getTabRequiredDetailsForm().get(controlName)?.reset();
+    }
+  }
+
+  resetArtistsAndTitleNameControls(){
+    this.resetRequiredDetailsFormValue('artistName');
+    this.resetRequiredDetailsFormValue('otherArtistsName');
+    this.resetRequiredDetailsFormValue('songTitle');
+  }
 }

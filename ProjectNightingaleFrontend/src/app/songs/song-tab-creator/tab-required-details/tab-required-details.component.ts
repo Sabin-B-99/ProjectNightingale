@@ -48,20 +48,21 @@ export class TabRequiredDetailsComponent implements OnInit{
       'songTitle': new FormControl<string>('', [Validators.required, noWhiteSpaceValidator()]),
       'artistName': new FormControl<string>('', [Validators.required, noWhiteSpaceValidator()]),
       'otherArtistsJoinPhrase': new FormControl(''),
-      'otherArtistsNames': new FormArray<FormControl<string>>([]),
-      'tuningOrHarmonicaType': new FormControl<string>('', [Validators.required]),
+      'otherArtistsNames': new FormArray<FormControl<string | null>>([]),
+      'tuningType': new FormControl<string>('', [Validators.required]),
+      'harmonicaType': new FormControl<string>('', [Validators.required]),
       'difficulty': new FormControl<string>('' , [Validators.required]),
       'harmonicaKey': new FormControl<string>('', [Validators.required]),
       'capoFret': new FormControl<string>('', [Validators.required])
     });
   }
   get otherArtistsNameInputArray(){
-    return <FormArray>(this.tabRequiredDetailForm?.get('otherArtistsNames'));
+    return <FormArray<FormControl<string | null>>>(this.tabRequiredDetailForm?.get('otherArtistsNames'));
   }
 
   addOtherArtistsInput() {
     this.otherArtistsNameInputArray.push(
-      new FormControl<string>('', [Validators.required, noWhiteSpaceValidator()])
+      new FormControl<string | null>('', [Validators.required, noWhiteSpaceValidator()])
     )
   }
 

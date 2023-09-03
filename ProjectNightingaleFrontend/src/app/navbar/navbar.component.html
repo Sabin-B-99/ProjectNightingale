@@ -10,22 +10,34 @@
           <span class="navbar-toggler-icon"></span>
   </button>
 
-  <div class="collapse navbar-collapse justify-content-center" id="navmenu">
+  <div class="collapse navbar-collapse justify-content-center container-fluid" id="navmenu">
     <ul class="navbar-nav mx-auto">
       <li class="nav-item">
         <a
           routerLinkActive="active"
-          [routerLink]="['songs']" class="nav-link">Songs</a>
+          [routerLink]="['songs']" class="nav-link">
+          Songs
+        </a>
       </li>
       <li class="nav-item">
         <a
           routerLinkActive="active"
-          [routerLink]="['chords']" class="nav-link">Chords</a>
+          [routerLink]="['chords']" class="nav-link">
+          Chords
+        </a>
       </li>
       <li class="nav-item">
         <a routerLinkActive="active"
            [routerLink]="['metronome']"
-           class="nav-link">Metronome</a>
+           class="nav-link">
+          Metronome
+        </a>
+      </li>
+      <li class="nav-item">
+        <a routerLinkActive="active"
+           [routerLink]="['create-tab']"
+           class="nav-link">
+          Publish tab</a>
       </li>
     </ul>
   </div>

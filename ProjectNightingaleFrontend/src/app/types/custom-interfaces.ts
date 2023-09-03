@@ -1,4 +1,4 @@
-import {Form, FormArray, FormControl, FormGroup} from "@angular/forms";
+import {FormArray, FormControl, FormGroup} from "@angular/forms";
 
 interface IMetronomeValues {
   bpm: number;
@@ -67,8 +67,9 @@ interface ISongTabCreationRequiredDetailsForm{
   songTitle: FormControl<string | null>,
   artistName: FormControl<string | null>,
   otherArtistsJoinPhrase: FormControl<string | null>,
-  otherArtistsNames: FormArray<FormControl<string>>,
-  tuningOrHarmonicaType: FormControl<string | null>,
+  otherArtistsNames: FormArray<FormControl<string | null>>,
+  tuningType: FormControl<string | null>,
+  harmonicaType: FormControl<string| null>,
   difficulty: FormControl<string | null>,
   harmonicaKey: FormControl<string | null>,
   capoFret: FormControl<string| null>
@@ -99,6 +100,43 @@ interface ITableFormCellValue{
   cellNum: ICellNumber
 }
 
+interface ISongTabDTO{
+  id: string | null,
+  tabSongTitle: string,
+  songArtistName: string
+}
+
+interface IOtherArtistDTO{
+  otherJoinWord: string,
+  otherArtistName: string
+}
+
+interface IHarmonicaOtherReqDetailsDTO{
+  harmonicaType: string,
+  harmonicaKey: string,
+  difficulty: string
+}
+
+interface IGuitarOtherReqDetailsDTO{
+  tuningType: string,
+  capoPosition: string,
+  difficulty: string
+}
+
+interface IGuitarTabLyricsDTO{
+  lyrics: string
+}
+
+interface IHarmonicaTabLyricsDTO{
+  cellRowNo: number,
+  cellColNo: number,
+  cellValue: string
+}
+
+interface ILyricsOnlyTabLyricsDTO{
+  lyrics: string
+}
+
 export {
   IMetronomeValues,
   IChordRoot,
@@ -114,5 +152,12 @@ export {
   ICellNumber,
   ITableFormCellValue,
   ISongTabCreationForm,
-  ISongTabCreationRequiredDetailsForm
+  ISongTabCreationRequiredDetailsForm,
+  ISongTabDTO,
+  IOtherArtistDTO,
+  IHarmonicaOtherReqDetailsDTO,
+  IGuitarOtherReqDetailsDTO,
+  IGuitarTabLyricsDTO,
+  IHarmonicaTabLyricsDTO,
+  ILyricsOnlyTabLyricsDTO
 }

@@ -41,7 +41,7 @@
         <div class="flex-row d-flex">
         <span class="mx-sm-1" *ngIf="guitarTabSelected">
           <label class="form-label col-form-label-sm">Add Tuning: </label>
-          <select [ngModel]="tuningTypes.at(0)" class="form-select" formControlName="tuningOrHarmonicaType">
+          <select [ngModel]="tuningTypes.at(0)" class="form-select" formControlName="tuningType">
             <option *ngFor="let tuningName of tuningTypes">{{tuningName}}</option>
           </select>
         </span>
@@ -53,7 +53,7 @@
         </span>
           <span class="mx-sm-1" *ngIf="harmonicaTabSelected">
           <label class="form-label col-form-label-sm">Harmonica Type: </label>
-          <select [ngModel]="harmonicaTypes.at(0)" class="form-select" formControlName="tuningOrHarmonicaType">
+          <select [ngModel]="harmonicaTypes.at(0)" class="form-select" formControlName="harmonicaType">
             <option *ngFor="let harmonicaType of harmonicaTypes">{{harmonicaType}}</option>
           </select>
         </span>
