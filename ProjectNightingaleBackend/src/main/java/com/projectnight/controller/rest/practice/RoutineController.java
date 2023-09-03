@@ -41,11 +41,11 @@ public class RoutineController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody Routines saveRoutine(@RequestBody Routines routine){
-         Routines routines = routinesService.saveRoutine(routine);
-         if(routines == null){
+         Routines savedRoutine = routinesService.saveRoutine(routine);
+         if(savedRoutine == null){
              throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error while saving routine");
          }
-         return routine;
+         return savedRoutine;
     }
 
     @PostMapping("/routines/{routineId}/topics")
