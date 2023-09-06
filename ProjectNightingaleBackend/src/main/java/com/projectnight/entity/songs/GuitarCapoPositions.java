@@ -1,4 +1,4 @@
-package com.projectnight.entity.songs.primarykeys;
+package com.projectnight.entity.songs;
 
 import javax.persistence.*;
 

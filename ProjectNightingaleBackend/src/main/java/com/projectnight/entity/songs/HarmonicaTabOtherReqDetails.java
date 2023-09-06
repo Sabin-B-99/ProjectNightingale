@@ -1,6 +1,7 @@
 package com.projectnight.entity.songs;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.UUID;
@@ -12,6 +13,7 @@ public class HarmonicaTabOtherReqDetails {
     @Id
     @GeneratedValue(generator = "uuid-hibernate-generator")
     @GenericGenerator(name = "uuid-hibernate-generator", strategy = "org.hibernate.id.UUIDGenerator")
+    @Type(type = "uuid-char")
     @Column(name = "id")
     private UUID id;
 

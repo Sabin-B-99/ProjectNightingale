@@ -1,2 +1,9 @@
-package com.projectnight.service.songs;public interface GuitarCapoPositionsService {
+package com.projectnight.service.songs;
+
+import com.projectnight.entity.songs.GuitarCapoPositions;
+
+import java.util.List;
+
+public interface GuitarCapoPositionsService {
+    List<GuitarCapoPositions> getAllCapoPositions();
 }
