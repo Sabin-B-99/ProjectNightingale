@@ -58,8 +58,8 @@
       <li class="list-group-item">
         <a *ngIf="guitarTabSelected || harmonicaTabTextAreaShown || lyricsSelected">
           <span class="btn-group btn-group-sm">
-            <button class="btn btn-outline-primary">Submit</button>
-            <button *ngIf="harmonicaTabTextAreaShown"
+            <button [disabled]="tabSaveStatus" class="btn btn-outline-primary">Submit</button>
+            <button *ngIf="harmonicaTabTextAreaShown" [disabled]="tabSaveStatus"
                     (click)="onHarmonicTabBackBtnClicked()"
                     class="btn btn-outline-secondary">Back</button>
           </span>
@@ -68,6 +68,9 @@
           <button type="button" (click)="createHarmonicaTabInputTextArea()"
                   class="btn btn-outline-secondary">Next</button>
         </a>
+        <span class="mx-sm-1" *ngIf="tabSaveStatus">
+          <p class="form-label">Saving...</p>
+        </span>
       </li>
     </ul>
   </form>

@@ -1,48 +1,139 @@
-import {ElementRef, Injectable} from '@angular/core';
+import {ElementRef, Injectable, OnInit} from '@angular/core';
 import {
-  IGuitarOtherReqDetailsDTO, IGuitarTabLyricsDTO,
-  IHarmonicaOtherReqDetailsDTO, IHarmonicaTabLyricsDTO, ILyricsOnlyTabLyricsDTO,
+  ICapoPositionDTO, IChordKey, IChordRoot,
+  IDifficultyLevelsDTO,
+  IGuitarOtherReqDetailsDTO, IGuitarTabLyricsDTO, IGuitarTuningTypesDTO, IHarmonicaKeyDTO,
+  IHarmonicaOtherReqDetailsDTO, IHarmonicaTabLyricsDTO, IHarmonicaTypesDTO, IJoinPhraseDTO, ILyricsOnlyTabLyricsDTO,
   IOtherArtistDTO,
   ISongTabCreationForm,
   ISongTabDTO
 } from "../types/custom-interfaces";
 import {FormGroup} from "@angular/forms";
 import {HttpClient} from "@angular/common/http";
-import {map} from "rxjs";
+import {map, Observable, Subject} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
-export class TabCreatorService {
+export class TabCreatorService{
 
-  private difficultyLevels: string[] = ['Easy', 'Intermediate', 'Hard']
-  private otherArtistJoinPhrase: string[] = ['feat.', 'with'];
-  private tuningTypes: string[] = [
-    'Standard',
-    'Not Standard',
-    'Tune 3',
-    'Tune 4'
-  ]
-  private harmonicaTypes: string[] = [
-    'Diatonic',
-    'Chromatic'
-  ]
-  private harmonicaKeyTypes: string[] = [
-    'A', 'B', 'C', 'D', 'E', 'F'
-  ]
+validChordsChanged: Subject<string[]> = new Subject<string[]>();
+private validChordRoots: string[] = [];
+private validChordKeys: string[] = [];
+private validChords: string[] = [];
 
-  private capos: string[] = [
-    '1st fret', '2nd fret', '3rd fret', '4th fret'
-  ];
+  constructor(private http: HttpClient) {
+  }
 
-  private validChords: string[] = [
-    'A', 'B', 'C', 'D', 'E', 'F', 'G',
-    'Am', 'Bm', 'Cm', 'Dm', 'Em', 'Fm', 'Gm',
-    'Ab', 'Bb', 'Cb', 'Db', 'Eb', 'Fb', 'Gb',
-    'A#', 'B#', 'C#', 'D#', 'E#', 'F#', 'G#'
-  ]
 
-  constructor(private http: HttpClient) { }
+
+  public loadAllValidChordRoots(){
+    this.http.get<IChordRoot[]>('http://localhost:8080/ProjectNightingale/api/chords/chord-roots')
+      .pipe(map((chordRoots: IChordRoot[])=>{
+        let chordRootNames: string[] = [];
+        for (const chordRoot of chordRoots) {
+          chordRootNames.push(chordRoot.rootName);
+        }
+        return chordRootNames;
+      })).subscribe( (validChordRootNames: string[]) =>{
+        this.validChordRoots = validChordRootNames;
+        this.buildValidChords();
+    });
+  }
+
+  public loadAllValidChordKeys(){
+    this.http.get<IChordKey[]>('http://localhost:8080/ProjectNightingale/api/chords/chord-keys')
+      .pipe(map((chordKeys: IChordKey[])=>{
+        let chordKeyNames: string[] = [];
+        for (const chordKey of chordKeys) {
+          chordKeyNames.push(chordKey.keyName);
+        }
+        return chordKeyNames;
+      })).subscribe( (validChordKeyNames: string[]) =>{
+        this.validChordKeys = validChordKeyNames;
+        this.buildValidChords();
+    });
+  }
+
+  private buildValidChords(){
+    if(this.validChords.length <= 0){
+      for (const rootName of this.validChordRoots) {
+        for (const keyName of this.validChordKeys) {
+          this.validChords.push(rootName.concat(keyName));
+        }
+      }
+      this.validChordsChanged.next(this.validChords.slice());
+    }
+  }
+
+  public loadGuitarTunings(): Observable<string[]>{
+    return  this.http.get<IGuitarTuningTypesDTO[]>('http://localhost:8080/ProjectNightingale/api/tabs/guitar-tunings/')
+      .pipe(map( (tunings: IGuitarTuningTypesDTO[]) =>{
+        let tuningTypes: string[] = [];
+        for (const tuningType of tunings) {
+          tuningTypes.push(tuningType.tuning);
+        }
+        return tuningTypes;
+      }));
+  }
+
+
+  public loadDifficultyLevels(): Observable<string[]>{
+    return this.http.get<IDifficultyLevelsDTO[]>('http://localhost:8080/ProjectNightingale/api/tabs/difficulties/')
+      .pipe(map((difficulties: IDifficultyLevelsDTO[]) =>{
+        let difficultyLevels: string[] = [];
+        for (const difficultyType of difficulties) {
+          difficultyLevels.push(difficultyType.difficulty);
+        }
+        return difficultyLevels;
+      }));
+  }
+
+  public loadHarmonicaTypes(): Observable<string[]>{
+    return this.http.get<IHarmonicaTypesDTO[]>('http://localhost:8080/ProjectNightingale/api/tabs/harmonica-types/')
+      .pipe(map((harmonicaTypes: IHarmonicaTypesDTO[]) =>{
+        let harmonicas: string[] = [];
+        for (const harmonica of harmonicaTypes) {
+          harmonicas.push(harmonica.harmonicaType);
+        }
+        return harmonicas;
+      }));
+  }
+
+  public loadHarmonicaKeys(): Observable<string[]>{
+    return this.http.get<IHarmonicaKeyDTO[]>('http://localhost:8080/ProjectNightingale/api/tabs/harmonica-keys/')
+      .pipe(map( (harmonicaKeys: IHarmonicaKeyDTO[]) =>{
+        let keys: string[] = [];
+        for (const key of harmonicaKeys) {
+          keys.push(key.harmonicaKey);
+        }
+        return keys;
+      }));
+  }
+
+  public loadCapoPositions(): Observable<string[]>{
+    return this.http.get<ICapoPositionDTO[]>('http://localhost:8080/ProjectNightingale/api/tabs/capo-positions/')
+      .pipe(map((capoPosns: ICapoPositionDTO[]) =>{
+        let capoPositions: string[] = [];
+        for (const capoPosition of capoPosns) {
+          capoPositions.push(capoPosition.capoPosition);
+        }
+        return capoPositions;
+      }));
+  }
+
+  public loadJoinPhrases(): Observable<string[]>{
+    return this.http.get<IJoinPhraseDTO[]>('http://localhost:8080/ProjectNightingale/api/tabs/join-phrases/')
+      .pipe(map( (joinPhrases: IJoinPhraseDTO[]) =>{
+        let phrases: string[] = [];
+        for (const joinPhrase of joinPhrases) {
+          phrases.push(joinPhrase.joinPhrase);
+        }
+        return phrases;
+      }));
+  }
+
+
 
   public setCursorAt(textArea: ElementRef<HTMLTextAreaElement>, lineNo:number, col: number){
     let startPos: number = textArea.nativeElement.selectionStart;
@@ -151,29 +242,6 @@ export class TabCreatorService {
   // }
 
 
-  getOtherArtistsJoinPhrase(): string[]{
-    return this.otherArtistJoinPhrase.slice();
-  }
-
-  getTuningTypes(): string[]{
-    return this.tuningTypes.slice();
-  }
-
-  getHarmonicaTypes(): string[]{
-    return this.harmonicaTypes.slice();
-  }
-  getDifficultyLevels(): string[]{
-    return this.difficultyLevels.slice();
-  }
-
-  getHarmonicaKeyTypes(): string[]{
-    return this.harmonicaKeyTypes.slice();
-  }
-
-  getCapos(): string[] {
-    return this.capos.slice();
-  }
-
   // extractChordsFromLyrics(lyrics: string): string[] {
   //   let extractedChords: string[] = [];
   //   let extractedChord: string = '';
@@ -187,14 +255,11 @@ export class TabCreatorService {
   //   return extractedChords;
   // }
 
-  getValidChords() {
-    return this.validChords;
-  }
+
   private  extractTabSongDetails(tabCreationForm: FormGroup<ISongTabCreationForm>): ISongTabDTO{
     return {
-      id: null,
-      tabSongTitle: tabCreationForm.value.tabRequiredDetails?.songTitle || '',
-      songArtistName: tabCreationForm.value.tabRequiredDetails?.artistName || ''
+      songTitle: tabCreationForm.value.tabRequiredDetails?.songTitle || '',
+      artistName: tabCreationForm.value.tabRequiredDetails?.artistName || ''
     };
   }
 
@@ -211,7 +276,7 @@ export class TabCreatorService {
       for (const otherArtistName of tabCreationForm.value.tabRequiredDetails.otherArtistsNames) {
         otherArtists.push({
           otherArtistName: otherArtistName || '',
-          otherJoinWord: tabCreationForm.value.tabRequiredDetails.otherArtistsJoinPhrase || ''
+          joinWord: tabCreationForm.value.tabRequiredDetails.otherArtistsJoinPhrase || ''
         })
       }
     }
@@ -278,9 +343,9 @@ export class TabCreatorService {
     if(tabCreationForm.value.harmonicaTabArea){
       for (const cell of tabCreationForm.value.harmonicaTabArea) {
         harmonicaTabCells.push({
-          cellRowNo: cell.cellNum.row,
-          cellColNo: cell.cellNum.col,
-          cellValue: cell.value
+          tabCellRowNo: cell.cellNum.row,
+          tabCellColNo: cell.cellNum.col,
+          tabCellValue: cell.value
         })
       }
     }
@@ -295,52 +360,61 @@ export class TabCreatorService {
       }
     }
   }
-  saveGuitarTab(tabCreationForm: FormGroup<ISongTabCreationForm>) {
+  saveGuitarTab(tabCreationForm: FormGroup<ISongTabCreationForm>): Observable<boolean> {
     const tabSongDetails: ISongTabDTO = this.extractTabSongDetails(tabCreationForm);
     const tabOtherArtists: IOtherArtistDTO[] = this.extractOtherArtistsName(tabCreationForm);
     const tabGuitarOtherReqDetails: IGuitarOtherReqDetailsDTO = this.extractGuitarOtherReqDetails(tabCreationForm);
     const tabLyrics: IGuitarTabLyricsDTO = this.extractGuitarTabLyrics(tabCreationForm);
 
-    this.saveTabSongDetails(tabSongDetails)
-      .subscribe((id: string | null)=>{
+    return this.saveTabSongDetails(tabSongDetails)
+      .pipe(map((id: string | undefined)=>{
+        let guitarTabSaved: boolean = false;
         if(id){
           this.saveOtherArtistsName(id, tabOtherArtists);
           this.saveGuitarOtherReqDetails(id, tabGuitarOtherReqDetails);
           this.saveGuitarTabLyrics(id, tabLyrics);
+          guitarTabSaved = true;
         }
+        return guitarTabSaved;
       }
-    );
+      ));
 
   }
 
-  saveHarmonicaTab(tabCreationForm: FormGroup<ISongTabCreationForm>) {
+  saveHarmonicaTab(tabCreationForm: FormGroup<ISongTabCreationForm>): Observable<boolean> {
     const tabSongDetails: ISongTabDTO = this.extractTabSongDetails(tabCreationForm);
     const tabOtherArtists: IOtherArtistDTO[] = this.extractOtherArtistsName(tabCreationForm);
     const tabHarmonicaOtherReqDetails: IHarmonicaOtherReqDetailsDTO = this.extractHarmonicaOtherReqDetails(tabCreationForm);
     const tabLyrics: IHarmonicaTabLyricsDTO[] = this.extractHarmonicaTabLyrics(tabCreationForm);
 
-    this.saveTabSongDetails(tabSongDetails)
-      .subscribe((id: string|null) =>{
+    return this.saveTabSongDetails(tabSongDetails)
+      .pipe(map((id: string | undefined) =>{
+        let harmonicaTabSaved: boolean = false;
         if(id){
           this.saveOtherArtistsName(id, tabOtherArtists);
           this.saveHarmonicaOtherReqDetails(id, tabHarmonicaOtherReqDetails);
           this.saveHarmonicaTabLyrics(id, tabLyrics);
+          harmonicaTabSaved = true;
         }
-      })
+        return harmonicaTabSaved;
+      }));
   }
 
-  saveLyrics(tabCreationForm: FormGroup<ISongTabCreationForm>) {
+  saveLyrics(tabCreationForm: FormGroup<ISongTabCreationForm>):Observable<boolean> {
     const tabSongDetails: ISongTabDTO = this.extractTabSongDetails(tabCreationForm);
     const tabOtherArtists: IOtherArtistDTO[] = this.extractOtherArtistsName(tabCreationForm);
     const lyrics: ILyricsOnlyTabLyricsDTO = this.extractLyricsOnlyTabLyrics(tabCreationForm);
 
-    this.saveTabSongDetails(tabSongDetails)
-      .subscribe((id: string|null) =>{
+    return this.saveTabSongDetails(tabSongDetails)
+      .pipe(map((id: string|undefined) =>{
+        let lyricsSaved: boolean = false;
         if(id){
           this.saveOtherArtistsName(id, tabOtherArtists);
           this.saveLyricsOnlyTabLyrics(id, lyrics);
+          lyricsSaved = true;
         }
-      })
+        return lyricsSaved;
+      }));
   }
 
 }

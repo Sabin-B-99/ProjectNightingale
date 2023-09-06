@@ -101,13 +101,13 @@ interface ITableFormCellValue{
 }
 
 interface ISongTabDTO{
-  id: string | null,
-  tabSongTitle: string,
-  songArtistName: string
+  id?: string,
+  songTitle: string,
+  artistName: string
 }
 
 interface IOtherArtistDTO{
-  otherJoinWord: string,
+  joinWord: string,
   otherArtistName: string
 }
 
@@ -128,13 +128,43 @@ interface IGuitarTabLyricsDTO{
 }
 
 interface IHarmonicaTabLyricsDTO{
-  cellRowNo: number,
-  cellColNo: number,
-  cellValue: string
+  tabCellRowNo: number,
+  tabCellColNo: number,
+  tabCellValue: string
 }
 
 interface ILyricsOnlyTabLyricsDTO{
   lyrics: string
+}
+
+interface IGuitarTuningTypesDTO{
+  id: number,
+  tuning: string
+}
+
+interface IDifficultyLevelsDTO{
+  id: number,
+  difficulty: string
+}
+
+interface IHarmonicaTypesDTO{
+  id: number,
+  harmonicaType: string
+}
+
+interface IHarmonicaKeyDTO{
+  id: number,
+  harmonicaKey: string
+}
+
+interface IJoinPhraseDTO{
+  id: number,
+  joinPhrase: string
+}
+
+interface ICapoPositionDTO{
+  id: number,
+  capoPosition: string
 }
 
 export {
@@ -159,5 +189,11 @@ export {
   IGuitarOtherReqDetailsDTO,
   IGuitarTabLyricsDTO,
   IHarmonicaTabLyricsDTO,
-  ILyricsOnlyTabLyricsDTO
+  ILyricsOnlyTabLyricsDTO,
+  IGuitarTuningTypesDTO,
+  IDifficultyLevelsDTO,
+  IHarmonicaTypesDTO,
+  IHarmonicaKeyDTO,
+  IJoinPhraseDTO,
+  ICapoPositionDTO
 }

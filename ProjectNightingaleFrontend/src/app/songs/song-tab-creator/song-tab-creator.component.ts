@@ -9,6 +9,8 @@ import {
 } from "../../types/custom-interfaces";
 import {lyricsBracketsValidation} from "../../validators/tab-lyrics-text-brackets-validator.directive";
 import {chordsValidator} from "../../validators/valid-chords-validator.directive";
+import {Router} from "@angular/router";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-song-tab-creator',
@@ -39,37 +41,77 @@ export class SongTabCreatorComponent implements OnInit, OnDestroy, AfterViewInit
 
   validChords: string[] = [];
 
-  constructor(private tabCreatorService: TabCreatorService) {
+  private tabSavedSubscription: Subscription;
+  tabSaveStatus: boolean = false;
+
+  private validChordChangedSubscription: Subscription;
+
+
+
+  constructor(private router:Router, private tabCreatorService: TabCreatorService) {
   }
 
   ngOnInit(): void {
-    this.validChords = this.tabCreatorService.getValidChords();
+    this.tabCreatorService.loadAllValidChordRoots();
+    this.tabCreatorService.loadAllValidChordKeys();
 
     this.tabCreationForm = new FormGroup<ISongTabCreationForm>({
       'tabRequiredDetails': TabRequiredDetailsComponent.getTabRequiredDetailForm(),
-      'tabLyricsArea': new FormControl<string>('', [Validators.required,
-        lyricsBracketsValidation(), chordsValidator(this.validChords.slice())]),
+      'tabLyricsArea': new FormControl<string>(''),
       'harmonicaTabArea': new FormControl<ITableFormCellValue[]>([])
     });
+
+    this.validChordChangedSubscription = this.tabCreatorService.validChordsChanged
+      .subscribe((validChords: string[])=>{
+        this.validChords = validChords;
+        console.log(this.validChords);
+        this.tabCreationForm.get('tabLyricsArea')?.setValidators([Validators.required,
+          lyricsBracketsValidation(), chordsValidator(this.validChords.slice())])
+      });
   }
+
+
 
   ngAfterViewInit() {
     this.tabCreatorService.setCursorAt(this.lyricsTabTextArea,2,0);
   }
 
   ngOnDestroy() {
+    if(this.validChordChangedSubscription){
+      this.validChordChangedSubscription.unsubscribe();
+    }
   }
 
   onTabCreationFormSubmitted(){
+    this.tabSaveStatus = true;
     if(this.tabCreationForm.valid){
       if(this.guitarTabSelected){
-        this.tabCreatorService.saveGuitarTab(this.tabCreationForm);
+        this.tabSavedSubscription = this.tabCreatorService.saveGuitarTab(this.tabCreationForm)
+          .subscribe( (tabSaved: boolean) =>{
+            if(tabSaved){
+              this.router.navigate(['songs']);
+            }
+            this.tabSaveStatus = false;
+          });
       }else if(this.harmonicaTabSelected){
-        this.tabCreatorService.saveHarmonicaTab(this.tabCreationForm);
+        this.tabSavedSubscription = this.tabCreatorService.saveHarmonicaTab(this.tabCreationForm)
+          .subscribe((tabSaved: boolean)=>{
+            if(tabSaved){
+              this.router.navigate(['songs']);
+            }
+            this.tabSaveStatus = false;
+          });
       }else {
-        this.tabCreatorService.saveLyrics(this.tabCreationForm);
+        this.tabSavedSubscription = this.tabCreatorService.saveLyrics(this.tabCreationForm)
+          .subscribe((tabSaved: boolean) =>{
+            if(tabSaved){
+              this.router.navigate(['songs']);
+            }
+            this.tabSaveStatus = false;
+          });
       }
     }
+
   }
 
   getTabRequiredDetailsForm(): FormGroup<ISongTabCreationRequiredDetailsForm>{
