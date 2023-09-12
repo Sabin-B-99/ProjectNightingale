@@ -7,7 +7,13 @@ import {
 import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Chord} from "../../models/chord-model/chord";
 import {ChordChange} from "../../models/chord-change-model/chord-change";
-import {IChordChanges, IChords, IMetronomeValues, ITopicForm} from "../../types/custom-interfaces";
+import {
+  IChordChanges,
+  IChords,
+  IMetronomeValues,
+  ITopic,
+  ITopicForm
+} from "../../types/custom-interfaces";
 import {topicFormAtLeastOneFieldRequired} from "../../validators/topic-form-validator.directive";
 import {noWhiteSpaceValidator} from "../../validators/no-white-space-validator.directive";
 
@@ -57,6 +63,22 @@ export class TopicCreatorComponent{
       'topicTime': new FormControl<string>( this.TOPIC_DURATION_DEFAULT_VALUE,
         [Validators.pattern(new RegExp("^\\d+:\\d{2}:\\d{2}$")), Validators.required])
     }, {validators: topicFormAtLeastOneFieldRequired()})
+  }
+
+  static addTopicFormForEdit(topic: ITopic): FormGroup<ITopicForm> {
+    for (const [key, value] of Object.entries(topic)){
+      console.log(key, value);
+    }
+    return new FormGroup<ITopicForm>({
+      'topicTitle': new FormControl<string>(topic.title, [Validators.required, noWhiteSpaceValidator()]),
+      'topicSongTitle': new FormControl<string>(topic.songTitle || ''),
+      'topicChords': new FormControl<IChords[]>(topic.chords),
+      'topicChordChanges': new FormControl<IChordChanges[]>(topic.topicChordChanges),
+      'strumPatterns': new FormArray<FormControl<string|null>>([]),
+      'topicMetronome' : new FormControl<IMetronomeValues>(topic.metronomes),
+      'topicTime': new FormControl<string>(this.TOPIC_DURATION_DEFAULT_VALUE,
+        [Validators.pattern(new RegExp("^\\d+:\\d{2}:\\d{2}$")), Validators.required])
+    }, {validators: topicFormAtLeastOneFieldRequired()});
   }
 
   get strumInputArray(): FormArray<FormControl<string | null>>{

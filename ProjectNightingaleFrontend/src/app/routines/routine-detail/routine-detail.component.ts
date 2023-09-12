@@ -19,7 +19,7 @@ export class RoutineDetailComponent implements OnInit, OnDestroy{
   ngOnInit(): void {
     this.route.params.subscribe(
       (param: Params) =>{
-        this.routineService.loadRoutineById(+param['id'])
+        this.routineService.loadSelectedRoutineAndItsTopicsByRoutineId(+param['id'])
       }
     )
 

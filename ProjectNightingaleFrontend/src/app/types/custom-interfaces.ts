@@ -90,6 +90,19 @@ interface IChords{
   chordKeyId: number
 }
 
+interface IChordDTO{
+  id: {
+    chordRootOrder: number,
+    chordKeyId: number
+  }
+  chordImageFileName: string
+}
+
+interface IChordChangesDTO{
+  changeFrom: IChordDTO,
+  changeTo: IChordDTO
+}
+
 interface ICellNumber{
   row: number,
   col: number
@@ -167,6 +180,8 @@ interface ICapoPositionDTO{
   capoPosition: string
 }
 
+
+
 export {
   IMetronomeValues,
   IChordRoot,
@@ -195,5 +210,7 @@ export {
   IHarmonicaTypesDTO,
   IHarmonicaKeyDTO,
   IJoinPhraseDTO,
-  ICapoPositionDTO
+  ICapoPositionDTO,
+  IChordDTO,
+  IChordChangesDTO
 }

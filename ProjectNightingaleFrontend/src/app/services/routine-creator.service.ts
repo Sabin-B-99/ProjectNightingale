@@ -23,6 +23,9 @@ export class RoutineCreatorService {
     duration: 0
   };
 
+  private routineIdForEdit: number;
+  private editMode: boolean = false;
+
   private autoGenIdForRoutine: number = -1;
 
   private totalRoutineDuration: number = 0;
@@ -101,7 +104,7 @@ export class RoutineCreatorService {
   }
   private saveTopicChordChange(topicId: number, chordChangeChordsPrimaryKeys: IChords[]){
     this.http.post<IChords[]>(`http://localhost:8080/ProjectNightingale/api/practice/topics/${topicId}/chords-changes`,
-      chordChangeChordsPrimaryKeys).subscribe();
+    chordChangeChordsPrimaryKeys).subscribe();
   }
 
   private saveTopicMetronomeValues(topicId: number, metronome: IMetronomeValues){
@@ -168,5 +171,21 @@ export class RoutineCreatorService {
       }
     }
     return totalDuration;
+  }
+
+  public setRoutineIdForEdit(routineIdForEdit: number){
+    this.routineIdForEdit = routineIdForEdit;
+  }
+
+  public setEditMode(editMode: boolean){
+    this.editMode = editMode;
+  }
+
+  public getRoutineEditMode(){
+    return this.editMode;
+  }
+
+  public getRoutineForEdit(){
+    return this.routineIdForEdit;
   }
 }

@@ -3,6 +3,7 @@ import {Routine} from "../../models/routine-model/routine";
 import {RoutineService} from "../../services/routine.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Subscription} from "rxjs";
+import {RoutineCreatorService} from "../../services/routine-creator.service";
 
 @Component({
   selector: 'app-routine-list',
@@ -16,6 +17,7 @@ export class RoutineListComponent implements OnInit{
   private routinesListSubscription: Subscription;
 
   constructor(private routineService: RoutineService,
+              private routineCreatorService: RoutineCreatorService,
               private route: ActivatedRoute,
               private router: Router) {
   }
@@ -32,6 +34,13 @@ export class RoutineListComponent implements OnInit{
   }
 
   onAddRoutineButtonClicked(): void{
+    this.routineCreatorService.setEditMode(false);
+    this.router.navigate(['create'], {relativeTo: this.route});
+  }
+
+  onEditRoutineClicked(routine: Routine) {
+    this.routineCreatorService.setEditMode(true);
+    this.routineCreatorService.setRoutineIdForEdit(routine.routineId);
     this.router.navigate(['create'], {relativeTo: this.route});
   }
 }

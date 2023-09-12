@@ -3,9 +3,10 @@ import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
 import {TopicCreatorComponent} from "../topic-creator/topic-creator.component";
 import {RoutineCreatorService} from "../../services/routine-creator.service";
 import {Router} from "@angular/router";
-import {IRoutineForm, ITopicForm} from "../../types/custom-interfaces";
+import {IRoutine, IRoutineForm, ITopicForm} from "../../types/custom-interfaces";
 import {Subscription} from "rxjs";
 import {noWhiteSpaceValidator} from "../../validators/no-white-space-validator.directive";
+import {RoutineService} from "../../services/routine.service";
 
 @Component({
   selector: 'app-routine-creator',
@@ -20,12 +21,44 @@ export class RoutineCreatorComponent implements OnInit, OnDestroy ,AfterViewChec
 
   private saveRoutineSubscription: Subscription;
 
+  private loadRoutineSubscription: Subscription;
+
   formSaveStatus: boolean = false;
 
-  constructor(private routineCreatorService: RoutineCreatorService, private router: Router) {
+  constructor(private routineCreatorService: RoutineCreatorService, private routineService: RoutineService,
+              private router: Router) {
   }
 
   ngOnInit(): void {
+    this.initializeRoutineCreationForm();
+  }
+
+  initializeRoutineCreationForm(){
+    if(this.routineCreatorService.getRoutineEditMode()){
+     this.initializeRoutineCreationFormForEdit();
+    }else {
+     this.initializeNewRoutineCreationForm();
+    }
+  }
+
+  private initializeRoutineCreationFormForEdit(){
+    this.routineCreationForm = new FormGroup<IRoutineForm>({
+      'routineTitle': new FormControl<string>('', [Validators.required, noWhiteSpaceValidator()]),
+      'topics': new FormArray<FormGroup<ITopicForm>>([])
+    });
+
+    const routineIdForEdit: number = this.routineCreatorService.getRoutineForEdit();
+    this.loadRoutineSubscription = this.routineService.loadRoutineAndItsTopicContentsByRoutineId(routineIdForEdit)
+      .subscribe((routine: IRoutine) =>{
+        this.routineCreationForm.get('routineTitle')?.patchValue(routine.title);
+        if(routine.topics){
+          for (const topic of routine.topics) {
+            this.topicFormArray.push(TopicCreatorComponent.addTopicFormForEdit(topic));
+          }
+        }
+      });
+  }
+  private initializeNewRoutineCreationForm(){
     this.routineCreationForm = new FormGroup<IRoutineForm>({
       'routineTitle': new FormControl<string>('', [Validators.required, noWhiteSpaceValidator()]),
       'topics': new FormArray<FormGroup<ITopicForm>>([
@@ -62,6 +95,7 @@ export class RoutineCreatorComponent implements OnInit, OnDestroy ,AfterViewChec
             }
           });
     }
+    this.routineCreatorService.setEditMode(false);
     this.formSaveStatus = false;
   }
 
