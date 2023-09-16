@@ -1,4 +1,4 @@
-import {Injectable, OnDestroy} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Routine} from "../models/routine-model/routine";
 import {HttpClient} from "@angular/common/http";
 import {
@@ -20,6 +20,8 @@ export class RoutineService {
 
   private selectedRoutine: Routine;
   selectedRoutineChanged: Subject<Routine> = new Subject<Routine>();
+
+  public topicsToEdit: ITopic[] = [];
   constructor(private http: HttpClient) {
   }
 
@@ -146,11 +148,15 @@ export class RoutineService {
             actualChanges.push({
               changeFrom: {
                 chordKeyId: change.changeFrom.id.chordKeyId,
-                chordRootOrder: change.changeFrom.id.chordRootOrder
+                chordRootOrder: change.changeFrom.id.chordRootOrder,
+                chordRootName: change.changeFrom.chordRootName,
+                chordKeyName: change.changeFrom.chordKeyName
               },
               changeTo: {
-                chordKeyId: change.changeFrom.id.chordKeyId,
-                chordRootOrder: change.changeFrom.id.chordRootOrder
+                chordKeyId: change.changeTo.id.chordKeyId,
+                chordRootOrder: change.changeTo.id.chordRootOrder,
+                chordRootName: change.changeTo.chordRootName,
+                chordKeyName: change.changeTo.chordKeyName
               }
             })
           }
@@ -167,7 +173,9 @@ export class RoutineService {
           if(chord.id.chordKeyId && chord.id.chordRootOrder){
             chords.push({
               chordKeyId: chord.id.chordKeyId,
-              chordRootOrder: chord.id.chordRootOrder
+              chordRootOrder: chord.id.chordRootOrder,
+              chordRootName: chord.chordRootName,
+              chordKeyName: chord.chordKeyName
             })
           }
         }

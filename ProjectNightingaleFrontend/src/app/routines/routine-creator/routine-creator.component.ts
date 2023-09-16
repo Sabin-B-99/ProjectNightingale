@@ -54,6 +54,7 @@ export class RoutineCreatorComponent implements OnInit, OnDestroy ,AfterViewChec
         if(routine.topics){
           for (const topic of routine.topics) {
             this.topicFormArray.push(TopicCreatorComponent.addTopicFormForEdit(topic));
+            this.routineService.topicsToEdit.push(topic);
           }
         }
       });
@@ -71,6 +72,7 @@ export class RoutineCreatorComponent implements OnInit, OnDestroy ,AfterViewChec
     if (this.saveRoutineSubscription){
       this.saveRoutineSubscription.unsubscribe();
     }
+    this.routineService.topicsToEdit.splice(0, this.routineService.topicsToEdit.length);
   }
 
   ngAfterViewChecked() {

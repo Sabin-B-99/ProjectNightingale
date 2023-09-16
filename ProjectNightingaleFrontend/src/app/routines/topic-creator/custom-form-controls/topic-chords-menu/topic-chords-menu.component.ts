@@ -52,7 +52,9 @@ export class TopicChordsMenuComponent implements ControlValueAccessor, OnInit{
       selectedChordsOrderAndKeysValues.push(
         {
           chordRootOrder: chord.chordRoot.rootOrder,
-          chordKeyId: chord.chordKey.id
+          chordKeyId: chord.chordKey.id,
+          chordRootName: chord.chordRoot.rootName,
+          chordKeyName: chord.chordKey.keyName
         }
       )
     }
@@ -62,8 +64,11 @@ export class TopicChordsMenuComponent implements ControlValueAccessor, OnInit{
   addChord(selectedChord: Chord):void{
     this.markAsTouched();
     if(!this.isDisabled){
-      let selectedChordOrderAndKey: IChords = {chordRootOrder: selectedChord.chordRoot.rootOrder,
-        chordKeyId: selectedChord.chordKey.id
+      let selectedChordOrderAndKey: IChords = {
+        chordRootOrder: selectedChord.chordRoot.rootOrder,
+        chordKeyId: selectedChord.chordKey.id,
+        chordRootName: selectedChord.chordRoot.rootName,
+        chordKeyName: selectedChord.chordKey.keyName
       };
       this.selectedChordsOrderAndKeyValues.push(selectedChordOrderAndKey);
       this.selectedChords.push(selectedChord);

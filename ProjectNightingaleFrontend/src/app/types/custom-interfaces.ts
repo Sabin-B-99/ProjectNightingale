@@ -87,7 +87,9 @@ interface IStrumPatterns{
 
 interface IChords{
   chordRootOrder: number,
-  chordKeyId: number
+  chordKeyId: number,
+  chordRootName: string,
+  chordKeyName: string
 }
 
 interface IChordDTO{
@@ -95,7 +97,9 @@ interface IChordDTO{
     chordRootOrder: number,
     chordKeyId: number
   }
-  chordImageFileName: string
+  chordImageFileName: string,
+  chordRootName: string,
+  chordKeyName:string
 }
 
 interface IChordChangesDTO{

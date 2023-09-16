@@ -9,7 +9,11 @@ import {
 } from "../types/custom-interfaces";
 import {FormArray, FormGroup} from "@angular/forms";
 import {HttpClient} from "@angular/common/http";
-import {map, Observable} from "rxjs";
+import {map, min, Observable, Subject} from "rxjs";
+import {Chord} from "../models/chord-model/chord";
+import {ChordRoot} from "../models/chord-model/chord-root-model/chord-root";
+import {ChordKey} from "../models/chord-model/chord-key-model/chord-key";
+import {ChordChange} from "../models/chord-change-model/chord-change";
 
 
 @Injectable({
@@ -187,5 +191,47 @@ export class RoutineCreatorService {
 
   public getRoutineForEdit(){
     return this.routineIdForEdit;
+  }
+
+
+  public buildChordsFromIChords(chords: IChords[]): Chord[]{
+    let chordModels: Chord[] = [];
+    for (const chord of chords) {
+      chordModels.push(this.buildChordModelFormIChord(chord));
+    }
+    return chordModels;
+  }
+
+  private buildChordModelFormIChord(chord: IChords): Chord{
+    return new Chord(
+      new ChordRoot(chord.chordRootOrder, chord.chordRootName),
+      new ChordKey(chord.chordKeyId, chord.chordKeyName)
+    )
+  }
+
+  buildChordsChangesFromIChordsChanges(chordChanges: IChordChanges[]) {
+    let chordChangesModels: ChordChange[] = []
+    for (const chordChange of chordChanges) {
+      chordChangesModels.push(this.buildChordChangeModelFormIChordChange(chordChange));
+    }
+    return chordChangesModels;
+  }
+
+  private buildChordChangeModelFormIChordChange(chordChange: IChordChanges) {
+    return new ChordChange(
+      this.buildChordModelFormIChord(chordChange.changeFrom),
+      this.buildChordModelFormIChord(chordChange.changeTo)
+    );
+  }
+
+  buildTimeStringFromSecsVal(timeInSecs: number) {
+    const hours: number = Math.floor(timeInSecs / 3600);
+    const hoursInString: string = (hours < 10) ? `0${hours}`: `${hours}`;
+    timeInSecs %= 3600;
+    const minutes: number = Math.floor(timeInSecs / 60);
+    const minutesInString: string = (minutes < 10) ? `0${minutes}`: `${minutes}`;
+    const seconds: number = timeInSecs % 60;
+    const secondsInString: string = (seconds < 10) ? `0${seconds}`: `${seconds}`;
+    return `${hoursInString}:${minutesInString}:${secondsInString}`;
   }
 }

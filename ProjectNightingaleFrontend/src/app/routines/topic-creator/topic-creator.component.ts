@@ -1,7 +1,8 @@
 import {
+  AfterViewInit,
   Component,
   EventEmitter,
-  Input,
+  Input, OnDestroy, OnInit,
   Output,
 } from '@angular/core';
 import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
@@ -10,22 +11,24 @@ import {ChordChange} from "../../models/chord-change-model/chord-change";
 import {
   IChordChanges,
   IChords,
-  IMetronomeValues,
+  IMetronomeValues, IStrumPatterns,
   ITopic,
   ITopicForm
 } from "../../types/custom-interfaces";
 import {topicFormAtLeastOneFieldRequired} from "../../validators/topic-form-validator.directive";
 import {noWhiteSpaceValidator} from "../../validators/no-white-space-validator.directive";
+import {Subject, Subscription} from "rxjs";
+import {RoutineCreatorService} from "../../services/routine-creator.service";
+import {RoutineService} from "../../services/routine.service";
 
 @Component({
   selector: 'app-topic-creator',
   templateUrl: './topic-creator.component.html',
   styleUrls: ['./topic-creator.component.css']
 })
-export class TopicCreatorComponent{
+export class TopicCreatorComponent implements OnInit, OnDestroy{
 
   private static readonly TOPIC_DURATION_DEFAULT_VALUE: string = "00:03:00";
-
 
   selectedChordChanges: ChordChange[] = [];
   selectedChords: Chord[] = [];
@@ -49,7 +52,16 @@ export class TopicCreatorComponent{
   showChordsSelectionMenu: boolean = false;
   showChordChangesMenu: boolean = false;
 
-  constructor() {
+  constructor(private routineCreatorService: RoutineCreatorService,
+              private routineService: RoutineService) {
+  }
+
+  ngOnInit() {
+    this.setUpForTopicFormForEdit();
+  }
+
+
+  ngOnDestroy() {
   }
 
   static addTopicForm(): FormGroup<ITopicForm>{
@@ -60,23 +72,20 @@ export class TopicCreatorComponent{
       'topicChordChanges': new FormControl<IChordChanges[]>([]),
       'strumPatterns': new FormArray<FormControl<string | null>>([]),
       'topicMetronome' : new FormControl<IMetronomeValues>({bpm: 100, beatsPerMeasure: 4}),
-      'topicTime': new FormControl<string>( this.TOPIC_DURATION_DEFAULT_VALUE,
+      'topicTime': new FormControl<string>( TopicCreatorComponent.TOPIC_DURATION_DEFAULT_VALUE,
         [Validators.pattern(new RegExp("^\\d+:\\d{2}:\\d{2}$")), Validators.required])
     }, {validators: topicFormAtLeastOneFieldRequired()})
   }
 
   static addTopicFormForEdit(topic: ITopic): FormGroup<ITopicForm> {
-    for (const [key, value] of Object.entries(topic)){
-      console.log(key, value);
-    }
     return new FormGroup<ITopicForm>({
       'topicTitle': new FormControl<string>(topic.title, [Validators.required, noWhiteSpaceValidator()]),
       'topicSongTitle': new FormControl<string>(topic.songTitle || ''),
       'topicChords': new FormControl<IChords[]>(topic.chords),
       'topicChordChanges': new FormControl<IChordChanges[]>(topic.topicChordChanges),
       'strumPatterns': new FormArray<FormControl<string|null>>([]),
-      'topicMetronome' : new FormControl<IMetronomeValues>(topic.metronomes),
-      'topicTime': new FormControl<string>(this.TOPIC_DURATION_DEFAULT_VALUE,
+      'topicMetronome' : new FormControl<IMetronomeValues>({bpm: 100, beatsPerMeasure: 4}),
+      'topicTime': new FormControl<string>(TopicCreatorComponent.TOPIC_DURATION_DEFAULT_VALUE,
         [Validators.pattern(new RegExp("^\\d+:\\d{2}:\\d{2}$")), Validators.required])
     }, {validators: topicFormAtLeastOneFieldRequired()});
   }
@@ -135,5 +144,32 @@ export class TopicCreatorComponent{
   }
   onCloseChordChangesMenuButtonClicked() : void{
     this.showChordChangesMenu = false;
+  }
+
+  private setUpForTopicFormForEdit(){
+    const chordsToEdit: IChords[] | undefined = this.routineService.topicsToEdit.at(this.indexInCurrentRoutine)?.chords;
+    const chordChangesToEdit: IChordChanges[] | undefined = this.routineService.topicsToEdit.at(this.indexInCurrentRoutine)?.topicChordChanges;
+    const metronomeValToEdit: IMetronomeValues | undefined = this.routineService.topicsToEdit.at(this.indexInCurrentRoutine)?.metronomes;
+    const time: number | undefined = this.routineService.topicsToEdit.at(this.indexInCurrentRoutine)?.timeDuration;
+    const patterns: IStrumPatterns[] | undefined = this.routineService.topicsToEdit.at(this.indexInCurrentRoutine)?.strumPatterns;
+    if(chordsToEdit){
+      this.selectedChords = this.routineCreatorService.buildChordsFromIChords(chordsToEdit);
+    }
+    if(chordChangesToEdit){
+      this.selectedChordChanges = this.routineCreatorService.buildChordsChangesFromIChordsChanges(chordChangesToEdit);
+    }
+    if(metronomeValToEdit){
+      this.selectedMetronomeValues = metronomeValToEdit;
+    }
+    if(time){
+      this.topicForm.get('topicTime')?.patchValue(this.routineCreatorService.buildTimeStringFromSecsVal(time));
+    }
+    if(patterns){
+      for (const pattern of patterns) {
+        this.strumInputArray.push(
+          new FormControl<string | null>(pattern.pattern, [Validators.required, noWhiteSpaceValidator()])
+        );
+      }
+    }
   }
 }

@@ -57,11 +57,19 @@ export class TopicChordChangesMenuComponent  implements OnInit, ControlValueAcce
     for (let chordChange of selectedChordChangesForEdit){
       selectedChordChangesOrderAndKeyForEdit.push(
         {
-          changeFrom: {chordRootOrder: chordChange.getFromChord().chordRoot.rootOrder,
-            chordKeyId: chordChange.getFromChord().chordKey.id},
+          changeFrom: {
+            chordRootOrder: chordChange.getFromChord().chordRoot.rootOrder,
+            chordKeyId: chordChange.getFromChord().chordKey.id,
+            chordRootName: chordChange.getChordFromRootName(),
+            chordKeyName: chordChange.getChordFromKeyName()
+          },
 
-          changeTo: {chordRootOrder: chordChange.getToChord().chordRoot.rootOrder,
-            chordKeyId: chordChange.getToChord().chordKey.id}
+          changeTo: {
+            chordRootOrder: chordChange.getToChord().chordRoot.rootOrder,
+            chordKeyId: chordChange.getToChord().chordKey.id,
+            chordRootName: chordChange.getChordToRootName(),
+            chordKeyName: chordChange.getChordToKeyName()
+          }
         }
       )
     }
@@ -73,11 +81,19 @@ export class TopicChordChangesMenuComponent  implements OnInit, ControlValueAcce
     this.markAsTouched();
     if(chordChange && !this.isDisabled){
       let chordChangeOrderAndKeyValues: IChordChanges = {
-        changeFrom: {chordRootOrder: chordChange.getFromChord().chordRoot.rootOrder,
-          chordKeyId: chordChange.getFromChord().chordKey.id},
+        changeFrom: {
+          chordRootOrder: chordChange.getFromChord().chordRoot.rootOrder,
+          chordKeyId: chordChange.getFromChord().chordKey.id,
+          chordRootName: chordChange.getChordFromRootName(),
+          chordKeyName: chordChange.getChordFromKeyName()
+        },
 
-        changeTo: {chordRootOrder: chordChange.getToChord().chordRoot.rootOrder,
-          chordKeyId: chordChange.getToChord().chordKey.id}
+        changeTo: {
+          chordRootOrder: chordChange.getToChord().chordRoot.rootOrder,
+          chordKeyId: chordChange.getToChord().chordKey.id,
+          chordRootName: chordChange.getChordToRootName(),
+          chordKeyName: chordChange.getChordToKeyName()
+        }
       };
       this.chordChanges.push(chordChange);
       this.selectedChordChangesOrderKeyValues.push(chordChangeOrderAndKeyValues);
