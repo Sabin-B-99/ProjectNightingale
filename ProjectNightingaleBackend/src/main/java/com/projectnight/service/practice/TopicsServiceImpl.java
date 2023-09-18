@@ -1,19 +1,17 @@
 package com.projectnight.service.practice;
 
-import com.projectnight.entity.practice.ChordChanges;
-import com.projectnight.entity.practice.Metronomes;
-import com.projectnight.entity.practice.StrumPatterns;
+import com.projectnight.entity.practice.Routines;
 import com.projectnight.entity.practice.Topics;
 import com.projectnight.entity.songs.Chords;
 import com.projectnight.entity.songs.primarykeys.ChordsPK;
 import com.projectnight.repository.practice.MetronomesRepository;
+import com.projectnight.repository.practice.RoutinesRepository;
 import com.projectnight.repository.practice.TopicsRepository;
 import com.projectnight.repository.songs.ChordsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -24,12 +22,15 @@ public class TopicsServiceImpl implements TopicsService{
     private final TopicsRepository topicsRepository;
     private final MetronomesRepository metronomesRepository;
     private final ChordsRepository chordsRepository;
+
+    private final RoutinesRepository routinesRepository;
     @Autowired
     public TopicsServiceImpl(TopicsRepository topicsRepository, ChordsRepository chordsRepository,
-                             MetronomesRepository metronomesRepository) {
+                             MetronomesRepository metronomesRepository, RoutinesRepository routinesRepository) {
         this.topicsRepository = topicsRepository;
         this.chordsRepository = chordsRepository;
         this.metronomesRepository = metronomesRepository;
+        this.routinesRepository = routinesRepository;
     }
 
     @Override
@@ -69,56 +70,20 @@ public class TopicsServiceImpl implements TopicsService{
 
     @Override
     @Transactional
-    public Topics addTopicChordChange(int topicId, List<ChordsPK> changesPrimaryKeys) {
-        Chords changeFrom = this.chordsRepository.findById(changesPrimaryKeys.get(0))
+    public List<Chords> getChordsByTopicId(int topicId) {
+        return topicsRepository.getChordsByTopic(topicId);
+    }
+
+    @Override
+    @Transactional
+    public Topics saveTopic(int routineId, Topics topic) {
+        Routines routine = this.routinesRepository.findById(routineId)
                 .orElseThrow(() ->{
-                  throw new ResponseStatusException(HttpStatus.NOT_FOUND,
-                          "Change from chord not found.");
-                });
-        Chords changeTo = this.chordsRepository.findById(changesPrimaryKeys.get(1))
-                .orElseThrow(()->{
                     throw new ResponseStatusException(HttpStatus.NOT_FOUND,
-                            "Change to chord not found.");
+                            "Routine with the given id not found");
                 });
-        ChordChanges chordChanges = new ChordChanges();
-        chordChanges.setChangeFrom(changeFrom);
-        chordChanges.setChangeTo(changeTo);
-
-        Topics topic = topicsRepository.findById(topicId)
-                .orElseThrow(()->{
-                    throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Topic not found.");
-                });
-        chordChanges.setTopic(topic);
-        topic.getTopicChordChanges().add(chordChanges);
-        return topicsRepository.save(topic);
+        topic.setRoutine(routine);
+        return this.topicsRepository.save(topic);
     }
-
-    @Override
-    @Transactional
-    public Topics addTopicStrumPattern(int topicId, StrumPatterns strumPattern) {
-        Topics topic = topicsRepository.findById(topicId)
-                .orElseThrow(
-                        () ->{
-                            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Topic not found.");
-                        }
-                );
-        strumPattern.setTopic(topic);
-        topic.getStrumPatterns().add(strumPattern);
-        return topicsRepository.save(topic);
-    }
-
-    @Override
-    @Transactional
-    public Metronomes addTopicMetronome(int topicId, Metronomes metronome) {
-        Topics topic = topicsRepository.findById(topicId)
-                .orElseThrow(
-                        () ->{
-                            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Topic not found.");
-                        }
-                );
-        metronome.setTopics(topic);
-        return metronomesRepository.save(metronome);
-    }
-
 
 }

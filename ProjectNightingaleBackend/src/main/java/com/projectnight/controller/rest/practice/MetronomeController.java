@@ -28,4 +28,14 @@ public class MetronomeController {
     public List<Metronomes> getAllMetronomes(){
         return metronomesService.getAllMetronomes();
     }
+
+    @PostMapping("/topics/{topicId}/metronomes")
+    public @ResponseBody Metronomes addTopicMetronome(@PathVariable int topicId, @RequestBody Metronomes metronome){
+        return metronomesService.addTopicMetronome(topicId, metronome);
+    }
+
+    @GetMapping("/topics/{topicId}/metronomes")
+    public Metronomes getMetronomeByTopicId(@PathVariable int topicId){
+        return metronomesService.getMetronomeByTopicId(topicId);
+    }
 }

@@ -11,4 +11,8 @@ public interface ChordsService {
     List<Chords> getAllChords();
 
     String getChordImagePathById(ChordsPK id);
+
+    String getChordRootNameById(ChordsPK id);
+
+    String gerChordKeyNameById(ChordsPK id);
 }

@@ -1,6 +1,7 @@
 package com.projectnight.service.practice;
 
 import com.projectnight.entity.practice.StrumPatterns;
+import com.projectnight.entity.practice.Topics;
 import com.projectnight.repository.practice.StrumPatternsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,10 +15,12 @@ import java.util.List;
 public class StrumPatternServiceImpl implements StrumPatternService{
 
     private final StrumPatternsRepository strumPatternsRepository;
+    private final TopicsService topicsService;
 
     @Autowired
-    public StrumPatternServiceImpl(StrumPatternsRepository strumPatternsRepository) {
+    public StrumPatternServiceImpl(StrumPatternsRepository strumPatternsRepository, TopicsService topicsService) {
         this.strumPatternsRepository = strumPatternsRepository;
+        this.topicsService = topicsService;
     }
 
     @Override
@@ -35,5 +38,19 @@ public class StrumPatternServiceImpl implements StrumPatternService{
                             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Strum pattern not found");
                         }
                 ) ;
+    }
+
+    @Override
+    @Transactional
+    public StrumPatterns addTopicStrumPattern(int topicId, StrumPatterns strumPattern) {
+        Topics topic = topicsService.getTopicById(topicId);
+        strumPattern.setTopic(topic);
+        return strumPatternsRepository.save(strumPattern);
+    }
+
+    @Override
+    @Transactional
+    public List<StrumPatterns> getStrumPatternsByTopicId(int topicId) {
+        return strumPatternsRepository.getStrumPatternsByTopicId(topicId);
     }
 }

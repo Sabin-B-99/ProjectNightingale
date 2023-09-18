@@ -24,7 +24,7 @@ public class Topics {
     @Column(name = "time_duration")
     private long timeDuration;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "routine_id", referencedColumnName = "id")
     private Routines routine;
 
@@ -32,8 +32,7 @@ public class Topics {
     private List<ChordChanges> topicChordChanges;
 
 
-    //Unidirectional by design
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @JoinTable(
             name = "topic_chords",
             joinColumns = {@JoinColumn(name = "topic_id", referencedColumnName = "id")},
@@ -46,6 +45,8 @@ public class Topics {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "topic")
     private List<StrumPatterns> strumPatterns;
 
+    @OneToOne(mappedBy = "topics", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Metronomes metronomes;
 
 
     public Topics() {
@@ -113,5 +114,13 @@ public class Topics {
 
     public void setRoutine(Routines routine) {
         this.routine = routine;
+    }
+
+    public Metronomes getMetronomes() {
+        return metronomes;
+    }
+
+    public void setMetronomes(Metronomes metronomes) {
+        this.metronomes = metronomes;
     }
 }

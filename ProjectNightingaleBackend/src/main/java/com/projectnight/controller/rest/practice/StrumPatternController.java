@@ -27,4 +27,16 @@ public class StrumPatternController {
     public List<StrumPatterns> getAllStrumPatterns(){
         return strumPatternService.getAllStrumPatterns();
     }
+
+
+    @PostMapping("/topics/{topicId}/strum-patterns")
+    public @ResponseBody StrumPatterns addTopicStrumPatterns(@PathVariable int topicId, @RequestBody StrumPatterns strumPattern){
+        return strumPatternService.addTopicStrumPattern(topicId, strumPattern);
+    }
+
+    @GetMapping("/topics/{topicId}/strum-patterns")
+    public List<StrumPatterns> getStrumPatternsByTopicId(@PathVariable int topicId){
+        return strumPatternService.getStrumPatternsByTopicId(topicId);
+    }
 }
+

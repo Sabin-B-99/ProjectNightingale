@@ -3,6 +3,7 @@ package com.projectnight.repository.practice;
 import com.projectnight.entity.practice.Routines;
 import com.projectnight.entity.practice.Topics;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;

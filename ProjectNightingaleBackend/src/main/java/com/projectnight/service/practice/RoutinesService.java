@@ -13,5 +13,5 @@ public interface RoutinesService {
 
     Routines saveRoutine(Routines routine);
 
-    Topics saveTopic(int routineId, Topics topic);
+    void deleteRoutineById(int routineId);
 }

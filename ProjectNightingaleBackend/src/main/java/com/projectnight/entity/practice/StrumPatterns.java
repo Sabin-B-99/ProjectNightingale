@@ -14,7 +14,7 @@ public class StrumPatterns {
     @Column(name = "pattern")
     private String pattern;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "topic_id", referencedColumnName = "id")
     private Topics topic;
 

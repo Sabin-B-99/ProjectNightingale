@@ -18,7 +18,7 @@ public class Routines {
     @Column(name = "duration")
     private long duration;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "routine")
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "routine", fetch = FetchType.LAZY)
     private List<Topics> topics;
 
     public Routines() {

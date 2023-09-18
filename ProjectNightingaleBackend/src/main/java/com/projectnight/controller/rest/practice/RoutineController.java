@@ -11,6 +11,8 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
+//TODO: Use patch mappings to update instead of post mappings
+
 @RestController
 @CrossOrigin("http://localhost:4200")
 @RequestMapping("/api/practice")
@@ -48,8 +50,8 @@ public class RoutineController {
          return savedRoutine;
     }
 
-    @PostMapping("/routines/{routineId}/topics")
-    public @ResponseBody Topics saveTopic(@PathVariable int routineId, @RequestBody Topics topic){
-        return this.routinesService.saveTopic(routineId, topic);
+    @DeleteMapping("/routines/{routineId}")
+    public void deleteRoutineById(@PathVariable int routineId){
+        this.routinesService.deleteRoutineById(routineId);
     }
 }

@@ -1,6 +1,8 @@
 package com.projectnight.entity.practice;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -19,8 +21,9 @@ public class Metronomes {
     private int beatsPerMeasure;
 
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "topic_id", referencedColumnName = "id")
+    @OneToOne
+    @JoinColumn(name = "topic_id")
+    @JsonIgnore
     private Topics topics;
 
     public Metronomes() {

@@ -16,13 +16,10 @@ import java.util.List;
 public class RoutinesServiceImpl implements RoutinesService{
 
     private final RoutinesRepository routinesRepository;
-    private final TopicsRepository topicsRepository;
 
     @Autowired
-    public RoutinesServiceImpl(RoutinesRepository routinesRepository,
-                               TopicsRepository topicsRepository) {
+    public RoutinesServiceImpl(RoutinesRepository routinesRepository) {
         this.routinesRepository = routinesRepository;
-        this.topicsRepository = topicsRepository;
     }
 
     @Override
@@ -56,13 +53,7 @@ public class RoutinesServiceImpl implements RoutinesService{
 
     @Override
     @Transactional
-    public Topics saveTopic(int routineId, Topics topic) {
-        Routines routine = this.routinesRepository.findById(routineId)
-                .orElseThrow(() ->{
-                    throw new ResponseStatusException(HttpStatus.NOT_FOUND,
-                            "Routine with the given id not found");
-                });
-        topic.setRoutine(routine);
-        return this.topicsRepository.save(topic);
+    public void deleteRoutineById(int routineId) {
+        this.routinesRepository.deleteById(routineId);
     }
 }

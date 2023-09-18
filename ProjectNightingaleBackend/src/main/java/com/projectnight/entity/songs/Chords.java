@@ -17,6 +17,12 @@ public class Chords {
     @Column(name = "image_file_name")
     private String imageFileName;
 
+    @Column(name = "chord_root_name")
+    private String chordRootName;
+
+    @Column(name = "chord_key_name")
+    private String chordKeyName;
+
     public Chords() {
     }
 
@@ -34,5 +40,21 @@ public class Chords {
 
     public void setImageFileName(String imageFileName) {
         this.imageFileName = imageFileName;
+    }
+
+    public String getChordRootName() {
+        return chordRootName;
+    }
+
+    public void setChordRootName(String chordRootName) {
+        this.chordRootName = chordRootName;
+    }
+
+    public String getChordKeyName() {
+        return chordKeyName;
+    }
+
+    public void setChordKeyName(String chordKeyName) {
+        this.chordKeyName = chordKeyName;
     }
 }

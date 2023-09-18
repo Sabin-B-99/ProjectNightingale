@@ -3,6 +3,7 @@ package com.projectnight.controller.rest.practice;
 import com.projectnight.entity.practice.Metronomes;
 import com.projectnight.entity.practice.StrumPatterns;
 import com.projectnight.entity.practice.Topics;
+import com.projectnight.entity.songs.Chords;
 import com.projectnight.entity.songs.primarykeys.ChordsPK;
 import com.projectnight.service.practice.TopicsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,18 +38,15 @@ public class TopicController {
         return topicsService.addTopicChord(topicId, topicChordPk);
     }
 
-    @PostMapping("/topics/{topicId}/chords-changes")
-    public @ResponseBody Topics addTopicChordChanges(@PathVariable int topicId, @RequestBody List<ChordsPK> changePrimaryKeys){
-        return topicsService.addTopicChordChange(topicId, changePrimaryKeys);
+
+    @GetMapping("/topics/{topicId}/chords")
+    public List<Chords> getChordsByTopicId(@PathVariable int topicId){
+        return topicsService.getChordsByTopicId(topicId);
     }
 
-    @PostMapping("/topics/{topicId}/strum-patterns")
-    public @ResponseBody Topics addTopicStrumPatterns(@PathVariable int topicId, @RequestBody StrumPatterns strumPattern){
-        return topicsService.addTopicStrumPattern(topicId, strumPattern);
+    @PostMapping("/routines/{routineId}/topics")
+    public @ResponseBody Topics saveTopic(@PathVariable int routineId, @RequestBody Topics topic){
+        return this.topicsService.saveTopic(routineId, topic);
     }
 
-    @PostMapping("/topics/{topicId}/metronomes")
-    public @ResponseBody Metronomes addTopicMetronome(@PathVariable int topicId, @RequestBody Metronomes metronome){
-        return topicsService.addTopicMetronome(topicId, metronome);
-    }
 }

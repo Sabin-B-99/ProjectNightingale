@@ -28,7 +28,7 @@ public class ChordChanges {
     private Chords changeTo;
 
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "topic_id", referencedColumnName = "id")
     private Topics topic;
 

@@ -1,6 +1,7 @@
 package com.projectnight.service.practice;
 
 import com.projectnight.entity.practice.Metronomes;
+import com.projectnight.entity.practice.Topics;
 import com.projectnight.repository.practice.MetronomesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,10 +15,12 @@ import java.util.List;
 public class MetronomesServiceImpl implements MetronomesService {
 
     private final MetronomesRepository metronomesRepository;
+    private final TopicsService topicsService;
 
     @Autowired
-    public MetronomesServiceImpl(MetronomesRepository metronomesRepository) {
+    public MetronomesServiceImpl(MetronomesRepository metronomesRepository, TopicsService topicsService) {
         this.metronomesRepository = metronomesRepository;
+        this.topicsService = topicsService;
     }
 
     @Override
@@ -35,5 +38,21 @@ public class MetronomesServiceImpl implements MetronomesService {
     @Transactional
     public List<Metronomes> getAllMetronomes() {
         return this.metronomesRepository.findAll();
+    }
+
+    @Override
+    @Transactional
+    public Metronomes addTopicMetronome(int topicId, Metronomes metronome) {
+        Topics topic = topicsService.getTopicById(topicId);
+        metronome.setTopics(topic);
+        return metronomesRepository.save(metronome);
+    }
+
+
+    @Override
+    @Transactional
+    public Metronomes getMetronomeByTopicId(int topicId) {
+        Topics topic = topicsService.getTopicById(topicId);
+        return metronomesRepository.getMetronomesByTopics(topic);
     }
 }

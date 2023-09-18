@@ -51,4 +51,16 @@ public class ChordsServiceImpl implements ChordsService{
         }
         return path + fileName + CHORD_IMAGE_FILE_EXTENSION;
     }
+
+    @Override
+    @Transactional("songsTransactionManager")
+    public String getChordRootNameById(ChordsPK id) {
+        return chordsRepository.findChordRootNameByPrimaryKey(id);
+    }
+
+    @Override
+    @Transactional("songsTransactionManager")
+    public String gerChordKeyNameById(ChordsPK id) {
+        return chordsRepository.findChordKeyNameByPrimaryKey(id);
+    }
 }

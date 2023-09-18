@@ -1,6 +1,7 @@
 package com.projectnight.controller.rest.practice;
 
 import com.projectnight.entity.practice.ChordChanges;
+import com.projectnight.entity.songs.primarykeys.ChordsPK;
 import com.projectnight.service.practice.ChordChangesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -32,5 +33,15 @@ public class ChordChangesController {
     @GetMapping("/chord-changes")
     public List<ChordChanges> getAllChordChanges(){
         return chordChangesService.getAllChordChanges();
+    }
+
+    @PostMapping("/topics/{topicId}/chords-changes")
+    public @ResponseBody ChordChanges addTopicChordChanges(@PathVariable int topicId, @RequestBody List<ChordsPK> changePrimaryKeys){
+        return chordChangesService.addTopicChordChange(topicId, changePrimaryKeys);
+    }
+
+    @GetMapping("/topics/{topicId}/chord-changes")
+    public List<ChordChanges> getChordChangesByTopicId(@PathVariable int topicId){
+        return chordChangesService.getChordChangesByTopicId(topicId);
     }
 }

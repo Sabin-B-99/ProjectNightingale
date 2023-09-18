@@ -1,8 +1,7 @@
 package com.projectnight.service.practice;
 
-import com.projectnight.entity.practice.Metronomes;
-import com.projectnight.entity.practice.StrumPatterns;
 import com.projectnight.entity.practice.Topics;
+import com.projectnight.entity.songs.Chords;
 import com.projectnight.entity.songs.primarykeys.ChordsPK;
 
 import java.util.List;
@@ -12,9 +11,7 @@ public interface TopicsService {
     List<Topics> getAllTopics();
     Topics addTopicChord(int topicId, ChordsPK topicChordPK);
 
-    Topics addTopicChordChange(int topicId, List<ChordsPK> changesPrimaryKeys);
+    List<Chords> getChordsByTopicId(int topicId);
 
-    Topics addTopicStrumPattern(int topicId, StrumPatterns strumPattern);
-
-    Metronomes addTopicMetronome(int topicId, Metronomes metronome);
+    Topics saveTopic(int routineId, Topics topic);
 }
