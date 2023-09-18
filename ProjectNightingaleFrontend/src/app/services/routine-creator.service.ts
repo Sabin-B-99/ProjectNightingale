@@ -9,13 +9,14 @@ import {
 } from "../types/custom-interfaces";
 import {FormArray, FormGroup} from "@angular/forms";
 import {HttpClient} from "@angular/common/http";
-import {map, min, Observable, Subject} from "rxjs";
+import {map, Observable} from "rxjs";
 import {Chord} from "../models/chord-model/chord";
 import {ChordRoot} from "../models/chord-model/chord-root-model/chord-root";
 import {ChordKey} from "../models/chord-model/chord-key-model/chord-key";
 import {ChordChange} from "../models/chord-change-model/chord-change";
 
 
+//TODO: Use Patch mappings to update rather than post
 @Injectable({
   providedIn: 'root'
 })
@@ -37,11 +38,14 @@ export class RoutineCreatorService {
   }
 
   buildAndSaveRoutine(controls: IRoutineForm): Observable<boolean> {
+    if(this.editMode){
+      this.routineCreated.id = this.routineIdForEdit;
+    }
     this.routineCreated.title = controls.routineTitle.value || '';
     let routineTopics: ITopic[] = this.buildTopics(controls.topics);
     this.routineCreated.duration = this.calculateRoutineTotalDuration(routineTopics);
 
-    return  this.saveRoutine(this.routineCreated).
+    return this.saveRoutine(this.routineCreated).
       pipe(map((routine: IRoutine) =>{
         let routineSaved: boolean = false;
         if(routine.id){

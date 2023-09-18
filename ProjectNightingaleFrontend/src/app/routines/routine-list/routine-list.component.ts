@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Routine} from "../../models/routine-model/routine";
 import {RoutineService} from "../../services/routine.service";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -10,11 +10,12 @@ import {RoutineCreatorService} from "../../services/routine-creator.service";
   templateUrl: './routine-list.component.html',
   styleUrls: ['./routine-list.component.css'],
 })
-export class RoutineListComponent implements OnInit{
+export class RoutineListComponent implements OnInit, OnDestroy{
 
 
   public routines: Routine[];
   private routinesListSubscription: Subscription;
+  private deleteRoutineSubscription: Subscription;
 
   constructor(private routineService: RoutineService,
               private routineCreatorService: RoutineCreatorService,
@@ -26,6 +27,14 @@ export class RoutineListComponent implements OnInit{
       .subscribe( (loadedRoutines: Routine[]) =>{
         this.routines = loadedRoutines;
       });
+  }
+  ngOnDestroy() {
+    if(this.deleteRoutineSubscription){
+      this.deleteRoutineSubscription.unsubscribe();
+    }
+    if(this.routinesListSubscription){
+      this.routinesListSubscription.unsubscribe();
+    }
   }
 
   onRoutineSelected(selectedRoutine: Routine):void {
@@ -42,5 +51,12 @@ export class RoutineListComponent implements OnInit{
     this.routineCreatorService.setEditMode(true);
     this.routineCreatorService.setRoutineIdForEdit(routine.routineId);
     this.router.navigate(['create'], {relativeTo: this.route});
+  }
+
+  onRoutineDeleteClicked(routine: Routine) {
+    this.deleteRoutineSubscription =  this.routineService.deleteRoutineById(routine.routineId)
+      .subscribe((deleteProcessComplete: boolean) =>{
+
+      });
   }
 }

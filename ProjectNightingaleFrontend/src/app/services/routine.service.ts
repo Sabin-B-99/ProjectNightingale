@@ -197,4 +197,11 @@ export class RoutineService {
   setSelectedRoutine(selectedRoutine: Routine) {
     this.selectedRoutine = selectedRoutine;
   }
+
+  deleteRoutineById(routineId: number) {
+     return this.http.delete(`http://localhost:8080/ProjectNightingale/api/practice/routines/${routineId}`)
+      .pipe(map(()=>{
+        return true;
+      }));
+  }
 }
