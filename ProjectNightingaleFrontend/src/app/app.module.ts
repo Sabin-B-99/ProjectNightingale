@@ -32,6 +32,8 @@ import {HttpClientModule} from "@angular/common/http";
 import { SongTabCreatorComponent } from './songs/song-tab-creator/song-tab-creator.component';
 import { TabRequiredDetailsComponent } from './songs/song-tab-creator/tab-required-details/tab-required-details.component';
 import { HarmonicaTabInputArrayComponent } from './songs/song-tab-creator/custom-form-controls/harmonica-tab-input-array/harmonica-tab-input-array.component';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import {MatAutocompleteModule} from "@angular/material/autocomplete";
 
 @NgModule({
   declarations: [
@@ -63,14 +65,16 @@ import { HarmonicaTabInputArrayComponent } from './songs/song-tab-creator/custom
     TabRequiredDetailsComponent,
     HarmonicaTabInputArrayComponent,
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        ReactiveFormsModule,
-        FormsModule,
-        HttpClientModule,
-        NgOptimizedImage,
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    ReactiveFormsModule,
+    FormsModule,
+    HttpClientModule,
+    NgOptimizedImage,
+    NoopAnimationsModule,
+    MatAutocompleteModule,
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })

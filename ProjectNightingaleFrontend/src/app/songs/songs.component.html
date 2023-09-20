@@ -1,22 +1,36 @@
 <div class="container row mt-1">
-  <div class="row-cols-auto">
-    <form class="d-flex" role="search">
-      <input class="form-control me-2" type="search" placeholder="Song" aria-label="Search">
+  <div>
+    <form class="d-flex" role="search"
+          [formGroup]="songSearchForm" (ngSubmit)="onSearchButtonClicked()">
+      <input class="form-control me-2 col-lg-8"
+             type="search"
+             placeholder="Song"
+             aria-label="Search"
+             formControlName = "searchData"
+             [matAutocomplete]="auto">
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let result of searchResults" [value]="result.songTitle">
+          {{result.songTitle}} - {{result.artistName}}
+        </mat-option>
+      </mat-autocomplete>
+
       <button class="btn btn-outline-success" type="submit">Search</button>
     </form>
-    <div class="btn-group-sm mt-sm-1 btn-group">
-      <button class="btn btn-outline-secondary btn-sm" type="button">Top</button>
-      <button class="btn btn-outline-secondary btn-sm" type="button">Favourites</button>
-    </div>
+<!--    <div class="btn-group-sm mt-sm-1 btn-group">-->
+<!--      <button class="btn btn-outline-secondary btn-sm" type="button">Top</button>-->
+<!--      <button class="btn btn-outline-secondary btn-sm" type="button">Favourites</button>-->
+<!--    </div>-->
   </div>
 
-  <div class="row mt-sm-5">
-    <div class="col-md-auto">
-      <app-song-list listName="Top Songs"></app-song-list>
-    </div>
-    <div class="col-md-auto">
-      <router-outlet></router-outlet>
-    </div>
-  </div>
+
+
+<!--  <div class="row mt-sm-5">-->
+<!--    <div class="col-md-auto">-->
+<!--      <app-song-list listName="Top Songs"></app-song-list>-->
+<!--    </div>-->
+<!--    <div class="col-md-auto">-->
+<!--      <router-outlet></router-outlet>-->
+<!--    </div>-->
+<!--  </div>-->
 </div>
 
