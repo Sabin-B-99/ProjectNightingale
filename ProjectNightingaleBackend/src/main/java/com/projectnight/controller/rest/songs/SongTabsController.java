@@ -2,11 +2,16 @@ package com.projectnight.controller.rest.songs;
 
 import com.projectnight.entity.songs.SongTabs;
 import com.projectnight.service.songs.SongTabsService;
+import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import org.w3c.dom.stylesheets.LinkStyle;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/tabs")
@@ -28,5 +33,15 @@ public class SongTabsController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error while saving tab");
         }
         return savedTab;
+    }
+
+    @GetMapping(value = "/songs", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<SongTabs> getSongTabs(){
+        return this.songTabsService.getAllTabs();
+    }
+
+    @GetMapping(value = "/songs/{title}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<SongTabs> getSongTabsWithTitleLike(@PathVariable String title){
+        return this.songTabsService.getTabsWithTitleLike(title);
     }
 }

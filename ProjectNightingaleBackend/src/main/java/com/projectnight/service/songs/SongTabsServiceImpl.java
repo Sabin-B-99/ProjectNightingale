@@ -41,4 +41,10 @@ public class SongTabsServiceImpl implements SongTabsService{
     public SongTabs saveSongTab(SongTabs songTab) {
         return songTabsRepository.save(songTab);
     }
+
+    @Override
+    @Transactional("songsTransactionManager")
+    public List<SongTabs> getTabsWithTitleLike(String title) {
+        return songTabsRepository.findDistinctBySongTitleContainingIgnoreCase(title);
+    }
 }

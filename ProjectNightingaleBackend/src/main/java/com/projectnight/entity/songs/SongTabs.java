@@ -1,5 +1,6 @@
 package com.projectnight.entity.songs;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
@@ -25,21 +26,27 @@ public class SongTabs {
     private String artistName;
 
     @OneToMany(mappedBy = "songTab", orphanRemoval = true, cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<SongTabOtherArtists> otherArtists;
 
     @OneToOne(mappedBy = "songTab", fetch = FetchType.LAZY)
+    @JsonIgnore
     private HarmonicaTabOtherReqDetails harmonicaTabOtherReqDetails;
 
     @OneToOne(mappedBy = "songTab", fetch = FetchType.LAZY)
+    @JsonIgnore
     private GuitarTabOtherReqDetails guitarTabOtherReqDetails;
 
     @OneToOne(mappedBy = "songTab", fetch = FetchType.LAZY)
+    @JsonIgnore
     private GuitarTabLyrics guitarTabLyrics;
 
     @OneToOne(mappedBy = "songTab", fetch = FetchType.LAZY)
+    @JsonIgnore
     private LyricsOnlyTabLyrics lyricsOnlyTabLyrics;
 
     @OneToMany(mappedBy = "songTab")
+    @JsonIgnore
     private List<HarmonicaTabLyrics> harmonicaTabLyrics;
 
     public SongTabs() {
