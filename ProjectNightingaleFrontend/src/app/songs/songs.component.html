@@ -9,8 +9,8 @@
              formControlName = "searchData"
              [matAutocomplete]="auto">
       <mat-autocomplete #auto="matAutocomplete">
-        <mat-option *ngFor="let result of searchResults" [value]="result.songTitle">
-          {{result.songTitle}} - {{result.artistName}}
+        <mat-option *ngFor="let suggestion of searchSuggestions" [value]="suggestion.songTitle">
+          {{suggestion.songTitle}} - {{suggestion.artistName}}
         </mat-option>
       </mat-autocomplete>
 
@@ -22,6 +22,17 @@
 <!--    </div>-->
   </div>
 
+
+  <div *ngIf="searchResults.length > 0">
+    <div class="mt-sm-3">
+      <p class="text-secondary">Search Results: </p>
+    </div>
+    <li class="list-group" *ngFor="let result of searchResults">
+      <div class="list-group-item" (click)="onSongClicked(result)">
+        {{result.songTitle}} - {{result.artistName}}
+      </div>
+    </li>
+  </div>
 
 
 <!--  <div class="row mt-sm-5">-->

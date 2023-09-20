@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {SongService} from "../services/song.service";
 import {FormControl, FormGroup} from "@angular/forms";
 import {ISongTabDTO} from "../types/custom-interfaces";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-songs',
@@ -12,7 +13,9 @@ import {ISongTabDTO} from "../types/custom-interfaces";
 export class SongsComponent implements OnInit{
 
 
+  searchSuggestions: ISongTabDTO[] = [];
   searchResults: ISongTabDTO[] = [];
+  searchResultsSubscription: Subscription;
 
   songSearchForm: FormGroup;
 
@@ -33,22 +36,36 @@ export class SongsComponent implements OnInit{
   private searchSong(){
     this.songSearchForm.get('searchData')?.valueChanges.subscribe(
       (newSearchData: string) =>{
-        this.getSearchResults(newSearchData);
+        this.getSearchSuggestions(newSearchData);
       }
     )
+  }
+
+  private getSearchSuggestions(title: string){
+    if(title.trim().length > 0){
+      this.songService.getSongSearchSuggestions(title)
+        .subscribe((results: ISongTabDTO[]) =>{
+          this.searchSuggestions = results;
+        });
+    }else{
+      this.searchSuggestions.splice(0, this.searchResults.length);
+    }
   }
 
   private getSearchResults(title: string){
     if(title.trim().length > 0){
       this.songService.searchSongsByTitle(title)
-        .subscribe((results: ISongTabDTO[]) =>{
-          this.searchResults = results;
-        });
-    }else{
-      this.searchResults.splice(0, this.searchResults.length);
+      .subscribe((results: ISongTabDTO[]) =>{
+        this.searchResults = results;
+      });
     }
   }
 
   onSearchButtonClicked() {
+    this.getSearchResults(this.songSearchForm.get('searchData')?.value);
+  }
+
+  onSongClicked(result: ISongTabDTO) {
+
   }
 }
