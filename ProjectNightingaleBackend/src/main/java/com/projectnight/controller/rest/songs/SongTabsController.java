@@ -40,8 +40,13 @@ public class SongTabsController {
         return this.songTabsService.getAllTabs();
     }
 
-    @GetMapping(value = "/songs/{title}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<SongTabs> getSongTabsWithTitleLike(@PathVariable String title){
-        return this.songTabsService.getTabsWithTitleLike(title);
+    @GetMapping(value = "/songs/search/{title}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<SongTabs> getDistinctSongTabsWithTitleLike(@PathVariable String title){
+        return this.songTabsService.getDistinctTabsWithTitleLike(title);
+    }
+
+    @GetMapping(value="/songs/{title}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<SongTabs> getAllSongSongTabsWithTitleLike(@PathVariable String title){
+        return this.songTabsService.getAllTabsWithTitleLike(title);
     }
 }

@@ -44,7 +44,12 @@ public class SongTabsServiceImpl implements SongTabsService{
 
     @Override
     @Transactional("songsTransactionManager")
-    public List<SongTabs> getTabsWithTitleLike(String title) {
+    public List<SongTabs> getDistinctTabsWithTitleLike(String title) {
         return songTabsRepository.findDistinctBySongTitleContainingIgnoreCase(title);
+    }
+    @Override
+    @Transactional("songsTransactionManager")
+    public List<SongTabs> getAllTabsWithTitleLike(String title) {
+        return songTabsRepository.findSongTabsBySongTitleContainingIgnoreCase(title);
     }
 }

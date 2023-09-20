@@ -10,5 +10,7 @@ public interface SongTabsService {
     SongTabs getSongTabById(UUID id);
     SongTabs saveSongTab(SongTabs songTab);
 
-    List<SongTabs> getTabsWithTitleLike(String title);
+    List<SongTabs> getDistinctTabsWithTitleLike(String title);
+
+    List<SongTabs> getAllTabsWithTitleLike(String title);
 }
