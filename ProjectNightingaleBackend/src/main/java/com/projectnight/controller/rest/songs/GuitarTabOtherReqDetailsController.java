@@ -28,4 +28,10 @@ public class GuitarTabOtherReqDetailsController {
         UUID id = UUID.fromString(songTabId);
         return guitarTabOtherReqDetailsService.saveGuitarTabOtherReqDetails(id, guitarTabOtherReqDetails);
     }
+
+    @GetMapping(value = "/songs/{tabId}/guitar-other-req-details")
+    private GuitarTabOtherReqDetails getGuitarTabOtherReqDetailsByTabId(String tabId){
+        UUID id = UUID.fromString(tabId);
+        return guitarTabOtherReqDetailsService.getGuitarTabOtherReqDetailsByTabId(id);
+    }
 }

@@ -35,4 +35,11 @@ public class GuitarTabOtherReqDetailsServiceImpl implements GuitarTabOtherReqDet
         guitarTabOtherReqDetails.setSongTab(songTab);
         return guitarTabOtherReqDetailsRepository.save(guitarTabOtherReqDetails);
     }
+
+
+    @Override
+    @Transactional("songsTransactionManager")
+    public GuitarTabOtherReqDetails getGuitarTabOtherReqDetailsByTabId(UUID id) {
+        return guitarTabOtherReqDetailsRepository.findGuitarTabOtherReqDetailsByTabId(id);
+    }
 }

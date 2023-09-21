@@ -27,4 +27,10 @@ public class LyricsOnlyTabLyricsController {
         UUID id = UUID.fromString(songTabId);
         return lyricsOnlyTabLyricsService.saveLyrics(id, lyricsOnlyTabLyrics);
     }
+
+    @GetMapping(value = "/songs/{songTabId}/lyrics-only-tab-lyrics", produces = MediaType.APPLICATION_JSON_VALUE)
+    public LyricsOnlyTabLyrics getLyricsForLyricsOnlyTab(@PathVariable String songTabId){
+        UUID id = UUID.fromString(songTabId);
+        return lyricsOnlyTabLyricsService.getLyricsByTabId(id);
+    }
 }

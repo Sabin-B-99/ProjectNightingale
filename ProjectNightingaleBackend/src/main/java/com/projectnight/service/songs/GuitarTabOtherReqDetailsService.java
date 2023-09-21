@@ -8,4 +8,6 @@ import java.util.UUID;
 public interface GuitarTabOtherReqDetailsService {
     List<GuitarTabOtherReqDetails> getAllGuitarTabOtherReqDetails();
     GuitarTabOtherReqDetails saveGuitarTabOtherReqDetails(UUID songTabId, GuitarTabOtherReqDetails guitarTabOtherReqDetails);
+
+    GuitarTabOtherReqDetails getGuitarTabOtherReqDetailsByTabId(UUID id);
 }

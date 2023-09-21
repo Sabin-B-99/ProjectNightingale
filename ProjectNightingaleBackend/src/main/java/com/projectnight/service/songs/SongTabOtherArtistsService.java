@@ -8,4 +8,6 @@ import java.util.UUID;
 public interface SongTabOtherArtistsService {
     List<SongTabOtherArtists> getAllContributingArtists();
     SongTabOtherArtists saveOtherContributingArtists(UUID songTabId, SongTabOtherArtists otherArtist);
+
+    List<SongTabOtherArtists> getOtherContributingArtistsByTabId(UUID songTabId);
 }

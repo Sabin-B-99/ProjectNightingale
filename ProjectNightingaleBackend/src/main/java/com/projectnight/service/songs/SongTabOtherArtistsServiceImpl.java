@@ -35,4 +35,10 @@ public class SongTabOtherArtistsServiceImpl implements SongTabOtherArtistsServic
         otherArtist.setSongTab(songTab);
         return songTabOtherArtistsRepository.save(otherArtist);
     }
+
+    @Override
+    @Transactional("songsTransactionManager")
+    public List<SongTabOtherArtists> getOtherContributingArtistsByTabId(UUID songTabId) {
+        return songTabOtherArtistsRepository.findOtherContributingArtistsBySongTabId(songTabId);
+    }
 }

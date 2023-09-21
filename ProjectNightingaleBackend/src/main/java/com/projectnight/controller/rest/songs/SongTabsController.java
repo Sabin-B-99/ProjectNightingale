@@ -6,12 +6,14 @@ import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import org.w3c.dom.stylesheets.LinkStyle;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/tabs")
@@ -40,13 +42,19 @@ public class SongTabsController {
         return this.songTabsService.getAllTabs();
     }
 
-    @GetMapping(value = "/songs/search/{title}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/songs/{title}/suggestions", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<SongTabs> getDistinctSongTabsWithTitleLike(@PathVariable String title){
         return this.songTabsService.getDistinctTabsWithTitleLike(title);
     }
 
-    @GetMapping(value="/songs/{title}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value="/songs/{title}/results", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<SongTabs> getAllSongSongTabsWithTitleLike(@PathVariable String title){
         return this.songTabsService.getAllTabsWithTitleLike(title);
+    }
+
+    @GetMapping(value = "/songs/{tabId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public SongTabs getTabById(@PathVariable String tabId){
+        UUID id = UUID.fromString(tabId);
+        return this.songTabsService.getSongTabById(id);
     }
 }

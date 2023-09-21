@@ -35,4 +35,10 @@ public class GuitarTabLyricsServiceImpl implements GuitarTabLyricsService{
         guitarTabLyrics.setSongTab(songTab);
         return guitarTabLyricsRepository.save(guitarTabLyrics);
     }
+
+    @Override
+    @Transactional("songsTransactionManager")
+    public GuitarTabLyrics getGuitarTabLyricsFromTabId(UUID id) {
+        return guitarTabLyricsRepository.findGuitarTabLyricsByTabId(id);
+    }
 }

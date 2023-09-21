@@ -35,4 +35,10 @@ public class HarmonicaTabLyricsServiceImpl implements HarmonicaTabLyricsService{
         harmonicaTabLyrics.setSongTab(songTab);
         return harmonicaTabLyricsRepository.save(harmonicaTabLyrics);
     }
+
+    @Override
+    @Transactional("songsTransactionManager")
+    public List<HarmonicaTabLyrics> getHarmonicaTabLyricsByTabId(UUID id) {
+        return harmonicaTabLyricsRepository.getHarmonicaTabLyricsByTabId(id);
+    }
 }

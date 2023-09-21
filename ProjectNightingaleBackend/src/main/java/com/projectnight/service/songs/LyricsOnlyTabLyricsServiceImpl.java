@@ -35,4 +35,10 @@ public class LyricsOnlyTabLyricsServiceImpl implements LyricsOnlyTabLyricsServic
         lyricsOnlyTabLyrics.setSongTab(songTab);
         return lyricsOnlyTabLyricsRepository.save(lyricsOnlyTabLyrics);
     }
+
+    @Override
+    @Transactional("songsTransactionManager")
+    public LyricsOnlyTabLyrics getLyricsByTabId(UUID songTabId) {
+        return lyricsOnlyTabLyricsRepository.getLyricsByTabId(songTabId);
+    }
 }

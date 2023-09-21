@@ -9,4 +9,6 @@ public interface HarmonicaTabOtherReqDetailsService {
     List<HarmonicaTabOtherReqDetails> getAllOtherRequiredDetails();
     HarmonicaTabOtherReqDetails saveHarmonicaOtherReqDetails(UUID songTabId,
                                                              HarmonicaTabOtherReqDetails harmonicaTabOtherReqDetails);
+
+    HarmonicaTabOtherReqDetails getHarmonicaTabOtherReqDetailsByTabId(UUID id);
 }

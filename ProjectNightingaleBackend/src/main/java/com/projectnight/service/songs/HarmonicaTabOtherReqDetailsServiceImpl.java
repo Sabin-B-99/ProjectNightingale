@@ -37,4 +37,10 @@ public class HarmonicaTabOtherReqDetailsServiceImpl implements HarmonicaTabOther
         harmonicaTabOtherReqDetails.setSongTab(songTab);
         return harmonicaTabOtherReqDetailsRepository.save(harmonicaTabOtherReqDetails);
     }
+
+    @Override
+    @Transactional("songsTransactionManager")
+    public HarmonicaTabOtherReqDetails getHarmonicaTabOtherReqDetailsByTabId(UUID id) {
+        return harmonicaTabOtherReqDetailsRepository.findHarmonicaTabOtherReqDetailsByTabId(id);
+    }
 }

@@ -8,4 +8,6 @@ import java.util.UUID;
 public interface GuitarTabLyricsService {
     List<GuitarTabLyrics> getAllGuitarTabLyrics();
     GuitarTabLyrics saveGuitarTabLyrics(UUID songTabId, GuitarTabLyrics guitarTabLyrics);
+
+    GuitarTabLyrics getGuitarTabLyricsFromTabId(UUID id);
 }

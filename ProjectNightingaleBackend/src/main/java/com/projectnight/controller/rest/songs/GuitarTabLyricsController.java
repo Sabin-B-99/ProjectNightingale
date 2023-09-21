@@ -1,8 +1,10 @@
 package com.projectnight.controller.rest.songs;
 
 import com.projectnight.entity.songs.GuitarTabLyrics;
+import com.projectnight.entity.songs.GuitarTabOtherReqDetails;
 import com.projectnight.service.songs.GuitarTabLyricsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,5 +29,11 @@ public class GuitarTabLyricsController {
                                                 @RequestBody GuitarTabLyrics guitarTabLyrics){
         UUID id = UUID.fromString(songTabId);
         return guitarTabLyricsService.saveGuitarTabLyrics(id, guitarTabLyrics);
+    }
+
+    @GetMapping(value = "/songs/{songTabId}/guitar-tab-lyrics", produces = MediaType.APPLICATION_JSON_VALUE)
+    private GuitarTabLyrics getGuitarTabLyricsByTabId(@PathVariable String songTabId){
+        UUID id = UUID.fromString(songTabId);
+        return guitarTabLyricsService.getGuitarTabLyricsFromTabId(id);
     }
 }

@@ -8,4 +8,6 @@ import java.util.UUID;
 public interface HarmonicaTabLyricsService {
     List<HarmonicaTabLyrics> getAllHarmonicaTabLyrics();
     HarmonicaTabLyrics saveHarmonicaTabLyrics(UUID songTabId, HarmonicaTabLyrics harmonicaTabLyrics);
+
+    List<HarmonicaTabLyrics> getHarmonicaTabLyricsByTabId(UUID id);
 }

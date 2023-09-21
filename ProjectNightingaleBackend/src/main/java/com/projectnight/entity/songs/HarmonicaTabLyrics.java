@@ -1,5 +1,6 @@
 package com.projectnight.entity.songs;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
@@ -27,6 +28,7 @@ public class HarmonicaTabLyrics {
     private String tabCellValue;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "song_tab_id", referencedColumnName = "id")
     private SongTabs songTab;
 

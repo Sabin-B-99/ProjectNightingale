@@ -8,4 +8,6 @@ import java.util.UUID;
 public interface LyricsOnlyTabLyricsService {
     List<LyricsOnlyTabLyrics> getAllLyrics();
     LyricsOnlyTabLyrics saveLyrics(UUID songTabId, LyricsOnlyTabLyrics lyricsOnlyTabLyrics);
+
+    LyricsOnlyTabLyrics getLyricsByTabId(UUID songTabId);
 }

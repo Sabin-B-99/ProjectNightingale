@@ -27,4 +27,10 @@ public class HarmonicaTabOtherReqDetailsController {
         UUID id = UUID.fromString(songTabId);
         return harmonicaTabOtherReqDetailsService.saveHarmonicaOtherReqDetails(id, harmonicaTabOtherReqDetails);
     }
+
+    @GetMapping(value = "/songs/{songTabId}/harmonica-other-req-details", produces = MediaType.APPLICATION_JSON_VALUE)
+    public HarmonicaTabOtherReqDetails getHarmonicaTabOtherReqDetailsByTabId(@PathVariable String songTabId){
+        UUID id = UUID.fromString(songTabId);
+        return harmonicaTabOtherReqDetailsService.getHarmonicaTabOtherReqDetailsByTabId(id);
+    }
 }
