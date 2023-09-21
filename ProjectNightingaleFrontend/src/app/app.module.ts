@@ -14,8 +14,7 @@ import { RoutinesComponent } from './routines/routines.component';
 import { RoutineDetailComponent } from './routines/routine-detail/routine-detail.component';
 import { RoutineCreatorComponent } from './routines/routine-creator/routine-creator.component';
 import {TopicCreatorComponent} from "./routines/topic-creator/topic-creator.component";
-import { SongDetailComponent } from './songs/song-detail/song-detail.component';
-import { SongListComponent } from './songs/song-list/song-list.component';
+import { SongTabDetailComponent } from './songs/song-tab-detail/song-tab-detail.component';
 import {AppRoutingModule} from "./app-routing.module";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { ChordListComponent } from './chords/chord-list/chord-list.component';
@@ -50,8 +49,7 @@ import {MatAutocompleteModule} from "@angular/material/autocomplete";
     RoutineDetailComponent,
     RoutineCreatorComponent,
     TopicCreatorComponent,
-    SongDetailComponent,
-    SongListComponent,
+    SongTabDetailComponent,
     ChordListComponent,
     MusicNotePipe,
     ChordItemComponent,

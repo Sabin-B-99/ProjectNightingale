@@ -5,7 +5,7 @@ import {ChordsComponent} from "./chords/chords.component";
 import {SongbooksComponent} from "./songbook/songbooks.component";
 import {RoutineDetailComponent} from "./routines/routine-detail/routine-detail.component";
 import {RoutinesComponent} from "./routines/routines.component";
-import {SongDetailComponent} from "./songs/song-detail/song-detail.component";
+import {SongTabDetailComponent} from "./songs/song-tab-detail/song-tab-detail.component";
 import {RoutineCreatorComponent} from "./routines/routine-creator/routine-creator.component";
 import {MetronomeComponent} from "./metronome/metronome.component";
 import {SongTabCreatorComponent} from "./songs/song-tab-creator/song-tab-creator.component";
@@ -15,7 +15,7 @@ const appRoutes: Routes = [
   {path: 'song-book', component: SongbooksComponent},
   {path: 'songs', component: SongsComponent,
     children: [
-      {path: ':id', component: SongDetailComponent}
+      {path: ':id', component: SongTabDetailComponent}
     ]},
   {path: 'create-tab', component: SongTabCreatorComponent},
   {path: 'chords', component: ChordsComponent},

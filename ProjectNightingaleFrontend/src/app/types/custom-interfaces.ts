@@ -124,33 +124,39 @@ interface ISongTabDTO{
 }
 
 interface IOtherArtistDTO{
+  id?: string,
   joinWord: string,
   otherArtistName: string
 }
 
 interface IHarmonicaOtherReqDetailsDTO{
+  id?: string,
   harmonicaType: string,
   harmonicaKey: string,
   difficulty: string
 }
 
 interface IGuitarOtherReqDetailsDTO{
+  id?: string,
   tuningType: string,
   capoPosition: string,
   difficulty: string
 }
 
 interface IGuitarTabLyricsDTO{
+  id?: string,
   lyrics: string
 }
 
 interface IHarmonicaTabLyricsDTO{
+  id?: string,
   tabCellRowNo: number,
   tabCellColNo: number,
   tabCellValue: string
 }
 
 interface ILyricsOnlyTabLyricsDTO{
+  id?: string,
   lyrics: string
 }
 
@@ -184,7 +190,25 @@ interface ICapoPositionDTO{
   capoPosition: string
 }
 
+interface ILyricsOnlyTabDTO{
+  tabDetails: ISongTabDTO,
+  otherArtists: IOtherArtistDTO[],
+  tabLyrics: ILyricsOnlyTabLyricsDTO
+}
 
+interface IGuitarTabDTO{
+  tabDetails: ISongTabDTO,
+  otherArtists: IOtherArtistDTO[],
+  guitarOtherReqDetails: IGuitarOtherReqDetailsDTO,
+  tabLyrics: IGuitarTabLyricsDTO
+}
+
+interface IHarmonicaTabDTO{
+  tabDetails: ISongTabDTO,
+  otherArtists: IOtherArtistDTO[],
+  harmonicaOtherReqDetails: IHarmonicaOtherReqDetailsDTO,
+  tabLyricsCells: IHarmonicaTabLyricsDTO[]
+}
 
 export {
   IMetronomeValues,
@@ -216,5 +240,8 @@ export {
   IJoinPhraseDTO,
   ICapoPositionDTO,
   IChordDTO,
-  IChordChangesDTO
+  IChordChangesDTO,
+  ILyricsOnlyTabDTO,
+  IGuitarTabDTO,
+  IHarmonicaTabDTO
 }

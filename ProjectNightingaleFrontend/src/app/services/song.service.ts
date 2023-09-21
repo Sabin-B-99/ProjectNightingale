@@ -1,45 +1,116 @@
-import {EventEmitter, Injectable} from '@angular/core';
-import {Song} from "../models/song-model/song";
+import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {ISongTabDTO} from "../types/custom-interfaces";
-import {map, Subject} from "rxjs";
+import {
+  IGuitarOtherReqDetailsDTO,
+  IGuitarTabDTO,
+  IGuitarTabLyricsDTO,
+  IHarmonicaOtherReqDetailsDTO,
+  IHarmonicaTabDTO,
+  IHarmonicaTabLyricsDTO,
+  ILyricsOnlyTabDTO,
+  ILyricsOnlyTabLyricsDTO,
+  IOtherArtistDTO,
+  ISongTabDTO
+} from "../types/custom-interfaces";
+import {forkJoin, map, switchMap} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
 export class SongService {
 
-
-  private topSongs: Song[] = [
-    new Song("Can't help falling in love with you",  "Wise man say..."),
-    new Song("Brand new day", "I'll be flicking stones..."),
-    new Song("Heartbeats", "One night to be confused..."),
-    new Song("Guaranteed", "Whatasayyay anaaya anaya ohhhh yeheyayyy whatasyay whatasya..."),
-    new Song("Sadhana", "Tetikai choda na teo kesa lai..."),
-  ];
-
-  private searchResults: ISongTabDTO[] = [];
-  searchResultsChanges: Subject<ISongTabDTO[]> = new Subject<ISongTabDTO[]>();
   constructor(private http: HttpClient) { }
 
-  public getTopSongs(): Song[]{
-    return this.topSongs.slice();
+
+  public loadLyricsOnlyTabByTabId(tabId: string){
+    return this.loadTabById(tabId)
+      .pipe(switchMap((selectedSong: ISongTabDTO) => {
+          return  forkJoin({
+            otherArtists: this.loadSelectedSongOtherArtists(selectedSong.id || ''),
+            lyrics: this.loadSelectedSongLyrics(selectedSong.id || '')
+          }).pipe(map(value => {
+              const loadedTab: ILyricsOnlyTabDTO = {
+                tabDetails: selectedSong,
+                otherArtists: value.otherArtists,
+                tabLyrics: value.lyrics
+              };
+              return loadedTab;
+            }));
+      }));
   }
 
-  public getSelectedSongById(id: number): Song{
-    return this.topSongs[id];
+  public loadGuitarTabByTabId(tabId: string){
+    return this.loadTabById(tabId)
+      .pipe(switchMap((selectedTab: ISongTabDTO) =>{
+        return forkJoin({
+          otherArtists: this.loadSelectedSongOtherArtists(selectedTab.id || ''),
+          guitarOtherReqDetails: this.loadGuitarTabOtherReqDetailsByTabId(selectedTab.id || ''),
+          lyrics: this.loadGuitarTabLyricsByTabId(selectedTab.id || '')
+        }).pipe(map(value => {
+          const loadedTab: IGuitarTabDTO = {
+            tabDetails: selectedTab,
+            otherArtists: value.otherArtists,
+            guitarOtherReqDetails: value.guitarOtherReqDetails,
+            tabLyrics: value.lyrics
+          }
+          return loadedTab;
+        }))
+      }));
   }
 
+
+  public loadHarmonicaTabByTabId(tabId: string){
+    return this.loadTabById(tabId)
+      .pipe(switchMap((selectedTab: ISongTabDTO) =>{
+        return forkJoin({
+          otherArtists: this.loadSelectedSongOtherArtists(selectedTab.id || ''),
+          harmonicaOtherReqDetails: this.loadHarmonicaTabOtherReqDetailsByTabId(selectedTab.id || ''),
+          harmonicaTabLyrics: this.loadHarmonicaTabLyricsByTabId(selectedTab.id || '')
+        }).pipe((map(value => {
+          const loadedTab: IHarmonicaTabDTO = {
+            tabDetails: selectedTab,
+            otherArtists: value.otherArtists,
+            harmonicaOtherReqDetails: value.harmonicaOtherReqDetails,
+            tabLyricsCells: value.harmonicaTabLyrics
+          }
+          return loadedTab;
+        })))
+      }))
+  }
+
+  private loadTabById(tabId: string){
+    return this.http.get<ISongTabDTO>(`http://localhost:8080/ProjectNightingale/api/tabs/songs/${tabId}`);
+  }
+
+  private loadSelectedSongOtherArtists(tabId: string){
+    return this.http.get<IOtherArtistDTO[]>(`http://localhost:8080/ProjectNightingale/api/tabs/songs/${tabId}/other-artists`);
+  }
+
+  private loadSelectedSongLyrics(tabId: string){
+    return this.http.get<ILyricsOnlyTabLyricsDTO>(`http://localhost:8080/ProjectNightingale/api/tabs/songs/${tabId}/lyrics-only-tab-lyrics`);
+  }
+
+  private loadGuitarTabOtherReqDetailsByTabId(tabId: string){
+    return this.http.get<IGuitarOtherReqDetailsDTO>(`http://localhost:8080/ProjectNightingale/api/tabs/songs/${tabId}/guitar-other-req-details`)
+  }
+
+  private loadGuitarTabLyricsByTabId(tabId: string){
+    return this.http.get<IGuitarTabLyricsDTO>(`http://localhost:8080/ProjectNightingale/api/tabs/songs/${tabId}/guitar-tab-lyrics`)
+  }
+
+  private loadHarmonicaTabOtherReqDetailsByTabId(tabId: string){
+    return this.http.get<IHarmonicaOtherReqDetailsDTO>(`http://localhost:8080/ProjectNightingale/tabs/songs/${tabId}/harmonica-other-req-details`)
+  }
+
+  private loadHarmonicaTabLyricsByTabId(tabId: string){
+    return this.http.get<IHarmonicaTabLyricsDTO[]>(`http://localhost:8080/ProjectNightingale/tabs/songs/${tabId}/harmonica-tab-lyrics`)
+  }
 
   public getSongSearchSuggestions(title: string){
-    return this.http.get<ISongTabDTO[]>(`http://localhost:8080/ProjectNightingale/api/tabs/songs/search/${title}`);
+    return this.http.get<ISongTabDTO[]>(`http://localhost:8080/ProjectNightingale/api/tabs/songs/${title}/suggestions`);
   }
   public searchSongsByTitle(title: string){
-    return  this.http.get<ISongTabDTO[]>(`http://localhost:8080/ProjectNightingale/api/tabs/songs/${title}`);
-      // .subscribe((results: ISongTabDTO[]) =>{
-      //   this.searchResults = results;
-      //   this.searchResultsChanges.next(this.searchResults.slice());
-      // });
+    return  this.http.get<ISongTabDTO[]>(`http://localhost:8080/ProjectNightingale/api/tabs/songs/${title}/results`);
   }
 
 }

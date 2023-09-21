@@ -3,6 +3,7 @@ import {SongService} from "../services/song.service";
 import {FormControl, FormGroup} from "@angular/forms";
 import {ISongTabDTO} from "../types/custom-interfaces";
 import {Subscription} from "rxjs";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-songs',
@@ -15,11 +16,11 @@ export class SongsComponent implements OnInit{
 
   searchSuggestions: ISongTabDTO[] = [];
   searchResults: ISongTabDTO[] = [];
-  searchResultsSubscription: Subscription;
 
   songSearchForm: FormGroup;
 
-  constructor(private songService: SongService) {
+  constructor(private songService: SongService, private router: Router,
+              private route: ActivatedRoute) {
   }
   ngOnInit(): void {
     this.initForm();
@@ -66,6 +67,6 @@ export class SongsComponent implements OnInit{
   }
 
   onSongClicked(result: ISongTabDTO) {
-
+    this.router.navigate([result.id], {relativeTo: this.route});
   }
 }
