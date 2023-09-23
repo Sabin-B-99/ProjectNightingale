@@ -144,7 +144,6 @@ export class RoutineService {
       .pipe(map((loadedChanges: IChordChangesDTO[]) =>{
         let actualChanges: IChordChanges[] = [];
         for (const change of loadedChanges) {
-          if(change.changeFrom.id.chordKeyId && change.changeTo.id.chordKeyId){
             actualChanges.push({
               changeFrom: {
                 chordKeyId: change.changeFrom.id.chordKeyId,
@@ -159,7 +158,6 @@ export class RoutineService {
                 chordKeyName: change.changeTo.chordKeyName
               }
             })
-          }
         }
         return actualChanges;
       }));
@@ -170,14 +168,12 @@ export class RoutineService {
       .pipe(map((loadedChords: IChordDTO[]) =>{
         let chords: IChords[] = [];
         for (const chord of loadedChords) {
-          if(chord.id.chordKeyId && chord.id.chordRootOrder){
             chords.push({
               chordKeyId: chord.id.chordKeyId,
               chordRootOrder: chord.id.chordRootOrder,
               chordRootName: chord.chordRootName,
               chordKeyName: chord.chordKeyName
             })
-          }
         }
         return chords;
       }))
@@ -187,8 +183,12 @@ export class RoutineService {
     return this.http.get<IMetronomeValues>(`http://localhost:8080/ProjectNightingale/api/practice/topics/${topicId}/metronomes`)
       .pipe(map((metronomeVal: IMetronomeValues) =>{
         let metronomeValue: IMetronomeValues = {
-          bpm: metronomeVal.bpm,
-          beatsPerMeasure: metronomeVal.beatsPerMeasure
+          bpm: 100,
+          beatsPerMeasure: 4
+        };
+        if(metronomeVal){
+          metronomeValue.bpm = metronomeVal.bpm;
+          metronomeValue.beatsPerMeasure = metronomeVal.beatsPerMeasure;
         }
         return metronomeValue;
       }))

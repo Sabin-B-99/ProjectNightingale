@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {ChordRoot} from "../models/chord-model/chord-root-model/chord-root";
 import {ChordKey} from "../models/chord-model/chord-key-model/chord-key";
 import {HttpClient} from "@angular/common/http";
-import {map, Observable, Subject} from "rxjs";
+import {map, Observable} from "rxjs";
 import {IChordKey, IChordRoot} from "../types/custom-interfaces";
 
 @Injectable({
@@ -10,7 +10,6 @@ import {IChordKey, IChordRoot} from "../types/custom-interfaces";
 })
 export class ChordService {
 
-  chordImagePathLoaded: Subject<string> = new Subject<string>();
   constructor(private http: HttpClient) { }
 
   getRootNotes(): Observable<ChordRoot[]>{
@@ -32,7 +31,7 @@ export class ChordService {
         for (let chordKey of chordKeys){
           loadedKeys.push(new ChordKey(chordKey.id, chordKey.keyName))
         }
-        return chordKeys;
+        return loadedKeys;
       }))
   }
 

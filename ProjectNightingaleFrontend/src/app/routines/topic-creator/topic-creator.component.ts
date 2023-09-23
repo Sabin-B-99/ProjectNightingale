@@ -84,7 +84,7 @@ export class TopicCreatorComponent implements OnInit, OnDestroy{
       'topicChords': new FormControl<IChords[]>(topic.chords),
       'topicChordChanges': new FormControl<IChordChanges[]>(topic.topicChordChanges),
       'strumPatterns': new FormArray<FormControl<string|null>>([]),
-      'topicMetronome' : new FormControl<IMetronomeValues>({bpm: 100, beatsPerMeasure: 4}),
+      'topicMetronome' : new FormControl<IMetronomeValues>(topic.metronomes),
       'topicTime': new FormControl<string>(TopicCreatorComponent.TOPIC_DURATION_DEFAULT_VALUE,
         [Validators.pattern(new RegExp("^\\d+:\\d{2}:\\d{2}$")), Validators.required])
     }, {validators: topicFormAtLeastOneFieldRequired()});
@@ -160,6 +160,7 @@ export class TopicCreatorComponent implements OnInit, OnDestroy{
     }
     if(metronomeValToEdit){
       this.selectedMetronomeValues = metronomeValToEdit;
+      this.topicForm.get('topicMetronome')?.patchValue(this.selectedMetronomeValues);
     }
     if(time){
       this.topicForm.get('topicTime')?.patchValue(this.routineCreatorService.buildTimeStringFromSecsVal(time));

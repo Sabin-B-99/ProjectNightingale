@@ -11,7 +11,7 @@ import {ChordRoot} from "../../models/chord-model/chord-root-model/chord-root";
 import {ChordKey} from "../../models/chord-model/chord-key-model/chord-key";
 import {Chord} from "../../models/chord-model/chord";
 import {Subscription} from "rxjs";
-import {DomSanitizer, SafeUrl} from "@angular/platform-browser";
+import {DomSanitizer} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-chord-list',
@@ -74,28 +74,14 @@ export class ChordListComponent implements  OnInit ,OnDestroy{
 
   loadChordImage(){
     if(this.selectedChordRoot && this.selectedChordKey){
-      this.chordImagePathSubscription = this.chordService.loadChordImage(this.selectedChordRoot, this.selectedChordKey)
-        .subscribe(
-          (imageBlob: Blob) =>{
-            if(this.selectedChordRoot && this.selectedChordKey){
-              const selectedChord: Chord = new Chord(this.selectedChordRoot, this.selectedChordKey);
+      const selectedChord: Chord = new Chord(this.selectedChordRoot, this.selectedChordKey);
 
-              const fileReader: FileReader = new FileReader();
-              fileReader.readAsDataURL(imageBlob);
-              fileReader.onload = function (){
-                let imageURL:string|ArrayBuffer|null = fileReader.result;
-                selectedChord.setImageUrl(imageURL);
-              }
+      this.selectedChordChangedEvent.emit(selectedChord);
 
-              this.selectedChordChangedEvent.emit(selectedChord);
-
-              this.selectedRootNoteIndex = -1;
-              this.selectedKeyNoteIndex= -1;
-              this.selectedChordRoot = null;
-              this.selectedChordKey = null;
-            }
-          }
-        );
+      this.selectedRootNoteIndex = -1;
+      this.selectedKeyNoteIndex= -1;
+      this.selectedChordRoot = null;
+      this.selectedChordKey = null;
     }
   }
 }

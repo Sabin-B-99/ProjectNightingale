@@ -23,7 +23,7 @@ export class TopicChordsMenuComponent implements ControlValueAccessor, OnInit{
   @Output()
   save: EventEmitter<Chord[]> = new EventEmitter<Chord[]>();
 
-  latestChordSelected: Chord | undefined;
+  latestChordSelected: Chord;
 
   selectedChords: Chord[] = [];
   selectedChordsOrderAndKeyValues: IChords[] = [];
@@ -86,7 +86,7 @@ export class TopicChordsMenuComponent implements ControlValueAccessor, OnInit{
     }
   }
 
-  setLatestChordSelected(chord: Chord | undefined) {
+  setLatestChordSelected(chord: Chord) {
     this.latestChordSelected = chord;
   }
 
