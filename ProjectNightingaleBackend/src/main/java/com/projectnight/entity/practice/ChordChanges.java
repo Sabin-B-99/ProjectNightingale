@@ -1,5 +1,6 @@
 package com.projectnight.entity.practice;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.projectnight.entity.songs.Chords;
 
 import javax.persistence.*;
@@ -30,6 +31,7 @@ public class ChordChanges {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "topic_id", referencedColumnName = "id")
+    @JsonIgnore
     private Topics topic;
 
     public ChordChanges() {

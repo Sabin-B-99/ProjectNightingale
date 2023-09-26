@@ -77,6 +77,6 @@ public class ChordChangesServiceImpl implements ChordChangesService {
     @Override
     public List<ChordChanges> getChordChangesByTopicId(int topicId) {
         Topics topic = topicsService.getTopicById(topicId);
-        return chordChangesRepository.getChordChangesByTopic(topic);
+        return chordChangesRepository.getChordChangesByTopicOrderByTopicId(topic);
     }
 }

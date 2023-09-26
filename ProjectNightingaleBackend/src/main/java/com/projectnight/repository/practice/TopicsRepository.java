@@ -10,6 +10,6 @@ import java.util.List;
 
 public interface TopicsRepository extends JpaRepository<Topics, Integer> {
 
-    @Query("SELECT t.chords FROM Topics t where t.id = :topicId")
+    @Query("SELECT t.chords FROM Topics t WHERE t.id = :topicId ORDER BY t.id")
     List<Chords> getChordsByTopic(@Param("topicId") int topicId);
 }

@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface ChordChangesRepository extends JpaRepository<ChordChanges, Integer> {
 
-    List<ChordChanges> getChordChangesByTopic(Topics topic);
+    List<ChordChanges> getChordChangesByTopicOrderByTopicId(Topics topic);
 }
