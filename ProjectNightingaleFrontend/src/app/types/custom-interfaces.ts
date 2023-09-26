@@ -1,6 +1,7 @@
 import {FormArray, FormControl, FormGroup} from "@angular/forms";
 
 interface IMetronomeValues {
+  id?: number;
   bpm: number;
   beatsPerMeasure: number;
 }
@@ -76,6 +77,7 @@ interface ISongTabCreationRequiredDetailsForm{
 }
 
 interface IChordChanges{
+  id?: number,
   changeFrom: IChords,
   changeTo: IChords
 }
@@ -210,6 +212,26 @@ interface IHarmonicaTabDTO{
   tabLyricsCells: IHarmonicaTabLyricsDTO[]
 }
 
+interface ITopicComponents{
+  savedChords: IChords[],
+  savedChordChanges: IChordChanges[],
+  savedStrumPatterns: IStrumPatterns[],
+  savedMetronomes: IMetronomeValues
+}
+
+
+interface IChordSaveResponse{
+  id: number,
+  chords: IChords[]
+  metronomes: IMetronomeValues,
+  routine: IRoutine,
+  topicChordChanges: IChordChanges[],
+  songTitle: string,
+  strumPatterns: IStrumPatterns[],
+  timeDuration: number,
+  title: string
+}
+
 export {
   IMetronomeValues,
   IChordRoot,
@@ -243,5 +265,7 @@ export {
   IChordChangesDTO,
   ILyricsOnlyTabDTO,
   IGuitarTabDTO,
-  IHarmonicaTabDTO
+  IHarmonicaTabDTO,
+  ITopicComponents,
+  IChordSaveResponse
 }

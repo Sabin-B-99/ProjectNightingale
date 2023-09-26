@@ -8,17 +8,18 @@
                 class="col-md-auto me-auto bg-light">Add</button>
       </div>
       <div class="container mt-sm-2" *ngFor="let routine of routines; let id = index">
-        <ul class="list-group col-md-7">
+        <ul class="list-group col-md-auto">
           <li class="list-group-item">
             <a (click)="onRoutineSelected(routine)">{{routine.routineTitle}}
             </a>
-          <a>
+            <div>
               <li class="btn-group">
                 <button class="btn btn-outline-dark btn-sm">Start</button>
                 <button class="btn btn-outline-secondary btn-sm" (click)="onEditRoutineClicked(routine)">Edit</button>
-                <button class="btn btn-outline-danger btn-sm" (click)="onRoutineDeleteClicked(routine)">Delete</button>
+                <button class="btn btn-outline-danger btn-sm" (click)="onRoutineDeleteClicked(routine)"
+                        [disabled]="disableAllDeleteButtonAfterClicked">Delete</button>
               </li>
-          </a>
+           </div>
           </li>
         </ul>
       </div>

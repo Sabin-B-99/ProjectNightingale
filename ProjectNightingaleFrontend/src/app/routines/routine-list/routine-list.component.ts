@@ -1,8 +1,8 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnDestroy, OnInit} from '@angular/core';
 import {Routine} from "../../models/routine-model/routine";
 import {RoutineService} from "../../services/routine.service";
-import {ActivatedRoute, Router} from "@angular/router";
-import {Subscription} from "rxjs";
+import {ActivatedRoute, Params, Router} from "@angular/router";
+import {Observable, Subscription, switchMap} from "rxjs";
 import {RoutineCreatorService} from "../../services/routine-creator.service";
 
 @Component({
@@ -10,12 +10,16 @@ import {RoutineCreatorService} from "../../services/routine-creator.service";
   templateUrl: './routine-list.component.html',
   styleUrls: ['./routine-list.component.css'],
 })
-export class RoutineListComponent implements OnInit, OnDestroy{
+export class RoutineListComponent implements OnInit,  OnDestroy{
 
 
   public routines: Routine[];
   private routinesListSubscription: Subscription;
   private deleteRoutineSubscription: Subscription;
+  private routineListReloadSubscription: Subscription;
+
+
+  disableAllDeleteButtonAfterClicked: boolean = false;
 
   constructor(private routineService: RoutineService,
               private routineCreatorService: RoutineCreatorService,
@@ -23,7 +27,7 @@ export class RoutineListComponent implements OnInit, OnDestroy{
               private router: Router) {
   }
   ngOnInit(): void {
-   this.routinesListSubscription = this.routineService.loadUserRoutines()
+    this.routinesListSubscription = this.routineService.loadUserRoutines()
       .subscribe( (loadedRoutines: Routine[]) =>{
         this.routines = loadedRoutines;
       });
@@ -34,6 +38,9 @@ export class RoutineListComponent implements OnInit, OnDestroy{
     }
     if(this.routinesListSubscription){
       this.routinesListSubscription.unsubscribe();
+    }
+    if(this.routineListReloadSubscription){
+      this.routineListReloadSubscription.unsubscribe();
     }
   }
 
@@ -54,9 +61,13 @@ export class RoutineListComponent implements OnInit, OnDestroy{
   }
 
   onRoutineDeleteClicked(routine: Routine) {
+    this.disableAllDeleteButtonAfterClicked = true;
     this.deleteRoutineSubscription =  this.routineService.deleteRoutineById(routine.routineId)
-      .subscribe((deleteProcessComplete: boolean) =>{
-
+      .pipe(switchMap( () => {
+          return this.routineService.loadUserRoutines();
+      })).subscribe((loadedRoutines: Routine[]) => {
+        this.routines = loadedRoutines;
+        this.disableAllDeleteButtonAfterClicked = false;
       });
   }
 }

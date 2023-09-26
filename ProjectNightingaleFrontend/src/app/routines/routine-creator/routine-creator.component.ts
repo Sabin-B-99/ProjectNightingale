@@ -2,7 +2,7 @@ import {AfterViewChecked, Component, ElementRef, OnDestroy, OnInit, ViewChild} f
 import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
 import {TopicCreatorComponent} from "../topic-creator/topic-creator.component";
 import {RoutineCreatorService} from "../../services/routine-creator.service";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {IRoutine, IRoutineForm, ITopicForm} from "../../types/custom-interfaces";
 import {Subscription} from "rxjs";
 import {noWhiteSpaceValidator} from "../../validators/no-white-space-validator.directive";
@@ -26,7 +26,7 @@ export class RoutineCreatorComponent implements OnInit, OnDestroy ,AfterViewChec
   formSaveStatus: boolean = false;
 
   constructor(private routineCreatorService: RoutineCreatorService, private routineService: RoutineService,
-              private router: Router) {
+              private router: Router, private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
@@ -91,14 +91,12 @@ export class RoutineCreatorComponent implements OnInit, OnDestroy ,AfterViewChec
     if(this.routineCreationForm.valid){
       this.saveRoutineSubscription = this.routineCreatorService.buildAndSaveRoutine(this.routineCreationForm.controls)
         .subscribe(
-          (routineSaved: boolean) =>{
-            if(routineSaved){
-              this.router.navigate(['routines']);
-            }
+          (topicSaveComplete: boolean) =>{
+              this.router.navigate(['../../routines'], {relativeTo: this.route});
+              this.routineCreatorService.setEditMode(false);
+              this.formSaveStatus = false;
           });
     }
-    this.routineCreatorService.setEditMode(false);
-    this.formSaveStatus = false;
   }
 
 

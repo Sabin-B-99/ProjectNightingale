@@ -201,7 +201,6 @@ export class RoutineService {
   deleteRoutineById(routineId: number) {
      return this.http.delete(`http://localhost:8080/ProjectNightingale/api/practice/routines/${routineId}`)
       .pipe(map(()=>{
-        return true;
       }));
   }
 }
