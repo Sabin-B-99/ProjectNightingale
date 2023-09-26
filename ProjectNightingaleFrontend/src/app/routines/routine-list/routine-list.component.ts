@@ -27,10 +27,24 @@ export class RoutineListComponent implements OnInit,  OnDestroy{
               private router: Router) {
   }
   ngOnInit(): void {
+    this.loadUserRoutines();
+    this.reloadUserRoutinesIfNecessary()
+  }
+
+  private loadUserRoutines(){
     this.routinesListSubscription = this.routineService.loadUserRoutines()
       .subscribe( (loadedRoutines: Routine[]) =>{
         this.routines = loadedRoutines;
       });
+  }
+
+  private reloadUserRoutinesIfNecessary(){
+    this.routineListReloadSubscription = this.routineService.routineSaved
+      .subscribe(saveStatus => {
+        if(saveStatus){
+          this.loadUserRoutines();
+        }
+      })
   }
   ngOnDestroy() {
     if(this.deleteRoutineSubscription){

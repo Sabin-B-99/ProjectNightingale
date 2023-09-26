@@ -22,6 +22,8 @@ export class RoutineService {
   selectedRoutineChanged: Subject<Routine> = new Subject<Routine>();
 
   public topicsToEdit: ITopic[] = [];
+
+  public routineSaved: Subject<boolean> = new Subject<boolean>();
   constructor(private http: HttpClient) {
   }
 

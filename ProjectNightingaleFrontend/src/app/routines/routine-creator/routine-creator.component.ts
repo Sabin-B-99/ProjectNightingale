@@ -95,6 +95,7 @@ export class RoutineCreatorComponent implements OnInit, OnDestroy ,AfterViewChec
               this.router.navigate(['../../routines'], {relativeTo: this.route});
               this.routineCreatorService.setEditMode(false);
               this.formSaveStatus = false;
+              this.routineService.routineSaved.next(topicSaveComplete);
           });
     }
   }
