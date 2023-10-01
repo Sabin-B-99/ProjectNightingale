@@ -33,6 +33,10 @@ import { TabRequiredDetailsComponent } from './songs/song-tab-creator/tab-requir
 import { HarmonicaTabInputArrayComponent } from './songs/song-tab-creator/custom-form-controls/harmonica-tab-input-array/harmonica-tab-input-array.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
+import { PractiseComponent } from './practise/practise.component';
+import { TimerComponent } from './practise/timer/timer.component';
+import { TransformIntoHHMMSSPipe } from './pipes/transform-into-hhmmss.pipe';
+import { TopicCardComponent } from './practise/topic-card/topic-card.component';
 
 @NgModule({
   declarations: [
@@ -62,6 +66,10 @@ import {MatAutocompleteModule} from "@angular/material/autocomplete";
     SongTabCreatorComponent,
     TabRequiredDetailsComponent,
     HarmonicaTabInputArrayComponent,
+    PractiseComponent,
+    TimerComponent,
+    TransformIntoHHMMSSPipe,
+    TopicCardComponent,
   ],
   imports: [
     BrowserModule,

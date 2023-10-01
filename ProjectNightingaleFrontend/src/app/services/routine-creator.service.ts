@@ -248,46 +248,4 @@ export class RoutineCreatorService {
   public getRoutineForEdit(){
     return this.routineIdForEdit;
   }
-
-
-  public buildChordsFromIChords(chords: IChords[]): Chord[]{
-    let chordModels: Chord[] = [];
-    for (const chord of chords) {
-      chordModels.push(this.buildChordModelFormIChord(chord));
-    }
-    return chordModels;
-  }
-
-  private buildChordModelFormIChord(chord: IChords): Chord{
-    return new Chord(
-      new ChordRoot(chord.chordRootOrder, chord.chordRootName),
-      new ChordKey(chord.chordKeyId, chord.chordKeyName)
-    )
-  }
-
-  buildChordsChangesFromIChordsChanges(chordChanges: IChordChanges[]) {
-    let chordChangesModels: ChordChange[] = []
-    for (const chordChange of chordChanges) {
-      chordChangesModels.push(this.buildChordChangeModelFormIChordChange(chordChange));
-    }
-    return chordChangesModels;
-  }
-
-  private buildChordChangeModelFormIChordChange(chordChange: IChordChanges) {
-    return new ChordChange(
-      this.buildChordModelFormIChord(chordChange.changeFrom),
-      this.buildChordModelFormIChord(chordChange.changeTo)
-    );
-  }
-
-  buildTimeStringFromSecsVal(timeInSecs: number) {
-    const hours: number = Math.floor(timeInSecs / 3600);
-    const hoursInString: string = (hours < 10) ? `0${hours}`: `${hours}`;
-    timeInSecs %= 3600;
-    const minutes: number = Math.floor(timeInSecs / 60);
-    const minutesInString: string = (minutes < 10) ? `0${minutes}`: `${minutes}`;
-    const seconds: number = timeInSecs % 60;
-    const secondsInString: string = (seconds < 10) ? `0${seconds}`: `${seconds}`;
-    return `${hoursInString}:${minutesInString}:${secondsInString}`;
-  }
 }

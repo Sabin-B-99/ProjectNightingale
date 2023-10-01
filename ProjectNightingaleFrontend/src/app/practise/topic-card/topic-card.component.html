@@ -1,0 +1,34 @@
+<p>{{topic.title}}</p>
+<p>{{topic.songTitle}}</p>
+<app-timer [initialDuration]="topic.timeDuration"></app-timer>
+<div *ngFor="let strumPattern of topic.strumPatterns">
+  <p>{{strumPattern.pattern}}</p>
+</div>
+<app-metronome [initialMetronomeValues]="topic.metronomes"></app-metronome>
+
+
+<div>
+  <p>Chords:</p>
+  <div *ngFor="let chord of topicChords">
+    <app-chord-item [selectedChord]="chord"></app-chord-item>
+  </div>
+</div>
+
+<div>
+  <p>Chord Changes:</p>
+  <div *ngFor="let chordChange of topicChordChanges" class="container row">
+    <div class="col col-sm-4">
+      <p>From:</p>
+      <div>
+        <app-chord-item [selectedChord]="chordChange.getFromChord()"></app-chord-item>
+      </div>
+    </div>
+
+    <div class="col col-sm-4">
+      <p>To:</p>
+      <div>
+        <app-chord-item [selectedChord]="chordChange.getToChord()"></app-chord-item>
+      </div>
+    </div>
+  </div>
+</div>

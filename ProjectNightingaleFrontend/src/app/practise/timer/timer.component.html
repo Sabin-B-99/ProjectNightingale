@@ -1,0 +1,16 @@
+<div class="container border">
+  <div>
+    {{remainingDuration|transformIntoHHMMSS}}
+  </div>
+  <div class="btn-group btn-group-sm">
+    <button type="button" *ngIf="!playButtonPressed"
+            class="btn btn-sm btn-outline-primary"
+            (click)="onPlayTimerClicked()">Play</button>
+    <button type="button" *ngIf="!pauseButtonPressed"
+            class="btn btn-sm btn-outline-secondary"
+            (click)="onPauseTimerClicked()">Pause</button>
+    <button type="button" *ngIf="!resetButtonPressed"
+            class="btn btn-sm btn-outline-dark"
+            (click)="onResetTimerClicked()">Reset</button>
+  </div>
+</div>

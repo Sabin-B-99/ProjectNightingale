@@ -1,5 +1,5 @@
 <div class="container" *ngIf="_selectedChord">
-  <p>Selected Chord: {{_selectedChord.chordRoot.rootName | musicNote}}{{_selectedChord.chordKey.keyName}}</p>
+  <p>Chord: {{_selectedChord.chordRoot.rootName | musicNote}}{{_selectedChord.chordKey.keyName}}</p>
   <img class="img-fluid " [src]="_selectedChord.getImagePath()" [width]="imageWidth" [height]="imageHeight"
        alt="{{_selectedChord.chordRoot.rootName | musicNote}}{{_selectedChord.chordKey.keyName}} image.">
 </div>

@@ -9,6 +9,7 @@ import {SongTabDetailComponent} from "./songs/song-tab-detail/song-tab-detail.co
 import {RoutineCreatorComponent} from "./routines/routine-creator/routine-creator.component";
 import {MetronomeComponent} from "./metronome/metronome.component";
 import {SongTabCreatorComponent} from "./songs/song-tab-creator/song-tab-creator.component";
+import {PractiseComponent} from "./practise/practise.component";
 
 const appRoutes: Routes = [
   {path: '', pathMatch: "full", redirectTo:'/routines'},
@@ -25,6 +26,7 @@ const appRoutes: Routes = [
       {path: ':id/topics', component: RoutineDetailComponent},
       {path: 'create', component: RoutineCreatorComponent}
     ]},
+  {path: 'practise/:id', component: PractiseComponent}
 ]
 @NgModule({
   imports: [RouterModule.forRoot(appRoutes)],

@@ -1,8 +1,8 @@
-import {AfterViewInit, Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Routine} from "../../models/routine-model/routine";
 import {RoutineService} from "../../services/routine.service";
-import {ActivatedRoute, Params, Router} from "@angular/router";
-import {Observable, Subscription, switchMap} from "rxjs";
+import {ActivatedRoute,  Router} from "@angular/router";
+import {Subscription, switchMap} from "rxjs";
 import {RoutineCreatorService} from "../../services/routine-creator.service";
 
 @Component({
@@ -83,5 +83,9 @@ export class RoutineListComponent implements OnInit,  OnDestroy{
         this.routines = loadedRoutines;
         this.disableAllDeleteButtonAfterClicked = false;
       });
+  }
+
+  onStartClicked(routineId: number) {
+    this.router.navigate(['../practise', routineId]);
   }
 }

@@ -153,17 +153,17 @@ export class TopicCreatorComponent implements OnInit, OnDestroy{
     const time: number | undefined = this.routineService.topicsToEdit.at(this.indexInCurrentRoutine)?.timeDuration;
     const patterns: IStrumPatterns[] | undefined = this.routineService.topicsToEdit.at(this.indexInCurrentRoutine)?.strumPatterns;
     if(chordsToEdit){
-      this.selectedChords = this.routineCreatorService.buildChordsFromIChords(chordsToEdit);
+      this.selectedChords = this.routineService.buildChordsFromIChords(chordsToEdit);
     }
     if(chordChangesToEdit){
-      this.selectedChordChanges = this.routineCreatorService.buildChordsChangesFromIChordsChanges(chordChangesToEdit);
+      this.selectedChordChanges = this.routineService.buildChordsChangesFromIChordsChanges(chordChangesToEdit);
     }
     if(metronomeValToEdit){
       this.selectedMetronomeValues = metronomeValToEdit;
       this.topicForm.get('topicMetronome')?.patchValue(this.selectedMetronomeValues);
     }
     if(time){
-      this.topicForm.get('topicTime')?.patchValue(this.routineCreatorService.buildTimeStringFromSecsVal(time));
+      this.topicForm.get('topicTime')?.patchValue(this.routineService.buildTimeStringFromSecsVal(time));
     }
     if(patterns){
       for (const pattern of patterns) {
