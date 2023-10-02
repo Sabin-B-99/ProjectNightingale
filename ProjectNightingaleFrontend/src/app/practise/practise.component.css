@@ -1,0 +1,44 @@
+
+.carousel-container{
+  position: relative;
+  margin: auto;
+  text-align: center;
+  width: 700px;
+  border-radius: 15px;
+  box-shadow: 0 8px 16px #dce1e1;
+}
+
+.carousel-container div {
+  display: none;
+  border-radius: 15px;
+}
+
+.carousel-container div.topic-active{
+  display: block;
+  width: 100%;
+  height: 400px;
+}
+
+.btn-carousel{
+  position: absolute;;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 6%;
+  padding: 0;
+  color: #000;
+  text-align: center;
+  background: #898282;
+  border: 0;
+  cursor: pointer;
+}
+
+.btn-prev {
+  left: 0;
+}
+
+.btn-next{
+  right: 0;
+}

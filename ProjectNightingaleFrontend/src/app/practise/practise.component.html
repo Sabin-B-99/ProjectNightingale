@@ -1,5 +1,17 @@
-<div *ngIf="loadedRoutine">
-  <div *ngFor="let topic of loadedRoutine.topics">
+<div *ngIf="loadedRoutine" class="carousel-container">
+  <div *ngFor="let topic of loadedRoutine.topics; let i = index"
+       [ngClass]="{'topic-active': selectedTopicIndex === i}">
     <app-topic-card [topic]="topic"></app-topic-card>
   </div>
+
+  <button class="btn-carousel btn-prev btn btn-outline-dark"
+          (click)="onPrevClicked()" type="button">
+    <---
+  </button>
+
+  <button class="btn-carousel btn-next btn btn-outline-dark"
+          (click)="onNextClicked()"
+          type="button">
+    --->
+  </button>
 </div>
