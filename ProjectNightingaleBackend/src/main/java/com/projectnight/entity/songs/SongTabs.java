@@ -25,6 +25,9 @@ public class SongTabs {
     @Column(name = "artist_name")
     private String artistName;
 
+    @Column(name = "tab_type")
+    private String tabType;
+
     @OneToMany(mappedBy = "songTab", orphanRemoval = true, cascade = CascadeType.ALL)
     @JsonIgnore
     private List<SongTabOtherArtists> otherArtists;
@@ -122,5 +125,13 @@ public class SongTabs {
 
     public void setHarmonicaTabLyrics(List<HarmonicaTabLyrics> harmonicaTabLyrics) {
         this.harmonicaTabLyrics = harmonicaTabLyrics;
+    }
+
+    public String getTabType() {
+        return tabType;
+    }
+
+    public void setTabType(String tabType) {
+        this.tabType = tabType;
     }
 }
