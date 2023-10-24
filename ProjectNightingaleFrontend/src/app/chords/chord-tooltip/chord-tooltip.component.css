@@ -1,0 +1,23 @@
+.chord-tooltip{
+  position: fixed;
+  background-color: white;
+  border-radius: 4px;
+  color: black;
+  font-family: FontAwesome, serif;
+  padding: 3px 6px;
+  font-size: 13px;
+  margin-top: 5px;
+  transform: translate(-50%);
+}
+
+.chord-tooltip::before{
+  content: "";
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 5px solid black;
+  position: absolute;
+  left: calc(50% - 5px);
+  top: -5px;
+}

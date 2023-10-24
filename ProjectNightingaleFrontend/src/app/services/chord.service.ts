@@ -40,5 +40,11 @@ export class ChordService {
     return this.http.get(imageURL, {responseType: "blob"});
   }
 
+  public loadChordRootByRootName(rootName: string){
+    return this.http.get<IChordRoot>(`http://localhost:8080/ProjectNightingale/api/chords/chord-roots/roots/${rootName}`);
+  }
 
+  public loadChordKeyByKeyName(keyName: string){
+    return this.http.get<IChordKey>(`http://localhost:8080/ProjectNightingale/api/chords/chord-keys/keys/${keyName}`);
+  }
 }

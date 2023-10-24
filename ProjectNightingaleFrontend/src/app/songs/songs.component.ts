@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {SongService} from "../services/song.service";
 import {FormControl, FormGroup} from "@angular/forms";
 import {ISongTabDTO} from "../types/custom-interfaces";
-import {Subscription} from "rxjs";
 import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
@@ -67,6 +66,12 @@ export class SongsComponent implements OnInit{
   }
 
   onSongClicked(result: ISongTabDTO) {
-    this.router.navigate([result.id], {relativeTo: this.route});
+    if(result.tabType === "HARMONICA"){
+      this.router.navigate([result.id, "harmonica-tab"], {relativeTo: this.route});
+    }else if(result.tabType === "GUITAR"){
+      this.router.navigate([result.id, "guitar-tab"], {relativeTo: this.route});
+    }else{
+      this.router.navigate([result.id, "lyrics"], {relativeTo: this.route});
+    }
   }
 }

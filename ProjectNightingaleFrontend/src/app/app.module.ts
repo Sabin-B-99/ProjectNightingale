@@ -14,7 +14,7 @@ import { RoutinesComponent } from './routines/routines.component';
 import { RoutineDetailComponent } from './routines/routine-detail/routine-detail.component';
 import { RoutineCreatorComponent } from './routines/routine-creator/routine-creator.component';
 import {TopicCreatorComponent} from "./routines/topic-creator/topic-creator.component";
-import { SongTabDetailComponent } from './songs/song-tab-detail/song-tab-detail.component';
+import { LyricsTabComponent } from './songs/tabs/lyrics-tab/lyrics-tab.component';
 import {AppRoutingModule} from "./app-routing.module";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { ChordListComponent } from './chords/chord-list/chord-list.component';
@@ -37,6 +37,11 @@ import { PractiseComponent } from './practise/practise.component';
 import { TimerComponent } from './practise/timer/timer.component';
 import { TransformIntoHHMMSSPipe } from './pipes/transform-into-hhmmss.pipe';
 import { TopicCardComponent } from './practise/topic-card/topic-card.component';
+import { GuitarTabComponent } from './songs/tabs/guitar-tab/guitar-tab.component';
+import { HarmonicaTabComponent } from './songs/tabs/harmonica-tab/harmonica-tab.component';
+import { LinkifyChordsPipe } from './pipes/linkify-chords.pipe';
+import { ChordTooltipComponent } from './chords/chord-tooltip/chord-tooltip.component';
+import { ChordTooltipDirective } from './directives/chord-tooltip.directive';
 
 @NgModule({
   declarations: [
@@ -53,7 +58,7 @@ import { TopicCardComponent } from './practise/topic-card/topic-card.component';
     RoutineDetailComponent,
     RoutineCreatorComponent,
     TopicCreatorComponent,
-    SongTabDetailComponent,
+    LyricsTabComponent,
     ChordListComponent,
     MusicNotePipe,
     ChordItemComponent,
@@ -70,6 +75,11 @@ import { TopicCardComponent } from './practise/topic-card/topic-card.component';
     TimerComponent,
     TransformIntoHHMMSSPipe,
     TopicCardComponent,
+    GuitarTabComponent,
+    HarmonicaTabComponent,
+    LinkifyChordsPipe,
+    ChordTooltipComponent,
+    ChordTooltipDirective
   ],
   imports: [
     BrowserModule,

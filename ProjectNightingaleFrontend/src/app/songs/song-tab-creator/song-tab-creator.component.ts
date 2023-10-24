@@ -64,7 +64,6 @@ export class SongTabCreatorComponent implements OnInit, OnDestroy, AfterViewInit
     this.validChordChangedSubscription = this.tabCreatorService.validChordsChanged
       .subscribe((validChords: string[])=>{
         this.validChords = validChords;
-        console.log(this.validChords);
         this.tabCreationForm.get('tabLyricsArea')?.setValidators([Validators.required,
           lyricsBracketsValidation(), chordsValidator(this.validChords.slice())])
       });

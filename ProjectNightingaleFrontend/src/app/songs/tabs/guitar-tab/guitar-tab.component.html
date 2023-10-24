@@ -1,0 +1,15 @@
+<ng-template appChordTooltip></ng-template>
+<div *ngIf="guitarTab">
+  <div>
+    <p>{{guitarTab.tabDetails.songTitle}}</p>
+    <p>{{guitarTab.tabDetails.artistName}}</p>
+    <hr>
+    <p>{{guitarTab.guitarOtherReqDetails.tuningType}}</p>
+    <p>{{guitarTab.guitarOtherReqDetails.capoPosition}}</p>
+    <p>{{guitarTab.guitarOtherReqDetails.difficulty}}</p>
+  </div>
+  <hr>
+  <div #lyricsDiv class="formatted-line-break"
+       [innerHTML]="guitarTab.tabLyrics.lyrics | linkifyChords">
+  </div>
+</div>

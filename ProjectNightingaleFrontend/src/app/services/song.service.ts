@@ -78,7 +78,7 @@ export class SongService {
       }))
   }
 
-  private loadTabById(tabId: string){
+  public loadTabById(tabId: string){
     return this.http.get<ISongTabDTO>(`http://localhost:8080/ProjectNightingale/api/tabs/songs/${tabId}`);
   }
 

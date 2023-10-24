@@ -1,12 +1,22 @@
-import {ElementRef, Injectable, OnInit} from '@angular/core';
+import {ElementRef, Injectable} from '@angular/core';
 import {
-  ICapoPositionDTO, IChordKey, IChordRoot,
+  ICapoPositionDTO,
+  IChordKey,
+  IChordRoot,
   IDifficultyLevelsDTO,
-  IGuitarOtherReqDetailsDTO, IGuitarTabLyricsDTO, IGuitarTuningTypesDTO, IHarmonicaKeyDTO,
-  IHarmonicaOtherReqDetailsDTO, IHarmonicaTabLyricsDTO, IHarmonicaTypesDTO, IJoinPhraseDTO, ILyricsOnlyTabLyricsDTO,
+  IGuitarOtherReqDetailsDTO,
+  IGuitarTabLyricsDTO,
+  IGuitarTuningTypesDTO,
+  IHarmonicaKeyDTO,
+  IHarmonicaOtherReqDetailsDTO,
+  IHarmonicaTabLyricsDTO,
+  IHarmonicaTypesDTO,
+  IJoinPhraseDTO,
+  ILyricsOnlyTabLyricsDTO,
   IOtherArtistDTO,
   ISongTabCreationForm,
-  ISongTabDTO
+  ISongTabDTO,
+  TabType
 } from "../types/custom-interfaces";
 import {FormGroup} from "@angular/forms";
 import {HttpClient} from "@angular/common/http";
@@ -59,7 +69,13 @@ private validChords: string[] = [];
     if(this.validChords.length <= 0){
       for (const rootName of this.validChordRoots) {
         for (const keyName of this.validChordKeys) {
-          this.validChords.push(rootName.concat(keyName));
+          if(keyName === "maj"){
+            this.validChords.push(rootName.concat(''));
+          }else if(keyName === "min"){
+            this.validChords.push(rootName.concat('m'));
+          }else{
+            this.validChords.push(rootName.concat(keyName));
+          }
         }
       }
       this.validChordsChanged.next(this.validChords.slice());
@@ -259,7 +275,7 @@ private validChords: string[] = [];
   private  extractTabSongDetails(tabCreationForm: FormGroup<ISongTabCreationForm>): ISongTabDTO{
     return {
       songTitle: tabCreationForm.value.tabRequiredDetails?.songTitle || '',
-      artistName: tabCreationForm.value.tabRequiredDetails?.artistName || ''
+      artistName: tabCreationForm.value.tabRequiredDetails?.artistName || '',
     };
   }
 
@@ -325,7 +341,7 @@ private validChords: string[] = [];
 
   private saveGuitarTabLyrics(songTabId: string, guitarTabLyrics: IGuitarTabLyricsDTO){
     this.http.post<IGuitarTabLyricsDTO>(`http://localhost:8080/ProjectNightingale/api/tabs/songs/${songTabId}/guitar-tab-lyrics`,
-      guitarTabLyrics)
+      guitarTabLyrics).subscribe();
   }
   private extractLyricsOnlyTabLyrics(tabCreationForm: FormGroup<ISongTabCreationForm>): ILyricsOnlyTabLyricsDTO{
     return {
@@ -355,13 +371,16 @@ private validChords: string[] = [];
   private saveHarmonicaTabLyrics(songTabId: string, harmonicaTabLyrics: IHarmonicaTabLyricsDTO[]){
     if(harmonicaTabLyrics.length > 0){
       for (const cell of harmonicaTabLyrics) {
+        console.log(cell);
         this.http.post<IHarmonicaTabLyricsDTO>(`http://localhost:8080/ProjectNightingale/api/tabs/songs/${songTabId}/harmonica-tab-lyrics`,
-          harmonicaTabLyrics).subscribe();
+          cell).subscribe();
       }
     }
   }
   saveGuitarTab(tabCreationForm: FormGroup<ISongTabCreationForm>): Observable<boolean> {
     const tabSongDetails: ISongTabDTO = this.extractTabSongDetails(tabCreationForm);
+    tabSongDetails.tabType = TabType.guitar;
+
     const tabOtherArtists: IOtherArtistDTO[] = this.extractOtherArtistsName(tabCreationForm);
     const tabGuitarOtherReqDetails: IGuitarOtherReqDetailsDTO = this.extractGuitarOtherReqDetails(tabCreationForm);
     const tabLyrics: IGuitarTabLyricsDTO = this.extractGuitarTabLyrics(tabCreationForm);
@@ -383,6 +402,8 @@ private validChords: string[] = [];
 
   saveHarmonicaTab(tabCreationForm: FormGroup<ISongTabCreationForm>): Observable<boolean> {
     const tabSongDetails: ISongTabDTO = this.extractTabSongDetails(tabCreationForm);
+    tabSongDetails.tabType = TabType.harmonica;
+
     const tabOtherArtists: IOtherArtistDTO[] = this.extractOtherArtistsName(tabCreationForm);
     const tabHarmonicaOtherReqDetails: IHarmonicaOtherReqDetailsDTO = this.extractHarmonicaOtherReqDetails(tabCreationForm);
     const tabLyrics: IHarmonicaTabLyricsDTO[] = this.extractHarmonicaTabLyrics(tabCreationForm);
@@ -402,6 +423,8 @@ private validChords: string[] = [];
 
   saveLyrics(tabCreationForm: FormGroup<ISongTabCreationForm>):Observable<boolean> {
     const tabSongDetails: ISongTabDTO = this.extractTabSongDetails(tabCreationForm);
+    tabSongDetails.tabType = TabType.lyrics
+
     const tabOtherArtists: IOtherArtistDTO[] = this.extractOtherArtistsName(tabCreationForm);
     const lyrics: ILyricsOnlyTabLyricsDTO = this.extractLyricsOnlyTabLyrics(tabCreationForm);
 

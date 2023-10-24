@@ -122,7 +122,8 @@ interface ITableFormCellValue{
 interface ISongTabDTO{
   id?: string,
   songTitle: string,
-  artistName: string
+  artistName: string,
+  tabType?: string
 }
 
 interface IOtherArtistDTO{
@@ -232,6 +233,12 @@ interface IChordSaveResponse{
   title: string
 }
 
+enum TabType{
+  harmonica = "HARMONICA",
+  guitar = "GUITAR",
+  lyrics = "LYRICS"
+}
+
 export {
   IMetronomeValues,
   IChordRoot,
@@ -267,5 +274,6 @@ export {
   IGuitarTabDTO,
   IHarmonicaTabDTO,
   ITopicComponents,
-  IChordSaveResponse
+  IChordSaveResponse,
+  TabType
 }
