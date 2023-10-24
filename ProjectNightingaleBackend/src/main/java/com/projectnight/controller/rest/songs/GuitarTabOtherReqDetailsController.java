@@ -30,7 +30,7 @@ public class GuitarTabOtherReqDetailsController {
     }
 
     @GetMapping(value = "/songs/{tabId}/guitar-other-req-details")
-    private GuitarTabOtherReqDetails getGuitarTabOtherReqDetailsByTabId(String tabId){
+    private GuitarTabOtherReqDetails getGuitarTabOtherReqDetailsByTabId(@PathVariable String tabId){
         UUID id = UUID.fromString(tabId);
         return guitarTabOtherReqDetailsService.getGuitarTabOtherReqDetailsByTabId(id);
     }

@@ -7,4 +7,6 @@ import java.util.List;
 public interface ChordsKeysService {
     ChordKeys getChordKeyById(int id);
     List<ChordKeys> getAllChordKeys();
+
+    ChordKeys getChordKeyByKeyName(String keyName);
 }

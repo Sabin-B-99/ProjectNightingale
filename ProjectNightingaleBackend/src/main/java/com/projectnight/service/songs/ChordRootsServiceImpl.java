@@ -36,4 +36,10 @@ public class ChordRootsServiceImpl implements ChordRootsService{
     public List<ChordRoots> getAllChordRoots(){
         return this.chordRootsRepository.findAll();
     }
+
+    @Override
+    @Transactional("songsTransactionManager")
+    public ChordRoots getChordRootByRootName(String rootName) {
+        return this.chordRootsRepository.findChordRootsByRootName(rootName);
+    }
 }

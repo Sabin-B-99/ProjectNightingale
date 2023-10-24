@@ -87,4 +87,14 @@ public class ChordsController {
     private List<ChordKeys> getAllChordKeys(){
         return chordsKeysService.getAllChordKeys();
     }
+
+    @GetMapping("/chord-keys/keys/{keyName}")
+    public ChordKeys getChordKeyByKeyName(@PathVariable String keyName){
+        return this.chordsKeysService.getChordKeyByKeyName(keyName);
+    }
+
+    @GetMapping("chord-roots/roots/{rootName}")
+    public ChordRoots getChordRootByRootName(@PathVariable String rootName){
+        return this.chordRootsService.getChordRootByRootName(rootName);
+    }
 }

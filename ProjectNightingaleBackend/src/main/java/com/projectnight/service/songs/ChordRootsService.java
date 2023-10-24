@@ -8,4 +8,6 @@ public interface ChordRootsService {
     ChordRoots getChordRootById(int chordRootId);
 
     List<ChordRoots> getAllChordRoots();
+
+    ChordRoots getChordRootByRootName(String rootName);
 }

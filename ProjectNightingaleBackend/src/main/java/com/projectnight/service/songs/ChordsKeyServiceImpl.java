@@ -36,4 +36,10 @@ public class ChordsKeyServiceImpl implements ChordsKeysService {
     public List<ChordKeys> getAllChordKeys(){
         return this.chordKeysRepository.findAll();
     }
+
+    @Override
+    @Transactional("songsTransactionManager")
+    public ChordKeys getChordKeyByKeyName(String keyName) {
+        return this.chordKeysRepository.findChordKeysByKeyName(keyName);
+    }
 }
