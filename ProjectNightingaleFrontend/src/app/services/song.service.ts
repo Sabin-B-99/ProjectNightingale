@@ -71,7 +71,8 @@ export class SongService {
             tabDetails: selectedTab,
             otherArtists: value.otherArtists,
             harmonicaOtherReqDetails: value.harmonicaOtherReqDetails,
-            tabLyricsCells: value.harmonicaTabLyrics
+            tabLyrics: value.harmonicaTabLyrics
+            // tabLyricsCells: value.harmonicaTabLyrics
           }
           return loadedTab;
         })))
@@ -99,11 +100,11 @@ export class SongService {
   }
 
   private loadHarmonicaTabOtherReqDetailsByTabId(tabId: string){
-    return this.http.get<IHarmonicaOtherReqDetailsDTO>(`http://localhost:8080/ProjectNightingale/tabs/songs/${tabId}/harmonica-other-req-details`)
+    return this.http.get<IHarmonicaOtherReqDetailsDTO>(`http://localhost:8080/ProjectNightingale/api/tabs/songs/${tabId}/harmonica-other-req-details`)
   }
 
   private loadHarmonicaTabLyricsByTabId(tabId: string){
-    return this.http.get<IHarmonicaTabLyricsDTO[]>(`http://localhost:8080/ProjectNightingale/tabs/songs/${tabId}/harmonica-tab-lyrics`)
+    return this.http.get<IHarmonicaTabLyricsDTO>(`http://localhost:8080/ProjectNightingale/api/tabs/songs/${tabId}/harmonica-tab-lyrics`)
   }
 
   public getSongSearchSuggestions(title: string){

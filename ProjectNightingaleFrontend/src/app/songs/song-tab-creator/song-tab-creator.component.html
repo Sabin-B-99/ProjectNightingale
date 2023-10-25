@@ -20,7 +20,8 @@
         </a>
       </li>
       <li class="list-group-item">
-        <div *ngIf="!harmonicaTabTextAreaShown" class="container">
+<!--        <div *ngIf="!harmonicaTabTextAreaShown" class="container"> Replaced with div in line below-->
+        <div class="container">
           <div class="row">
             <div class="col col-md-auto">
               <textarea [rows]="LYRICS_AREA_NO_OF_ROWS"
@@ -45,29 +46,30 @@
           </div>
         </div>
 
-        <div *ngIf="harmonicaTabTextAreaShown">
-          <app-harmonica-tab-input-array [numOfRows]="numOfRowsHarmonicaInputArray"
-                                         [numOfCols]="numOfColsHarmonicaInputArray"
-                                         [lyricLines]="harmonicaLyricsLines"
-                                         formControlName="harmonicaTabArea">
-          </app-harmonica-tab-input-array>
-          <label *ngIf="tabCreationForm.get('harmonicaTabArea')?.errors?.['requiredCellsEmpty']"
-                 class="form-label text-danger">*Cell above any cell with word/s should not be empty.</label>
-        </div>
+<!--        <div *ngIf="harmonicaTabTextAreaShown">-->
+<!--          <app-harmonica-tab-input-array [numOfRows]="numOfRowsHarmonicaInputArray"-->
+<!--                                         [numOfCols]="numOfColsHarmonicaInputArray"-->
+<!--                                         [lyricLines]="harmonicaLyricsLines"-->
+<!--                                         formControlName="harmonicaTabArea">-->
+<!--          </app-harmonica-tab-input-array>-->
+<!--          <label *ngIf="tabCreationForm.get('harmonicaTabArea')?.errors?.['requiredCellsEmpty']"-->
+<!--                 class="form-label text-danger">*Cell above any cell with word/s should not be empty.</label>-->
+<!--        </div>-->
       </li>
       <li class="list-group-item">
-        <a *ngIf="guitarTabSelected || harmonicaTabTextAreaShown || lyricsSelected">
+<!--        <a *ngIf="guitarTabSelected || harmonicaTabSelected || lyricsSelected">  Replaced with empty anchor link below-->
+        <a>
           <span class="btn-group btn-group-sm">
             <button [disabled]="tabSaveStatus" class="btn btn-outline-primary">Submit</button>
-            <button *ngIf="harmonicaTabTextAreaShown" [disabled]="tabSaveStatus"
-                    (click)="onHarmonicTabBackBtnClicked()"
-                    class="btn btn-outline-secondary">Back</button>
+<!--            <button *ngIf="harmonicaTabTextAreaShown" [disabled]="tabSaveStatus"-->
+<!--                    (click)="onHarmonicTabBackBtnClicked()"-->
+<!--                    class="btn btn-outline-secondary">Back</button>-->
           </span>
         </a>
-        <a *ngIf="harmonicaTabSelected && !harmonicaTabTextAreaShown">
-          <button type="button" (click)="createHarmonicaTabInputTextArea()"
-                  class="btn btn-outline-secondary">Next</button>
-        </a>
+<!--        <a *ngIf="harmonicaTabSelected && !harmonicaTabTextAreaShown">-->
+<!--          <button type="button" (click)="createHarmonicaTabInputTextArea()"-->
+<!--                  class="btn btn-outline-secondary">Next</button>-->
+<!--        </a>-->
         <span class="mx-sm-1" *ngIf="tabSaveStatus">
           <p class="form-label">Saving...</p>
         </span>

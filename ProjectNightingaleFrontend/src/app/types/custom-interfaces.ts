@@ -60,8 +60,8 @@ interface ITopicForm {
 
 interface ISongTabCreationForm{
   tabRequiredDetails: FormGroup<ISongTabCreationRequiredDetailsForm>,
-  tabLyricsArea: FormControl<string | null>,
-  harmonicaTabArea: FormControl<ITableFormCellValue[] | null>
+  tabLyricsArea: FormControl<string | null>
+  // harmonicaTabArea: FormControl<ITableFormCellValue[] | null>
 }
 
 interface ISongTabCreationRequiredDetailsForm{
@@ -151,11 +151,16 @@ interface IGuitarTabLyricsDTO{
   lyrics: string
 }
 
+// interface IHarmonicaTabLyricsDTO{
+//   id?: string,
+//   tabCellRowNo: number,
+//   tabCellColNo: number,
+//   tabCellValue: string
+// }
+
 interface IHarmonicaTabLyricsDTO{
   id?: string,
-  tabCellRowNo: number,
-  tabCellColNo: number,
-  tabCellValue: string
+  lyrics: string
 }
 
 interface ILyricsOnlyTabLyricsDTO{
@@ -210,7 +215,8 @@ interface IHarmonicaTabDTO{
   tabDetails: ISongTabDTO,
   otherArtists: IOtherArtistDTO[],
   harmonicaOtherReqDetails: IHarmonicaOtherReqDetailsDTO,
-  tabLyricsCells: IHarmonicaTabLyricsDTO[]
+  // tabLyricsCells: IHarmonicaTabLyricsDTO[]
+  tabLyrics: IHarmonicaTabLyricsDTO
 }
 
 interface ITopicComponents{

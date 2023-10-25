@@ -30,14 +30,14 @@ export class SongTabCreatorComponent implements OnInit, OnDestroy, AfterViewInit
   harmonicaTabSelected: boolean = false;
   lyricsSelected: boolean = false;
 
-  harmonicaTabTextAreaShown: boolean = false;
+  // harmonicaTabTextAreaShown: boolean = false;
 
   tabCreationForm: FormGroup<ISongTabCreationForm>;
 
 
-  numOfRowsHarmonicaInputArray: number;
-  numOfColsHarmonicaInputArray: number;
-  harmonicaLyricsLines: Map<number, string>;
+  // numOfRowsHarmonicaInputArray: number;
+  // numOfColsHarmonicaInputArray: number;
+  // harmonicaLyricsLines: Map<number, string>;
 
   validChords: string[] = [];
 
@@ -57,8 +57,8 @@ export class SongTabCreatorComponent implements OnInit, OnDestroy, AfterViewInit
 
     this.tabCreationForm = new FormGroup<ISongTabCreationForm>({
       'tabRequiredDetails': TabRequiredDetailsComponent.getTabRequiredDetailForm(),
-      'tabLyricsArea': new FormControl<string>(''),
-      'harmonicaTabArea': new FormControl<ITableFormCellValue[]>([])
+      'tabLyricsArea': new FormControl<string>('')
+      // 'harmonicaTabArea': new FormControl<ITableFormCellValue[]>([])
     });
 
     this.validChordChangedSubscription = this.tabCreatorService.validChordsChanged
@@ -148,7 +148,7 @@ export class SongTabCreatorComponent implements OnInit, OnDestroy, AfterViewInit
     this.enableGuitarTabRelatedControls();
     this.harmonicaTabSelected = false;
     this.lyricsSelected = false;
-    this.harmonicaTabTextAreaShown = false;
+    // this.harmonicaTabTextAreaShown = false;
     this.guitarTabSelected = true;
   }
 
@@ -166,24 +166,24 @@ export class SongTabCreatorComponent implements OnInit, OnDestroy, AfterViewInit
     this.lyricsSelected = true;
     this.guitarTabSelected = false;
     this.harmonicaTabSelected = false;
-    this.harmonicaTabTextAreaShown = false;
+    // this.harmonicaTabTextAreaShown = false;
   }
 
-  createHarmonicaTabInputTextArea() {
-
-    let lyricsTabValue: string = this.tabCreationForm.get('tabLyricsArea')?.value || '';
-    let totalNumOfLinesInTab: number = this.tabCreatorService.calculateNumberOfLinesAfterWhiteSpaceRemoval(lyricsTabValue);
-    let numOfWordsInLongestLine: number = this.tabCreatorService.calcLengthOfLongestLine(lyricsTabValue);
-    let lines: Map<number, string> = this.tabCreatorService.getLyricsLines(lyricsTabValue);
-
-    this.numOfRowsHarmonicaInputArray = totalNumOfLinesInTab * 2;
-    this.numOfColsHarmonicaInputArray = numOfWordsInLongestLine + 2;
-    this.harmonicaLyricsLines = lines;
-    this.harmonicaTabTextAreaShown = true;
-  }
-  onHarmonicTabBackBtnClicked() {
-    this.harmonicaTabTextAreaShown = false;
-  }
+  // createHarmonicaTabInputTextArea() {
+  //
+  //   let lyricsTabValue: string = this.tabCreationForm.get('tabLyricsArea')?.value || '';
+  //   let totalNumOfLinesInTab: number = this.tabCreatorService.calculateNumberOfLinesAfterWhiteSpaceRemoval(lyricsTabValue);
+  //   let numOfWordsInLongestLine: number = this.tabCreatorService.calcLengthOfLongestLine(lyricsTabValue);
+  //   let lines: Map<number, string> = this.tabCreatorService.getLyricsLines(lyricsTabValue);
+  //
+  //   this.numOfRowsHarmonicaInputArray = totalNumOfLinesInTab * 2;
+  //   this.numOfColsHarmonicaInputArray = numOfWordsInLongestLine + 2;
+  //   this.harmonicaLyricsLines = lines;
+  //   this.harmonicaTabTextAreaShown = true;
+  // }
+  // onHarmonicTabBackBtnClicked() {
+  //   this.harmonicaTabTextAreaShown = false;
+  // }
 
   disableHarmonicaTabRelatedControls(){
     if(this.getTabRequiredDetailsForm()){

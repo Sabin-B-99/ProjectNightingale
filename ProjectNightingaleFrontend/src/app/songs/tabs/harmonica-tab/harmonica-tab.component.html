@@ -1,1 +1,11 @@
-<p>harmonica-tab works!</p>
+<div class="row container ms-sm-1" *ngIf="harmonicaTab">
+  <p>{{harmonicaTab.tabDetails.songTitle}}</p>
+  <p>{{harmonicaTab.tabDetails.artistName}}</p>
+  <p>{{harmonicaTab.harmonicaOtherReqDetails.harmonicaType}}</p>
+  <p>{{harmonicaTab.harmonicaOtherReqDetails.harmonicaKey}}</p>
+  <p>{{harmonicaTab.harmonicaOtherReqDetails.difficulty}}</p>
+  <hr/>
+  <div class="formatted-line-break">
+    {{harmonicaTab.tabLyrics.lyrics}}
+  </div>
+</div>

@@ -178,13 +178,13 @@ private validChords: string[] = [];
     }
   }
 
-  public appendLineBreaks(strToAppendTo: string, numOfBreaks: number){
-    let stringAfterAppendingLineBreaks: string = strToAppendTo;
-    for (let i = 0; i < numOfBreaks; i++) {
-      stringAfterAppendingLineBreaks += '\n';
-    }
-    return stringAfterAppendingLineBreaks;
-  }
+  // public appendLineBreaks(strToAppendTo: string, numOfBreaks: number){
+  //   let stringAfterAppendingLineBreaks: string = strToAppendTo;
+  //   for (let i = 0; i < numOfBreaks; i++) {
+  //     stringAfterAppendingLineBreaks += '\n';
+  //   }
+  //   return stringAfterAppendingLineBreaks;
+  // }
 
   public findNumberOfCharacters(lines: string[]): number{
     let totalNumberOfChars: number = 0;
@@ -194,36 +194,36 @@ private validChords: string[] = [];
     return totalNumberOfChars;
   }
 
-  getLyricsLines(tabTextAreaValue: string): Map<number,string>{
-    let textAfterWhiteSpaceRemoval: string = this.removeBlankLinesAfterRemovingTextsInParenthesis(tabTextAreaValue);
-    let tabLines: string[] = textAfterWhiteSpaceRemoval.split('\n');
-    let lines: Map<number, string> = new Map<number, string>();
-    let lineNo: number = 0;
-    for (const line of tabLines) {
-      lines.set(lineNo, line);
-      lineNo++;
-    }
-    return lines;
-  }
+  // getLyricsLines(tabTextAreaValue: string): Map<number,string>{
+  //   let textAfterWhiteSpaceRemoval: string = this.removeBlankLinesAfterRemovingTextsInParenthesis(tabTextAreaValue);
+  //   let tabLines: string[] = textAfterWhiteSpaceRemoval.split('\n');
+  //   let lines: Map<number, string> = new Map<number, string>();
+  //   let lineNo: number = 0;
+  //   for (const line of tabLines) {
+  //     lines.set(lineNo, line);
+  //     lineNo++;
+  //   }
+  //   return lines;
+  // }
 
-  calcLengthOfLongestLine(tabTextAreaValue: string): number{
-    let textAfterWhiteSpaceRemoval: string = this.removeBlankLinesAfterRemovingTextsInParenthesis(tabTextAreaValue);
-    let tabLines: string[] = textAfterWhiteSpaceRemoval.split('\n');
-    let longestLen: number = 0;
-    for (const tabLine of tabLines) {
-      let lenOfCurrentLine: number = this.calculateTotalWordsInALine(tabLine);
-      if(lenOfCurrentLine > longestLen){
-        longestLen = lenOfCurrentLine;
-      }
-    }
-    return longestLen;
-  }
+  // calcLengthOfLongestLine(tabTextAreaValue: string): number{
+  //   let textAfterWhiteSpaceRemoval: string = this.removeBlankLinesAfterRemovingTextsInParenthesis(tabTextAreaValue);
+  //   let tabLines: string[] = textAfterWhiteSpaceRemoval.split('\n');
+  //   let longestLen: number = 0;
+  //   for (const tabLine of tabLines) {
+  //     let lenOfCurrentLine: number = this.calculateTotalWordsInALine(tabLine);
+  //     if(lenOfCurrentLine > longestLen){
+  //       longestLen = lenOfCurrentLine;
+  //     }
+  //   }
+  //   return longestLen;
+  // }
 
-  calculateNumberOfLinesAfterWhiteSpaceRemoval(tabTextAreaValue: string): number{
-    let textAfterWhiteSpaceRemoval: string = this.removeBlankLinesAfterRemovingTextsInParenthesis(tabTextAreaValue);
-    let tabLines: string[] = textAfterWhiteSpaceRemoval.split('\n');
-    return tabLines.length;
-  }
+  // calculateNumberOfLinesAfterWhiteSpaceRemoval(tabTextAreaValue: string): number{
+  //   let textAfterWhiteSpaceRemoval: string = this.removeBlankLinesAfterRemovingTextsInParenthesis(tabTextAreaValue);
+  //   let tabLines: string[] = textAfterWhiteSpaceRemoval.split('\n');
+  //   return tabLines.length;
+  // }
 
   // public calculateWordsInLyricsTab(tabTextAreaValue: string): number{
   //   let texAfterWhiteSpaceRemoval: string = this.removeBlankLinesAfterRemovingTextsInParenthesis(tabTextAreaValue);
@@ -235,23 +235,23 @@ private validChords: string[] = [];
   //   return totalWords;
   // }
 
-  private removeWordsInsideParenthesis(line: string): string{
-    return line.replace(/\s*\([^()]*\)$/, '');
-  }
-  private calculateTotalWordsInALine(line: string): number {
-    return line.split(new RegExp(/\b\s+/)).length;
-  }
-  private removeBlankLinesAfterRemovingTextsInParenthesis(textAreaValue: string): string{
-    let lines: string[] = textAreaValue.split('\n');
-    let remLinesAfterRemoval: string[] = [];
-    for (const line of lines) {
-      let lineAfterRemWordsInParenthesis = this.removeWordsInsideParenthesis(line);
-      if(lineAfterRemWordsInParenthesis.trim() !== ""){
-        remLinesAfterRemoval.push(lineAfterRemWordsInParenthesis);
-      }
-    }
-    return remLinesAfterRemoval.join('\n');
-  }
+  // private removeWordsInsideParenthesis(line: string): string{
+  //   return line.replace(/\s*\([^()]*\)$/, '');
+  // }
+  // private calculateTotalWordsInALine(line: string): number {
+  //   return line.split(new RegExp(/\b\s+/)).length;
+  // }
+  // private removeBlankLinesAfterRemovingTextsInParenthesis(textAreaValue: string): string{
+  //   let lines: string[] = textAreaValue.split('\n');
+  //   let remLinesAfterRemoval: string[] = [];
+  //   for (const line of lines) {
+  //     let lineAfterRemWordsInParenthesis = this.removeWordsInsideParenthesis(line);
+  //     if(lineAfterRemWordsInParenthesis.trim() !== ""){
+  //       remLinesAfterRemoval.push(lineAfterRemWordsInParenthesis);
+  //     }
+  //   }
+  //   return remLinesAfterRemoval.join('\n');
+  // }
 
   // getWordsInLine(line: string): string[] {
   //   return line.split(/\b\s+/);
@@ -354,28 +354,40 @@ private validChords: string[] = [];
       lyrics).subscribe();
   }
 
-  private extractHarmonicaTabLyrics(tabCreationForm: FormGroup<ISongTabCreationForm>): IHarmonicaTabLyricsDTO[]{
-    let harmonicaTabCells: IHarmonicaTabLyricsDTO[] = [];
-    if(tabCreationForm.value.harmonicaTabArea){
-      for (const cell of tabCreationForm.value.harmonicaTabArea) {
-        harmonicaTabCells.push({
-          tabCellRowNo: cell.cellNum.row,
-          tabCellColNo: cell.cellNum.col,
-          tabCellValue: cell.value
-        })
-      }
+  private extractHarmonicaTabLyrics(tabCreationForm: FormGroup<ISongTabCreationForm>): IHarmonicaTabLyricsDTO{
+    return {
+      lyrics: tabCreationForm.value.tabLyricsArea || ''
     }
-    return harmonicaTabCells;
   }
 
-  private saveHarmonicaTabLyrics(songTabId: string, harmonicaTabLyrics: IHarmonicaTabLyricsDTO[]){
-    if(harmonicaTabLyrics.length > 0){
-      for (const cell of harmonicaTabLyrics) {
-        console.log(cell);
-        this.http.post<IHarmonicaTabLyricsDTO>(`http://localhost:8080/ProjectNightingale/api/tabs/songs/${songTabId}/harmonica-tab-lyrics`,
-          cell).subscribe();
-      }
-    }
+  // private extractHarmonicaTabLyrics(tabCreationForm: FormGroup<ISongTabCreationForm>): IHarmonicaTabLyricsDTO[]{
+  //   let harmonicaTabCells: IHarmonicaTabLyricsDTO[] = [];
+  //   if(tabCreationForm.value.harmonicaTabArea){
+  //     for (const cell of tabCreationForm.value.harmonicaTabArea) {
+  //       harmonicaTabCells.push({
+  //         tabCellRowNo: cell.cellNum.row,
+  //         tabCellColNo: cell.cellNum.col,
+  //         tabCellValue: cell.value
+  //       })
+  //     }
+  //   }
+  //   return harmonicaTabCells;
+  // }
+
+  // private saveHarmonicaTabLyrics(songTabId: string, harmonicaTabLyrics: IHarmonicaTabLyricsDTO[]){
+  //   if(harmonicaTabLyrics.length > 0){
+  //     for (const cell of harmonicaTabLyrics) {
+  //       console.log(cell);
+  //       this.http.post<IHarmonicaTabLyricsDTO>(`http://localhost:8080/ProjectNightingale/api/tabs/songs/${songTabId}/harmonica-tab-lyrics`,
+  //         cell).subscribe();
+  //     }
+  //   }
+  // }
+
+
+  private saveHarmonicaTabLyrics(songTabId: string, harmonicaTabLyrics: IHarmonicaTabLyricsDTO){
+    this.http.post<IHarmonicaTabLyricsDTO>(`http://localhost:8080/ProjectNightingale/api/tabs/songs/${songTabId}/harmonica-tab-lyrics`,
+      harmonicaTabLyrics).subscribe();
   }
   saveGuitarTab(tabCreationForm: FormGroup<ISongTabCreationForm>): Observable<boolean> {
     const tabSongDetails: ISongTabDTO = this.extractTabSongDetails(tabCreationForm);
@@ -406,7 +418,8 @@ private validChords: string[] = [];
 
     const tabOtherArtists: IOtherArtistDTO[] = this.extractOtherArtistsName(tabCreationForm);
     const tabHarmonicaOtherReqDetails: IHarmonicaOtherReqDetailsDTO = this.extractHarmonicaOtherReqDetails(tabCreationForm);
-    const tabLyrics: IHarmonicaTabLyricsDTO[] = this.extractHarmonicaTabLyrics(tabCreationForm);
+    // const tabLyrics: IHarmonicaTabLyricsDTO[] = this.extractHarmonicaTabLyrics(tabCreationForm);
+    const tabLyrics: IHarmonicaTabLyricsDTO = this.extractHarmonicaTabLyrics(tabCreationForm);
 
     return this.saveTabSongDetails(tabSongDetails)
       .pipe(map((id: string | undefined) =>{
