@@ -10,5 +10,5 @@ import java.util.UUID;
 
 public interface HarmonicaTabLyricsRepository extends JpaRepository<HarmonicaTabLyrics, UUID> {
     @Query("FROM HarmonicaTabLyrics WHERE songTab.id = :id")
-    List<HarmonicaTabLyrics> getHarmonicaTabLyricsByTabId(@Param("id") UUID id);
+    HarmonicaTabLyrics getHarmonicaTabLyricsByTabId(@Param("id") UUID id);
 }

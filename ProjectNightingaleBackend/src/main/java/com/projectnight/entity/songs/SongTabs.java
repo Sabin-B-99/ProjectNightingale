@@ -48,9 +48,9 @@ public class SongTabs {
     @JsonIgnore
     private LyricsOnlyTabLyrics lyricsOnlyTabLyrics;
 
-    @OneToMany(mappedBy = "songTab")
+    @OneToOne(mappedBy = "songTab", fetch = FetchType.LAZY)
     @JsonIgnore
-    private List<HarmonicaTabLyrics> harmonicaTabLyrics;
+    private HarmonicaTabLyrics harmonicaTabLyrics;
 
     public SongTabs() {
     }
@@ -119,11 +119,11 @@ public class SongTabs {
         this.lyricsOnlyTabLyrics = lyricsOnlyTabLyrics;
     }
 
-    public List<HarmonicaTabLyrics> getHarmonicaTabLyrics() {
+    public HarmonicaTabLyrics getHarmonicaTabLyrics() {
         return harmonicaTabLyrics;
     }
 
-    public void setHarmonicaTabLyrics(List<HarmonicaTabLyrics> harmonicaTabLyrics) {
+    public void setHarmonicaTabLyrics(HarmonicaTabLyrics harmonicaTabLyrics) {
         this.harmonicaTabLyrics = harmonicaTabLyrics;
     }
 

@@ -38,7 +38,7 @@ public class HarmonicaTabLyricsServiceImpl implements HarmonicaTabLyricsService{
 
     @Override
     @Transactional("songsTransactionManager")
-    public List<HarmonicaTabLyrics> getHarmonicaTabLyricsByTabId(UUID id) {
+    public HarmonicaTabLyrics getHarmonicaTabLyricsByTabId(UUID id) {
         return harmonicaTabLyricsRepository.getHarmonicaTabLyricsByTabId(id);
     }
 }

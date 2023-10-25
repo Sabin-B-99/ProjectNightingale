@@ -30,7 +30,7 @@ public class HarmonicaTabLyricsController {
 
 
     @GetMapping("/songs/{songTabId}/harmonica-tab-lyrics")
-    public List<HarmonicaTabLyrics> getHarmonicaTabLyricsByTabId(@PathVariable String songTabId){
+    public HarmonicaTabLyrics getHarmonicaTabLyricsByTabId(@PathVariable String songTabId){
         UUID id = UUID.fromString(songTabId);
         return harmonicaTabLyricsService.getHarmonicaTabLyricsByTabId(id);
     }

@@ -9,5 +9,5 @@ public interface HarmonicaTabLyricsService {
     List<HarmonicaTabLyrics> getAllHarmonicaTabLyrics();
     HarmonicaTabLyrics saveHarmonicaTabLyrics(UUID songTabId, HarmonicaTabLyrics harmonicaTabLyrics);
 
-    List<HarmonicaTabLyrics> getHarmonicaTabLyricsByTabId(UUID id);
+    HarmonicaTabLyrics getHarmonicaTabLyricsByTabId(UUID id);
 }

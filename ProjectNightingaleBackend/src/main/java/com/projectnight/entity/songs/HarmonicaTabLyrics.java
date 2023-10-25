@@ -18,16 +18,10 @@ public class HarmonicaTabLyrics {
     @Column(name = "id")
     private UUID id;
 
-    @Column(name = "tab_cell_row_num")
-    private int tabCellRowNum;
+    @Column(name = "lyrics")
+    private String lyrics;
 
-    @Column(name = "tab_cell_col_num")
-    private int tabCellColNum;
-
-    @Column(name = "tab_cell_value")
-    private String tabCellValue;
-
-    @ManyToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JsonIgnore
     @JoinColumn(name = "song_tab_id", referencedColumnName = "id")
     private SongTabs songTab;
@@ -43,28 +37,13 @@ public class HarmonicaTabLyrics {
         this.id = id;
     }
 
-    public int getTabCellRowNum() {
-        return tabCellRowNum;
+
+    public String getLyrics() {
+        return lyrics;
     }
 
-    public void setTabCellRowNum(int tabCellRowNum) {
-        this.tabCellRowNum = tabCellRowNum;
-    }
-
-    public int getTabCellColNum() {
-        return tabCellColNum;
-    }
-
-    public void setTabCellColNum(int tabCellColNum) {
-        this.tabCellColNum = tabCellColNum;
-    }
-
-    public String getTabCellValue() {
-        return tabCellValue;
-    }
-
-    public void setTabCellValue(String tabCellValue) {
-        this.tabCellValue = tabCellValue;
+    public void setLyrics(String lyrics) {
+        this.lyrics = lyrics;
     }
 
     public SongTabs getSongTab() {
