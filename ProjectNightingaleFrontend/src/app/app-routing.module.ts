@@ -12,6 +12,8 @@ import {SongTabCreatorComponent} from "./songs/song-tab-creator/song-tab-creator
 import {PractiseComponent} from "./practise/practise.component";
 import {GuitarTabComponent} from "./songs/tabs/guitar-tab/guitar-tab.component";
 import {HarmonicaTabComponent} from "./songs/tabs/harmonica-tab/harmonica-tab.component";
+import {LoginPageComponent} from "./authentication/login-page/login-page.component";
+import {SignupPageComponent} from "./authentication/signup-page/signup-page.component";
 
 const appRoutes: Routes = [
   {path: '', pathMatch: "full", redirectTo:'/routines'},
@@ -28,7 +30,9 @@ const appRoutes: Routes = [
       {path: ':id/topics', component: RoutineDetailComponent},
       {path: 'create', component: RoutineCreatorComponent}
     ]},
-  {path: 'practise/:id', component: PractiseComponent}
+  {path: 'practise/:id', component: PractiseComponent},
+  {path:'login', component: LoginPageComponent},
+  {path: 'register', component: SignupPageComponent}
 ]
 @NgModule({
   imports: [RouterModule.forRoot(appRoutes)],

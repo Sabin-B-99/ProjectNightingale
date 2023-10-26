@@ -1,0 +1,23 @@
+<div>
+  <form [formGroup]="signUpForm" (ngSubmit)="onRegistrationFormSubmitted()">
+    <div class="container">
+      <span class="row my-sm-2">
+        <label class="col">Email:</label>
+        <input formControlName="email" type="email" class="col">
+      </span>
+      <span class="row my-sm-2">
+        <label class="col">Username:</label>
+        <input formControlName="username" type="text" class="col">
+      </span>
+      <span class="row my-sm-2">
+        <label class="col">Password:</label>
+        <input class="col" formControlName="password" type="password">
+      </span>
+      <span class="row my-sm-2">
+        <label class="col">Repeat password:</label>
+        <input class="col" formControlName="confirmPassword" type="password">
+      </span>
+      <button type="button" class="my-sm-2">Submit</button>
+    </div>
+  </form>
+</div>

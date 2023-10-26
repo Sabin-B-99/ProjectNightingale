@@ -42,6 +42,8 @@ import { HarmonicaTabComponent } from './songs/tabs/harmonica-tab/harmonica-tab.
 import { LinkifyChordsPipe } from './pipes/linkify-chords.pipe';
 import { ChordTooltipComponent } from './chords/chord-tooltip/chord-tooltip.component';
 import { ChordTooltipDirective } from './directives/chord-tooltip.directive';
+import { LoginPageComponent } from './authentication/login-page/login-page.component';
+import { SignupPageComponent } from './authentication/signup-page/signup-page.component';
 
 @NgModule({
   declarations: [
@@ -79,7 +81,9 @@ import { ChordTooltipDirective } from './directives/chord-tooltip.directive';
     HarmonicaTabComponent,
     LinkifyChordsPipe,
     ChordTooltipComponent,
-    ChordTooltipDirective
+    ChordTooltipDirective,
+    LoginPageComponent,
+    SignupPageComponent
   ],
   imports: [
     BrowserModule,
