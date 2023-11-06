@@ -238,6 +238,16 @@ interface IChordSaveResponse{
   timeDuration: number,
   title: string
 }
+interface CredentialsDTO{
+  username: string,
+  password: string
+}
+
+interface UserRegistrationDTO{
+  email: string
+  username: string,
+  password: string
+}
 
 enum TabType{
   harmonica = "HARMONICA",
@@ -281,5 +291,7 @@ export {
   IHarmonicaTabDTO,
   ITopicComponents,
   IChordSaveResponse,
-  TabType
+  TabType,
+  CredentialsDTO,
+  UserRegistrationDTO
 }

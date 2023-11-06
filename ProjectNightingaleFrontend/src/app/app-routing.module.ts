@@ -16,7 +16,7 @@ import {LoginPageComponent} from "./authentication/login-page/login-page.compone
 import {SignupPageComponent} from "./authentication/signup-page/signup-page.component";
 
 const appRoutes: Routes = [
-  {path: '', pathMatch: "full", redirectTo:'/routines'},
+  {path: '', pathMatch: "full", redirectTo:'/songs'},
   {path: 'song-book', component: SongbooksComponent},
   {path: 'songs', component: SongsComponent},
   {path: 'songs/:id/lyrics', component: LyricsTabComponent},

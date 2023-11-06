@@ -44,12 +44,20 @@
   <div class="w-100"></div>
   <div>
     <ul class="navbar-nav mx-sm-2">
-      <li class="nav-item">
+      <li class="nav-item" [hidden]="userIsAuthenticated">
         <a routerLinkActive="active"
            [routerLink]="['login']"
            class="nav-link">
           Login
         </a>
+      </li>
+      <li *ngIf="userIsAuthenticated" class="nav-item mx-sm-2 text-secondary">
+          {{username}}
+      </li>
+      <li *ngIf="userIsAuthenticated" class="nav-item">
+        <button type="button" class="btn-sm btn-outline-primary btn">
+          Logout
+        </button>
       </li>
     </ul>
   </div>
