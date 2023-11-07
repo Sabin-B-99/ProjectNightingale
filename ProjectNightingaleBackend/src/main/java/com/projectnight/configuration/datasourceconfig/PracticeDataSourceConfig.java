@@ -18,7 +18,7 @@ import javax.sql.DataSource;
 import java.beans.PropertyVetoException;
 
 @Configuration
-@PropertySource("classpath:persistence.mysql.properties")
+@PropertySource("classpath:application.properties")
 @EnableTransactionManagement
 @EnableJpaRepositories( basePackages = {"com.projectnight.repository.practice"},
         entityManagerFactoryRef = "practiceSessionFactory",

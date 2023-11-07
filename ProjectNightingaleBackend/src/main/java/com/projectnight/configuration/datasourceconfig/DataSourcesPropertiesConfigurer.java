@@ -10,7 +10,7 @@ import java.util.Objects;
 import java.util.Properties;
 
 @Component
-@PropertySource("classpath:persistence.mysql.properties")
+@PropertySource("classpath:application.properties")
 public class DataSourcesPropertiesConfigurer {
     private final Environment env;
 

@@ -15,11 +15,9 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
 import java.beans.PropertyVetoException;
-import java.util.Objects;
-import java.util.Properties;
 
 @Configuration
-@PropertySource("classpath:persistence.mysql.properties")
+@PropertySource("classpath:application.properties")
 @EnableTransactionManagement
 @EnableJpaRepositories( basePackages = {"com.projectnight.repository.users"},
         entityManagerFactoryRef = "userAuthenticationSessionFactory",
