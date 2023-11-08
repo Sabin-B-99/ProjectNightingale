@@ -14,7 +14,7 @@ public class CORSCustomizer {
             CorsConfigurationSource source = s -> {
                 CorsConfiguration configuration = new CorsConfiguration();
                 configuration.setAllowCredentials(true);
-                configuration.setAllowedOrigins(List.of("http://127.0.0.1:3000"));
+                configuration.setAllowedOrigins(List.of("http://127.0.0.1:4200"));
                 configuration.setAllowedHeaders(List.of("*"));
                 configuration.setAllowedMethods(List.of("*"));
                 return configuration;

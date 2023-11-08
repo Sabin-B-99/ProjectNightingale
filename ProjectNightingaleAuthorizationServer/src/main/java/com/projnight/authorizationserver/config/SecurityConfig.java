@@ -8,12 +8,19 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 public class SecurityConfig {
+
+    private final CORSCustomizer corsCustomizer;
+    public SecurityConfig(CORSCustomizer corsCustomizer) {
+        this.corsCustomizer = corsCustomizer;
+    }
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
         httpSecurity.formLogin(Customizer.withDefaults())
                 .authorizeHttpRequests(
                 req -> req.anyRequest().authenticated()
         );
+        corsCustomizer.corsCustomizer(httpSecurity);
         return httpSecurity.build();
     }
 }
