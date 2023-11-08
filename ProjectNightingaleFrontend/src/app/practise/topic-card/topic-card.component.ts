@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {ITopic} from "../../types/custom-interfaces";
+import {ITopic} from "../../types/song-interfaces";
 import {RoutineService} from "../../services/routine.service";
 import {Chord} from "../../models/chord-model/chord";
 import {ChordChange} from "../../models/chord-change-model/chord-change";

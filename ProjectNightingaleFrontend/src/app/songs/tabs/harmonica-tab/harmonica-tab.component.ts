@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {IHarmonicaTabDTO} from "../../../types/custom-interfaces";
+import {IHarmonicaTabDTO} from "../../../types/song-interfaces";
 import {SongService} from "../../../services/song.service";
 import {ActivatedRoute} from "@angular/router";
 import {switchMap} from "rxjs";

@@ -6,7 +6,7 @@ import {
   ISongTabCreationForm,
   ISongTabCreationRequiredDetailsForm,
   ITableFormCellValue
-} from "../../types/custom-interfaces";
+} from "../../types/song-interfaces";
 import {lyricsBracketsValidation} from "../../validators/tab-lyrics-text-brackets-validator.directive";
 import {chordsValidator} from "../../validators/valid-chords-validator.directive";
 import {Router} from "@angular/router";

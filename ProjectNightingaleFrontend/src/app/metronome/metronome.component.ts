@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {Metronome} from "../models/metronome-model/metronome";
-import {IMetronomeValues} from "../types/custom-interfaces";
+import {IMetronomeValues} from "../types/song-interfaces";
 import {Subject} from "rxjs";
 
 @Component({

@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {SongService} from "../../../services/song.service";
 import {ActivatedRoute} from "@angular/router";
-import {IGuitarTabDTO, IHarmonicaTabDTO, ILyricsOnlyTabDTO, TabType} from "../../../types/custom-interfaces";
+import {IGuitarTabDTO, IHarmonicaTabDTO, ILyricsOnlyTabDTO, TabType} from "../../../types/song-interfaces";
 import {map, switchMap} from "rxjs";
 
 @Component({

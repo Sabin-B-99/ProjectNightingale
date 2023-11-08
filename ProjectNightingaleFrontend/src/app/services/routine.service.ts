@@ -9,7 +9,7 @@ import {
   IRoutine,
   IStrumPatterns,
   ITopic
-} from "../types/custom-interfaces";
+} from "../types/song-interfaces";
 import {forkJoin, map, Observable,  Subject,  switchMap} from "rxjs";
 import {Topic} from "../models/topic-model/topic";
 import {Chord} from "../models/chord-model/chord";

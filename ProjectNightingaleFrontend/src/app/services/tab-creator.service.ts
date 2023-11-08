@@ -17,7 +17,7 @@ import {
   ISongTabCreationForm,
   ISongTabDTO,
   TabType
-} from "../types/custom-interfaces";
+} from "../types/song-interfaces";
 import {FormGroup} from "@angular/forms";
 import {HttpClient} from "@angular/common/http";
 import {map, Observable, Subject} from "rxjs";

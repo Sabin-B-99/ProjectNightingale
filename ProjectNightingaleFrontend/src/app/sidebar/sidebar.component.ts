@@ -9,17 +9,10 @@ import {Subscription} from "rxjs";
 })
 export class SidebarComponent implements OnInit{
 
-  private userAuthenticationSubscription: Subscription;
-  public userIsAuthenticated: boolean = false;
   constructor(private authService: AuthenticationService) {
   }
 
   ngOnInit(): void {
-    this.userAuthenticationSubscription = this.authService.userLoggedIn
-      .subscribe(status => {
-        console.log(status);
-        this.userIsAuthenticated = status
-      });
   }
 
 

@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Chord} from "../../../../models/chord-model/chord";
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
-import {IChords} from "../../../../types/custom-interfaces";
+import {IChords} from "../../../../types/song-interfaces";
 
 @Component({
   selector: 'app-topic-chords-menu',

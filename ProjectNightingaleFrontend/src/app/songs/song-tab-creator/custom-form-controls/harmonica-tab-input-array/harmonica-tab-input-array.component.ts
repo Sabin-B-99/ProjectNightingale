@@ -7,7 +7,7 @@ import {
   ValidationErrors,
   Validator
 } from "@angular/forms";
-import {ICellNumber, ITableFormCellValue} from "../../../../types/custom-interfaces";
+import {ICellNumber, ITableFormCellValue} from "../../../../types/song-interfaces";
 
 @Component({
   selector: 'app-harmonica-tab-input-array',

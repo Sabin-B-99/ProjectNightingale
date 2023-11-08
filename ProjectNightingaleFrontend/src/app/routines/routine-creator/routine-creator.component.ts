@@ -3,7 +3,7 @@ import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
 import {TopicCreatorComponent} from "../topic-creator/topic-creator.component";
 import {RoutineCreatorService} from "../../services/routine-creator.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {IRoutine, IRoutineForm, ITopicForm} from "../../types/custom-interfaces";
+import {IRoutine, IRoutineForm, ITopicForm} from "../../types/song-interfaces";
 import {Subscription} from "rxjs";
 import {noWhiteSpaceValidator} from "../../validators/no-white-space-validator.directive";
 import {RoutineService} from "../../services/routine.service";

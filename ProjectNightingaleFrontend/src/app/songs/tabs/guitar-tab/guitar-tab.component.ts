@@ -6,7 +6,7 @@ import {
   ViewChild,
   ViewContainerRef
 } from '@angular/core';
-import {IGuitarTabDTO} from "../../../types/custom-interfaces";
+import {IGuitarTabDTO} from "../../../types/song-interfaces";
 import {SongService} from "../../../services/song.service";
 import {ActivatedRoute} from "@angular/router";
 import {switchMap} from "rxjs";

@@ -6,7 +6,7 @@ import {
   ITopicForm,
   IStrumPatterns,
   IChords, IChordChanges, IMetronomeValues, ITopicDTO, IChordSaveResponse
-} from "../types/custom-interfaces";
+} from "../types/song-interfaces";
 import {FormArray, FormGroup} from "@angular/forms";
 import {HttpClient} from "@angular/common/http";
 import {defaultIfEmpty, forkJoin, map, Observable, Subject, switchMap} from "rxjs";

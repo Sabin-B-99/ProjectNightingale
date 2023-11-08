@@ -1,6 +1,6 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
-import {ISongTabCreationRequiredDetailsForm} from "../../../types/custom-interfaces";
+import {ISongTabCreationRequiredDetailsForm} from "../../../types/song-interfaces";
 import {TabCreatorService} from "../../../services/tab-creator.service";
 import {noWhiteSpaceValidator} from "../../../validators/no-white-space-validator.directive";
 import {Subscription} from "rxjs";

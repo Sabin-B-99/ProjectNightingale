@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {Subscription, switchMap} from "rxjs";
 import {RoutineService} from "../services/routine.service";
-import {IRoutine} from "../types/custom-interfaces";
+import {IRoutine} from "../types/song-interfaces";
 @Component({
   selector: 'app-practise',
   templateUrl: './practise.component.html',

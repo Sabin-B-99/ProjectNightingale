@@ -1,6 +1,6 @@
 import {Chord} from "../chord-model/chord";
 import {ChordChange} from "../chord-change-model/chord-change";
-import {IMetronomeValues} from "../../types/custom-interfaces";
+import {IMetronomeValues} from "../../types/song-interfaces";
 
 export class Topic{
 

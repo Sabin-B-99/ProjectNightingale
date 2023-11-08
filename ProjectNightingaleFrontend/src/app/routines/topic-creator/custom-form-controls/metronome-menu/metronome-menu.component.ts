@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {IMetronomeValues} from "../../../../types/custom-interfaces";
+import {IMetronomeValues} from "../../../../types/song-interfaces";
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 
 @Component({

@@ -14,10 +14,9 @@ import {
   IMetronomeValues, IStrumPatterns,
   ITopic,
   ITopicForm
-} from "../../types/custom-interfaces";
+} from "../../types/song-interfaces";
 import {topicFormAtLeastOneFieldRequired} from "../../validators/topic-form-validator.directive";
 import {noWhiteSpaceValidator} from "../../validators/no-white-space-validator.directive";
-import {Subject, Subscription} from "rxjs";
 import {RoutineCreatorService} from "../../services/routine-creator.service";
 import {RoutineService} from "../../services/routine.service";
 

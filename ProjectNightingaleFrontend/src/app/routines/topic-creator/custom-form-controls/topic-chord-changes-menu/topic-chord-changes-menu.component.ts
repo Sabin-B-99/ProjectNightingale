@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Chord} from "../../../../models/chord-model/chord";
 import {ChordChange} from "../../../../models/chord-change-model/chord-change";
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
-import {IChordChanges} from "../../../../types/custom-interfaces";
+import {IChordChanges} from "../../../../types/song-interfaces";
 
 @Component({
   selector: 'app-topic-chord-changes-menu',

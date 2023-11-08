@@ -3,7 +3,7 @@ import {ChordRoot} from "../models/chord-model/chord-root-model/chord-root";
 import {ChordKey} from "../models/chord-model/chord-key-model/chord-key";
 import {HttpClient} from "@angular/common/http";
 import {map, Observable} from "rxjs";
-import {IChordKey, IChordRoot} from "../types/custom-interfaces";
+import {IChordKey, IChordRoot} from "../types/song-interfaces";
 
 @Injectable({
   providedIn: 'root'

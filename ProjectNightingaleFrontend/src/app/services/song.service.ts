@@ -11,7 +11,7 @@ import {
   ILyricsOnlyTabLyricsDTO,
   IOtherArtistDTO,
   ISongTabDTO
-} from "../types/custom-interfaces";
+} from "../types/song-interfaces";
 import {forkJoin, map, switchMap} from "rxjs";
 
 @Injectable({

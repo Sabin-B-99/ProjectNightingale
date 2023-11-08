@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {SongService} from "../services/song.service";
 import {FormControl, FormGroup} from "@angular/forms";
-import {ISongTabDTO} from "../types/custom-interfaces";
+import {ISongTabDTO} from "../types/song-interfaces";
 import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({

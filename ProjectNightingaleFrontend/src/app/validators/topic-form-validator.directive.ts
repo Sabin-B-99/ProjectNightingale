@@ -1,5 +1,5 @@
 import {AbstractControl, FormArray, FormControl, ValidationErrors, ValidatorFn} from "@angular/forms";
-import {IChordChanges, IChords} from "../types/custom-interfaces";
+import {IChordChanges, IChords} from "../types/song-interfaces";
 
 export function topicFormAtLeastOneFieldRequired(): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {

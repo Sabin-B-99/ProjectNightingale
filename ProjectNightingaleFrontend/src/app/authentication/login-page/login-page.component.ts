@@ -3,7 +3,6 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 import {AuthenticationService} from "../../services/authentication.service";
 import {noWhiteSpaceValidator} from "../../validators/no-white-space-validator.directive";
-import {CredentialsDTO} from "../../types/custom-interfaces";
 
 @Component({
   selector: 'app-login-page',
@@ -28,20 +27,5 @@ export class LoginPageComponent implements OnInit{
   }
 
   onLogInFormSubmitted() {
-    if(this.loginForm.valid){
-      const uName: string = this.loginForm.get('userName')?.value;
-      const uPassword: string = this.loginForm.get('password')?.value;
-
-      const userCredentials: CredentialsDTO = {
-        username: uName,
-        password: uPassword
-      }
-      this.authService.submitUsernameAndPassword(userCredentials).subscribe( loginStatus =>{
-        if(loginStatus){
-          this.authService.userLoggedIn.next(loginStatus);
-          this.router.navigate(['/routines']);
-        }
-      });
-    }
   }
 }
