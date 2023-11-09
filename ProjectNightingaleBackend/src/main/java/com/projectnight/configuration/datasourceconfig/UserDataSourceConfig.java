@@ -32,7 +32,7 @@ public class UserDataSourceConfig {
         this.dataSourcesPropertiesConfigurer = dataSourcesPropertiesConfigurer;
     }
 
-    @Bean(name = "userAuthenticationDataSource")
+    @Bean(name = "userRegistrationDataSource")
     public DataSource projectNightingaleUserDataSource(){
         ComboPooledDataSource dataSource = new ComboPooledDataSource();
         try {
@@ -48,9 +48,9 @@ public class UserDataSourceConfig {
     }
 
 
-    @Bean(name = "userAuthenticationSessionFactory")
+    @Bean(name = "userRegistrationSessionFactory")
     public LocalSessionFactoryBean userAuthenticationLocalSessionFactoryBean(
-            @Qualifier("userAuthenticationDataSource") DataSource dataSource){
+            @Qualifier("userRegistrationDataSource") DataSource dataSource){
         LocalSessionFactoryBean localSessionFactoryBean = new LocalSessionFactoryBean();
         localSessionFactoryBean.setDataSource(dataSource);
         localSessionFactoryBean.setPackagesToScan(env.getProperty("hibernate.packagesToScan"));
@@ -59,10 +59,10 @@ public class UserDataSourceConfig {
     }
 
 
-    @Bean(name = "userAuthenticationTransactionManager")
+    @Bean(name = "userRegistrationTransactionManager")
     public HibernateTransactionManager userAuthenticationTransactionManager(
-            @Qualifier("userAuthenticationDataSource") DataSource dataSource,
-            @Qualifier("userAuthenticationSessionFactory")SessionFactory sessionFactory
+            @Qualifier("userRegistrationDataSource") DataSource dataSource,
+            @Qualifier("userRegistrationSessionFactory")SessionFactory sessionFactory
     ){
         HibernateTransactionManager txm = new HibernateTransactionManager();
         txm.setDataSource(dataSource);
