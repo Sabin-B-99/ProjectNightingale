@@ -17,7 +17,6 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/tabs")
-@CrossOrigin("http://localhost:4200/")
 public class SongTabsController {
     private final SongTabsService songTabsService;
 

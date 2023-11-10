@@ -1,5 +1,6 @@
 package com.projectnight.service.users;
 
+import com.projectnight.configuration.securityconfig.EmailValidator;
 import com.projectnight.configuration.securityconfig.PasswordEncoder;
 import com.projectnight.dto.users.UserDTO;
 import com.projectnight.dto.users.UserRegistrationDTO;
@@ -20,30 +21,32 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
 
     @Value(value = "${user.registration.redirection.url.template}")
     private String mailRedirectId;
-    private final ProjectNightingaleUserDetailsService userDetailsService;
     private final UsersService usersService;
     private final UserInfoService userInfoService;
     private final PasswordEncoder passwordEncoder;
     private final RegistrationTokensService registrationTokensService;
 
     private final RegistrationEmailSenderService registrationEmailSenderService;
+    private final EmailValidator emailValidator;
 
-    public UserRegistrationServiceImpl(ProjectNightingaleUserDetailsService userDetailsService,
-                                       UsersService usersService,
+    public UserRegistrationServiceImpl(UsersService usersService, EmailValidator emailValidator,
                                        UserInfoService userInfoService,
                                        PasswordEncoder passwordEncoder,
                                        RegistrationTokensService registrationTokensService,
                                        RegistrationEmailSenderService registrationEmailSenderService) {
-        this.userDetailsService = userDetailsService;
         this.usersService = usersService;
         this.userInfoService = userInfoService;
         this.passwordEncoder = passwordEncoder;
         this.registrationTokensService = registrationTokensService;
         this.registrationEmailSenderService = registrationEmailSenderService;
+        this.emailValidator = emailValidator;
     }
 
     @Override
     public UserDTO registerUser(UserRegistrationDTO users) {
+        if(!emailValidator.test(users.getEmail())){
+            throw new RuntimeException("Invalid email");
+        }
         if(usernameExists(users.getUsername())){
             throw new RuntimeException("Username already in use. Please use another.");
         }
@@ -80,12 +83,15 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
         }
 
         Users users = registrationTokens.get().getUsers();
-        UserAccountDetails updatedAccountDetails = new UserAccountDetails();
+
+        UserAccountDetails updatedAccountDetails = users.getUserAccountDetails();
         updatedAccountDetails.setAccountNonLocked(true);
         updatedAccountDetails.setAccountNonExpired(true);
         updatedAccountDetails.setCredentialsNonExpired(true);
         updatedAccountDetails.setAccountEnabled(true);
+
         users.setUserAccountDetails(updatedAccountDetails);
+
         usersService.saveUser(users);
 
         registrationTokensService.removeTokenById(registrationTokens.get().getId());
@@ -96,12 +102,12 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
 
     @Override
     public boolean usernameExists(String username) {
-        UserDetails userDetails = null;
+        Users userDetails = null;
         try {
-            userDetails = userDetailsService.loadUserByUsername(username);
+            userDetails = usersService.loadUserByUserName(username);
         }catch (UsernameNotFoundException ignored){
         }
-        return username != null;
+        return userDetails != null;
     }
 
     @Override
@@ -123,16 +129,19 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
                 .encode(userRegistrationDTO.getPassword()));
 
         userInfoToRegister.setEmail(userRegistrationDTO.getEmail());
-        userInfoToRegister.setFirstName(userRegistrationDTO.getFirstName());
-        userInfoToRegister.setLastName(userRegistrationDTO.getLastName());
+        userInfoToRegister.setFirstName(userRegistrationDTO.getFirstname());
+        userInfoToRegister.setLastName(userRegistrationDTO.getLastname());
+        userInfoToRegister.setUsers(userToRegister);
 
         userAccountDetails.setAccountEnabled(false);
         userAccountDetails.setCredentialsNonExpired(false);
         userAccountDetails.setAccountNonExpired(false);
         userAccountDetails.setAccountNonLocked(false);
+        userAccountDetails.setUsers(userToRegister);
 
         userToRegister.setUserInfo(userInfoToRegister);
         userToRegister.setUserAccountDetails(userAccountDetails);
+
         return userToRegister;
     }
 

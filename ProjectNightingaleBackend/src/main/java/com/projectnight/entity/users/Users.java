@@ -4,6 +4,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.util.UUID;
 
 @Entity
 @Table(name = "users")
@@ -14,7 +15,7 @@ public class Users {
     @GeneratedValue(generator = "uuid-hibernate-generator")
     @Column(name = "id")
     @Type(type = "uuid-char")
-    private String id;
+    private UUID id;
 
     @Column(name = "username")
     private String username;
@@ -22,20 +23,20 @@ public class Users {
     @Column(name = "password")
     private String password;
 
-    @OneToOne(mappedBy = "users")
+    @OneToOne(mappedBy = "users", cascade = CascadeType.ALL)
     private UserAccountDetails userAccountDetails;
 
-    @OneToOne(mappedBy = "users")
+    @OneToOne(mappedBy = "users", cascade = CascadeType.ALL)
     private UserInfo userInfo;
 
     public Users() {
     }
 
-    public String getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

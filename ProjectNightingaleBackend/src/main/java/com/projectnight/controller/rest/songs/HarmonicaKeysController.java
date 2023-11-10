@@ -13,7 +13,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/tabs")
-@CrossOrigin("http://localhost:4200/")
 public class HarmonicaKeysController {
 
     private final HarmonicaKeysService harmonicaKeysService;

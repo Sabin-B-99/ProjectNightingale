@@ -21,6 +21,7 @@ public class UserInfo {
     private String lastName;
 
     @OneToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     private Users users;
 
     public UserInfo() {

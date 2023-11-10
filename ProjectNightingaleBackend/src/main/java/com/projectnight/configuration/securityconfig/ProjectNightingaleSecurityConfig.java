@@ -13,16 +13,28 @@ public class ProjectNightingaleSecurityConfig {
     @Value("${jwkSetUri}")
     private String jwkSetUri;
 
+    private final CORSCustomizer corsCustomizer;
+
+    public ProjectNightingaleSecurityConfig(CORSCustomizer corsCustomizer) {
+        this.corsCustomizer = corsCustomizer;
+    }
 
     @Bean
     public SecurityFilterChain resourceServerSecurityFilterChain(HttpSecurity http) throws Exception{
-        http.authorizeHttpRequests()
+        http.csrf().disable()
+                .authorizeHttpRequests()
+                .mvcMatchers("/api/tabs/**",
+                        "/api/users/**",
+                        "/api/chords/**")
+                .permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()
                 .oauth2ResourceServer()
                 .jwt()
                 .jwkSetUri(jwkSetUri);
+
+        corsCustomizer.corsCustomizer(http);
         return http.build();
     }
 

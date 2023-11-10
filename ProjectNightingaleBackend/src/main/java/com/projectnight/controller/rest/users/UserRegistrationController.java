@@ -7,8 +7,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@CrossOrigin("http://localhost:4200/")
-@RequestMapping(value = "/api/users")
+@RequestMapping("/api/users")
 public class UserRegistrationController {
 
     private final UserRegistrationService userRegistrationService;
@@ -24,7 +23,7 @@ public class UserRegistrationController {
     }
 
     @PostMapping(value = "/confirm")
-    private @ResponseBody UserDTO confirmUser(@RequestParam("token") String registrationToken){
+    private @ResponseBody UserDTO confirmUser(@RequestBody String registrationToken){
         return userRegistrationService.confirmUserRegistration(registrationToken);
     }
 }

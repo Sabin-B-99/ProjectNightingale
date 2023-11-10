@@ -10,7 +10,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/practice")
-@CrossOrigin("http://localhost:4200")
 public class ChordChangesController {
 
     private final ChordChangesService chordChangesService;

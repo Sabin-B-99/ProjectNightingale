@@ -11,7 +11,6 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/tabs")
-@CrossOrigin("http://localhost:4200/")
 public class HarmonicaTabLyricsController {
 
     private final HarmonicaTabLyricsService harmonicaTabLyricsService;

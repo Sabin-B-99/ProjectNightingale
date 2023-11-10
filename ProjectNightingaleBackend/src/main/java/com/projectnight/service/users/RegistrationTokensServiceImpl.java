@@ -24,21 +24,26 @@ public class RegistrationTokensServiceImpl implements RegistrationTokensService 
     @Transactional("userRegistrationTransactionManager")
     public RegistrationTokens createRegistrationTokenForUser(Users user) {
         RegistrationTokens registrationToken = new RegistrationTokens();
+
         LocalDateTime expiryTime = LocalDateTime.now().plusDays(1);
         String token = Base64.encode(user.getUsername().concat(":").concat(expiryTime.toString())
                 .getBytes(StandardCharsets.UTF_8)).toString();
         registrationToken.setExpiryTime(expiryTime);
         registrationToken.setToken(token);
+        registrationToken.setUsers(user);
+
         tokensRepository.save(registrationToken);
         return registrationToken;
     }
 
     @Override
+    @Transactional("userRegistrationTransactionManager")
     public Optional<RegistrationTokens> getRegistrationTokenByToken(String token) {
         return tokensRepository.getRegistrationTokensToken(token);
     }
 
     @Override
+    @Transactional("userRegistrationTransactionManager")
     public void removeTokenById(Integer id) {
         tokensRepository.deleteById(id);
     }

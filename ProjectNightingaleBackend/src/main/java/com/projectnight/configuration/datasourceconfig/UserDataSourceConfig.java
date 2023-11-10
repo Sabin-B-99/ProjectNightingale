@@ -20,8 +20,8 @@ import java.beans.PropertyVetoException;
 @PropertySource("classpath:application.properties")
 @EnableTransactionManagement
 @EnableJpaRepositories( basePackages = {"com.projectnight.repository.users"},
-        entityManagerFactoryRef = "userAuthenticationSessionFactory",
-        transactionManagerRef = "userAuthenticationTransactionManager")
+        entityManagerFactoryRef = "userRegistrationSessionFactory",
+        transactionManagerRef = "userRegistrationTransactionManager")
 public class UserDataSourceConfig {
     private final Environment env;
     private final DataSourcesPropertiesConfigurer dataSourcesPropertiesConfigurer;

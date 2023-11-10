@@ -15,7 +15,6 @@ import java.util.List;
 //TODO: Use patch mappings to update instead of post mappings
 
 @RestController
-@CrossOrigin("http://localhost:4200")
 @RequestMapping("/api/practice")
 public class RoutineController {
 

@@ -22,7 +22,6 @@ import java.nio.file.Paths;
 import java.util.List;
 
 @RestController
-@CrossOrigin("http://localhost:4200/")
 @RequestMapping("/api/chords")
 public class ChordsController {
 

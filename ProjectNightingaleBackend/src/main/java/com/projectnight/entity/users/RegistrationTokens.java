@@ -24,7 +24,7 @@ public class RegistrationTokens {
     private LocalDateTime confirmationTime;
 
     @OneToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     private Users users;
 
     public RegistrationTokens() {

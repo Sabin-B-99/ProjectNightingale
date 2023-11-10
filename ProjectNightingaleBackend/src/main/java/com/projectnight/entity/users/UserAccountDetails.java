@@ -12,19 +12,20 @@ public class UserAccountDetails {
     private int id;
 
 
-    @Column(name = "account_non_expired", nullable = false, columnDefinition = "TINYINT", length = 1)
+    @Column(name = "is_account_non_expired", nullable = false, columnDefinition = "TINYINT", length = 1)
     private boolean isAccountNonExpired;
 
-    @Column(name = "non_locked", nullable = false, columnDefinition = "TINYINT", length = 1)
+    @Column(name = "is_account_non_locked", nullable = false, columnDefinition = "TINYINT", length = 1)
     private boolean isAccountNonLocked;
 
-    @Column(name = "credentials_non_expired", nullable = false, columnDefinition = "TINYINT", length = 1)
+    @Column(name = "is_credentials_non_expired", nullable = false, columnDefinition = "TINYINT", length = 1)
     private boolean isCredentialsNonExpired;
 
-    @Column(name = "enabled", nullable = false, columnDefinition = "TINYINT", length = 1)
+    @Column(name = "is_account_enabled", nullable = false, columnDefinition = "TINYINT", length = 1)
     private boolean isAccountEnabled;
 
     @OneToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     private Users users;
 
     public UserAccountDetails() {
