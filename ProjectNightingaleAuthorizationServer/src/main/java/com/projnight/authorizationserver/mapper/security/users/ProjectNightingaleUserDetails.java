@@ -32,21 +32,21 @@ public class ProjectNightingaleUserDetails implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return true;
+        return users.getUserAccountDetails().isAccountNonExpired();
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return users.getUserAccountDetails().isAccountNonLocked();
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return true;
+        return users.getUserAccountDetails().isAccountNonExpired();
     }
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return users.getUserAccountDetails().isAccountEnabled();
     }
 }

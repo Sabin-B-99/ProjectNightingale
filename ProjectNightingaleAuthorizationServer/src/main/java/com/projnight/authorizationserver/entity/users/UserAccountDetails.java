@@ -1,6 +1,7 @@
 package com.projnight.authorizationserver.entity.users;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
+
 
 @Entity
 @Table(name = "user_account_details")
