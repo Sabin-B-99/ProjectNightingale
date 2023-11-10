@@ -41,15 +41,21 @@
       </li>
     </ul>
   </div>
-  <div class="w-100"></div>
-  <div>
-    <ul class="navbar-nav mx-sm-2">
+  <div class="w-auto"></div>
+  <div class="container-fluid justify-content-end">
+    <ul class="navbar-nav">
       <li class="nav-item">
         <a routerLinkActive="active"
            role="button"
           (click)="redirectToUserLogin()"
            class="nav-link">
           Login
+        </a>
+      </li>
+      <li class="nav-item">
+        <a routerLinkActive="active" class="nav-link"
+           [routerLink]="['register']">
+          Sign up
         </a>
       </li>
 

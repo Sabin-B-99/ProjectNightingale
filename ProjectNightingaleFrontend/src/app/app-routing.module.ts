@@ -15,6 +15,9 @@ import {HarmonicaTabComponent} from "./songs/tabs/harmonica-tab/harmonica-tab.co
 import {LoginPageComponent} from "./authentication/login-page/login-page.component";
 import {SignupPageComponent} from "./authentication/signup-page/signup-page.component";
 import {AuthenticatingComponent} from "./authentication/authenticating/authenticating.component";
+import {
+  RegistrationConfirmationComponent
+} from "./authentication/registration-confirmation/registration-confirmation.component";
 
 const appRoutes: Routes = [
   {path: '', pathMatch: "full", redirectTo:'/songs'},
@@ -34,6 +37,7 @@ const appRoutes: Routes = [
   {path: 'practise/:id', component: PractiseComponent},
   {path:'login', component: LoginPageComponent},
   {path: 'register', component: SignupPageComponent},
+  {path: 'confirm', component: RegistrationConfirmationComponent},
   {path: 'authorized', component: AuthenticatingComponent, pathMatch: "full"}
 ]
 @NgModule({

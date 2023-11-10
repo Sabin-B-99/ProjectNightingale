@@ -1,6 +1,14 @@
-<div>
+<div *ngIf="!userNameToRegister">
   <form [formGroup]="signUpForm" (ngSubmit)="onRegistrationFormSubmitted()">
     <div class="container">
+      <span class="row my-sm-2">
+        <label class="col">First name:</label>
+        <input class="col" formControlName="firstname" type="text">
+      </span>
+      <span class="row my-sm-2">
+        <label class="col">Last name:</label>
+        <input class="col" formControlName="lastname" type="text">
+      </span>
       <span class="row my-sm-2">
         <label class="col">Email:</label>
         <input formControlName="email" type="email" class="col">
@@ -13,7 +21,18 @@
         <label class="col">Password:</label>
         <input class="col" formControlName="password" type="password">
       </span>
-      <button type="submit" class="my-sm-2">Submit</button>
+      <button type="submit" [disabled]="registrationFormSubmitted"
+              class="my-sm-2 btn btn-sm btn-outline-secondary">Submit</button>
     </div>
   </form>
+</div>
+<div *ngIf="userNameToRegister">
+  Dear, {{userNameToRegister}}
+  <br>
+  Please check your inbox to confirm your account.
+  <br>
+  <br>
+  Thank you,
+  <br>
+  Project Nightingale Team :)
 </div>

@@ -45,6 +45,7 @@ import { ChordTooltipDirective } from './directives/chord-tooltip.directive';
 import { LoginPageComponent } from './authentication/login-page/login-page.component';
 import { SignupPageComponent } from './authentication/signup-page/signup-page.component';
 import { AuthenticatingComponent } from './authentication/authenticating/authenticating.component';
+import { RegistrationConfirmationComponent } from './authentication/registration-confirmation/registration-confirmation.component';
 
 @NgModule({
   declarations: [
@@ -85,7 +86,8 @@ import { AuthenticatingComponent } from './authentication/authenticating/authent
     ChordTooltipDirective,
     LoginPageComponent,
     SignupPageComponent,
-    AuthenticatingComponent
+    AuthenticatingComponent,
+    RegistrationConfirmationComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,15 @@
+<div *ngIf="username" style="white-space: pre">
+  Dear, {{username}}
+  <br>
+  Your account has been confirmed.
+  <br>
+  Please login with valid username and password.
+  <br>
+  <br>
+  Thank you,
+  <br>
+  ProjectNightingale Team
+</div>
+<div *ngIf="!username">
+  Confirming...
+</div>

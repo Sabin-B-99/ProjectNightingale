@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {ActivatedRoute, Router} from "@angular/router";
+import { Router} from "@angular/router";
 import {AuthenticationService} from "../../services/authentication.service";
 import {noWhiteSpaceValidator} from "../../validators/no-white-space-validator.directive";
 

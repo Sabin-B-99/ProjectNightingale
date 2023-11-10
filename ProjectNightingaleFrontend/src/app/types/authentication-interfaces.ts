@@ -7,6 +7,20 @@ interface IJWTTokenResponse{
   "expires_in": number
 }
 
+interface IUserRegistrationDTO{
+  username: string,
+  password: string,
+  email: string,
+  firstname: string,
+  lastname: string
+}
+
+interface IUserDTO{
+  username: string
+}
+
 export {
-  IJWTTokenResponse
+  IJWTTokenResponse,
+  IUserRegistrationDTO,
+  IUserDTO
 }
