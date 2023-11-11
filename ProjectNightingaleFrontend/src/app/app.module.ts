@@ -27,7 +27,7 @@ import {NgOptimizedImage} from "@angular/common";
 import { MetronomeComponent } from './metronome/metronome.component';
 import { MetronomeMenuComponent } from './routines/topic-creator/custom-form-controls/metronome-menu/metronome-menu.component';
 import { DurationInputComponent } from './routines/topic-creator/custom-form-controls/duration-input/duration-input.component';
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import { SongTabCreatorComponent } from './songs/song-tab-creator/song-tab-creator.component';
 import { TabRequiredDetailsComponent } from './songs/song-tab-creator/tab-required-details/tab-required-details.component';
 import { HarmonicaTabInputArrayComponent } from './songs/song-tab-creator/custom-form-controls/harmonica-tab-input-array/harmonica-tab-input-array.component';
@@ -46,6 +46,7 @@ import { LoginPageComponent } from './authentication/login-page/login-page.compo
 import { SignupPageComponent } from './authentication/signup-page/signup-page.component';
 import { AuthenticatingComponent } from './authentication/authenticating/authenticating.component';
 import { RegistrationConfirmationComponent } from './authentication/registration-confirmation/registration-confirmation.component';
+import {AuthenticationInterceptorService} from "./services/authentication-interceptor.service";
 
 @NgModule({
   declarations: [
@@ -99,7 +100,7 @@ import { RegistrationConfirmationComponent } from './authentication/registration
     NoopAnimationsModule,
     MatAutocompleteModule,
   ],
-  providers: [],
+  providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptorService, multi: true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

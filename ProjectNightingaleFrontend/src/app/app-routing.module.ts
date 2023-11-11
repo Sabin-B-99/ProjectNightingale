@@ -18,18 +18,19 @@ import {AuthenticatingComponent} from "./authentication/authenticating/authentic
 import {
   RegistrationConfirmationComponent
 } from "./authentication/registration-confirmation/registration-confirmation.component";
+import {canActivateAuthenticatedRoutes, canActivateRegistrationAuthenticationUrls} from "./services/auth-guard.service";
 
 const appRoutes: Routes = [
   {path: '', pathMatch: "full", redirectTo:'/songs'},
-  {path: 'song-book', component: SongbooksComponent},
+  {path: 'song-book', component: SongbooksComponent, canActivate: [canActivateAuthenticatedRoutes]},
   {path: 'songs', component: SongsComponent},
   {path: 'songs/:id/lyrics', component: LyricsTabComponent},
   {path: 'songs/:id/guitar-tab', component: GuitarTabComponent},
   {path: 'songs/:id/harmonica-tab', component: HarmonicaTabComponent},
-  {path: 'create-tab', component: SongTabCreatorComponent},
+  {path: 'create-tab', component: SongTabCreatorComponent, canActivate: [canActivateAuthenticatedRoutes]},
   {path: 'chords', component: ChordsComponent},
   {path: 'metronome', component: MetronomeComponent},
-  {path: 'routines', component: RoutinesComponent,
+  {path: 'routines', component: RoutinesComponent, canActivate: [canActivateAuthenticatedRoutes],
     children: [
       {path: ':id/topics', component: RoutineDetailComponent},
       {path: 'create', component: RoutineCreatorComponent}
@@ -37,8 +38,8 @@ const appRoutes: Routes = [
   {path: 'practise/:id', component: PractiseComponent},
   {path:'login', component: LoginPageComponent},
   {path: 'register', component: SignupPageComponent},
-  {path: 'confirm', component: RegistrationConfirmationComponent},
-  {path: 'authorized', component: AuthenticatingComponent, pathMatch: "full"}
+  {path: 'confirm', component: RegistrationConfirmationComponent, canActivate: [canActivateRegistrationAuthenticationUrls]},
+  {path: 'authorized', component: AuthenticatingComponent, pathMatch: "full", canActivate: [canActivateRegistrationAuthenticationUrls]}
 ]
 @NgModule({
   imports: [RouterModule.forRoot(appRoutes)],

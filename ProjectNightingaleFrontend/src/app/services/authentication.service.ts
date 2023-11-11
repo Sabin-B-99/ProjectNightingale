@@ -2,22 +2,25 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {IJWTTokenResponse, IUserDTO, IUserRegistrationDTO} from "../types/authentication-interfaces";
 import {Buffer} from "buffer";
+import {BehaviorSubject} from "rxjs";
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
 })
 
 //TODO: create PKCE challanger and verifier
+//TODO: Add method to refresh auth token on auth token expiry
 export class AuthenticationService {
   private readonly clientId: string = 'ProjectNightingaleWebApp';
   private readonly clientSecret: string = '12345' //TODO: Don't keep it here later for production.
   private readonly authServerUrl: string = "http://localhost:9090/oauth2/authorize?response_type=code&client_id=ProjectNightingaleWebApp&scope=openid&redirect_uri=http://127.0.0.1:4200/authorized&code_challenge=QYPAZ5NU8yvtlQ9erXrUYR-T5AGCjCF47vN-KsaI2A8&code_challenge_method=S256"
   private authorizationCode: string;
 
+  authenticatedUser: BehaviorSubject<IUserDTO | null> = new BehaviorSubject<IUserDTO | null>(null);
 
-
-  constructor(private http: HttpClient) { }
-  getAuthServerUrl(){
+  constructor(private http: HttpClient, private router: Router) { }
+   getAuthServerUrl(){
     return this.authServerUrl;
   }
 
@@ -50,9 +53,11 @@ export class AuthenticationService {
     });
   }
 
-  public saveAccessAndRefreshToken(accessToken: string, refreshToken: string){
-    window.sessionStorage.setItem('auth_token', accessToken);
-    window.sessionStorage.setItem('refresh_token', refreshToken);
+  public saveJWTTokenInfo(jwtToken: IJWTTokenResponse){
+    window.localStorage.setItem('auth_token', jwtToken.access_token);
+    window.localStorage.setItem('refresh_token', jwtToken.refresh_token);
+    const expiryTime: number = Math.floor(Date.now() / 1000) + +jwtToken.expires_in;
+    window.localStorage.setItem('expiry_time', expiryTime.toString());
   }
 
   registerUser(userToRegister: IUserRegistrationDTO) {
@@ -61,5 +66,42 @@ export class AuthenticationService {
 
   confirmRegistration(token: string) {
     return this.http.post<IUserDTO>('http://localhost:8080/ProjectNightingale/api/users/confirm', token);
+  }
+
+  persistAuthenticatedUserInfo() {
+    this.authenticatedUser.next(this.getAuthenticatedUserInfo());
+  }
+
+  private getAuthenticatedUserInfo(): IUserDTO{
+    return {
+      username: "Test username"
+    }
+  }
+
+  onLogout() {
+    window.localStorage.removeItem('auth_token');
+    window.localStorage.removeItem('refresh_token');
+    window.localStorage.removeItem('expiry_time');
+    this.authenticatedUser.next(null);
+    this.router.navigate(['/songs'])
+  }
+
+  getAuthToken() {
+    const expiryTime: string | null = window.localStorage.getItem('expiry_time');
+    let currentTime: number = Math.floor(Date.now() / 1000);
+    if(expiryTime && currentTime < +expiryTime){
+      return window.localStorage.getItem('auth_token');
+    }
+    return null;
+  }
+
+  redirectToAuthServerUrl() {
+    window.location.href = this.getAuthServerUrl();
+  }
+
+  autoLogin() {
+    if(this.getAuthToken()){
+      this.authenticatedUser.next(this.getAuthenticatedUserInfo());
+    }
   }
 }

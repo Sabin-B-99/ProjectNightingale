@@ -9,11 +9,7 @@ import {
 } from "../types/song-interfaces";
 import {FormArray, FormGroup} from "@angular/forms";
 import {HttpClient} from "@angular/common/http";
-import {defaultIfEmpty, forkJoin, map, Observable, Subject, switchMap} from "rxjs";
-import {Chord} from "../models/chord-model/chord";
-import {ChordRoot} from "../models/chord-model/chord-root-model/chord-root";
-import {ChordKey} from "../models/chord-model/chord-key-model/chord-key";
-import {ChordChange} from "../models/chord-change-model/chord-change";
+import {defaultIfEmpty, forkJoin, map, Observable,switchMap} from "rxjs";
 
 
 //TODO: Use Patch mappings to update rather than post
