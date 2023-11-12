@@ -32,7 +32,8 @@ public class ProjectNightingaleSecurityConfig {
                 .and()
                 .oauth2ResourceServer()
                 .jwt()
-                .jwkSetUri(jwkSetUri);
+                .jwkSetUri(jwkSetUri)
+                .jwtAuthenticationConverter(new ProjectNightingaleJwtAuthenticationTokenConverter());
 
         corsCustomizer.corsCustomizer(http);
         return http.build();
