@@ -11,13 +11,15 @@ export class NavbarComponent implements OnInit, OnDestroy{
 
   isAuthenticated: boolean = false;
   userAuthenticationSub: Subscription;
+  username: string;
   constructor(private authService: AuthenticationService) {
   }
   ngOnInit(): void {
     this.userAuthenticationSub = this.authService.authenticatedUser
       .subscribe((user: IUserDTO | null) =>{
-      this.isAuthenticated = !!user;
-    })
+        this.username = user?.username || '';
+        this.isAuthenticated = !!user;
+    });
   }
 
   ngOnDestroy() {

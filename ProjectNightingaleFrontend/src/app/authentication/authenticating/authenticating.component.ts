@@ -20,8 +20,7 @@ export class AuthenticatingComponent implements OnInit, OnDestroy{
       this.authService.setAuthorizationCode(queryParam['code']);
       return this.authService.getJWTToken();
     })).subscribe((jwtTokenResponse:IJWTTokenResponse) => {
-      this.authService.saveJWTTokenInfo(jwtTokenResponse);
-      this.authService.persistAuthenticatedUserInfo();
+      this.authService.saveLoginInfo(jwtTokenResponse);
       this.router.navigate(['../songs'], {relativeTo: this.route});
     });
   }

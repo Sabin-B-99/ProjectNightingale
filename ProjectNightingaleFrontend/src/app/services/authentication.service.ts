@@ -4,6 +4,7 @@ import {IJWTTokenResponse, IUserDTO, IUserRegistrationDTO} from "../types/authen
 import {Buffer} from "buffer";
 import {BehaviorSubject} from "rxjs";
 import {Router} from "@angular/router";
+import {jwtDecode, JwtPayload} from "jwt-decode";
 
 @Injectable({
   providedIn: 'root'
@@ -53,7 +54,7 @@ export class AuthenticationService {
     });
   }
 
-  public saveJWTTokenInfo(jwtToken: IJWTTokenResponse){
+  private saveJWTTokenInfo(jwtToken: IJWTTokenResponse){
     window.localStorage.setItem('auth_token', jwtToken.access_token);
     window.localStorage.setItem('refresh_token', jwtToken.refresh_token);
     const expiryTime: number = Math.floor(Date.now() / 1000) + +jwtToken.expires_in;
@@ -68,13 +69,18 @@ export class AuthenticationService {
     return this.http.post<IUserDTO>('http://localhost:8080/ProjectNightingale/api/users/confirm', token);
   }
 
-  persistAuthenticatedUserInfo() {
-    this.authenticatedUser.next(this.getAuthenticatedUserInfo());
+  private persistAuthenticatedUserInfo(token: IJWTTokenResponse) {
+    const decodedToken:JwtPayload = jwtDecode(token.access_token);
+    if(decodedToken.sub){
+      window.localStorage.setItem('username', decodedToken.sub )
+      this.authenticatedUser.next(this.getAuthenticatedUserInfo());
+    }
   }
 
   private getAuthenticatedUserInfo(): IUserDTO{
+    const user: string | null = window.localStorage.getItem('username');
     return {
-      username: "Test username"
+      username: user || ''
     }
   }
 
@@ -82,6 +88,7 @@ export class AuthenticationService {
     window.localStorage.removeItem('auth_token');
     window.localStorage.removeItem('refresh_token');
     window.localStorage.removeItem('expiry_time');
+    window.localStorage.removeItem('username');
     this.authenticatedUser.next(null);
     this.router.navigate(['/songs'])
   }
@@ -103,5 +110,10 @@ export class AuthenticationService {
     if(this.getAuthToken()){
       this.authenticatedUser.next(this.getAuthenticatedUserInfo());
     }
+  }
+
+  saveLoginInfo(jwtTokenResponse: IJWTTokenResponse) {
+    this.saveJWTTokenInfo(jwtTokenResponse);
+    this.persistAuthenticatedUserInfo(jwtTokenResponse);
   }
 }
