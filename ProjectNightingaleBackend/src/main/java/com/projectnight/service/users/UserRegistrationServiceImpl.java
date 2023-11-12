@@ -4,16 +4,13 @@ import com.projectnight.configuration.securityconfig.EmailValidator;
 import com.projectnight.configuration.securityconfig.PasswordEncoder;
 import com.projectnight.dto.users.UserDTO;
 import com.projectnight.dto.users.UserRegistrationDTO;
-import com.projectnight.entity.users.RegistrationTokens;
-import com.projectnight.entity.users.UserAccountDetails;
-import com.projectnight.entity.users.UserInfo;
-import com.projectnight.entity.users.Users;
+import com.projectnight.entity.users.*;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -123,6 +120,7 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
         Users userToRegister = new Users();
         UserInfo userInfoToRegister = new UserInfo();
         UserAccountDetails userAccountDetails = new UserAccountDetails();
+        UserAuthorities userAuthorities = new UserAuthorities();
 
         userToRegister.setUsername(userRegistrationDTO.getUsername());
         userToRegister.setPassword(passwordEncoder.passwordEncoder()
@@ -139,8 +137,12 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
         userAccountDetails.setAccountNonLocked(false);
         userAccountDetails.setUsers(userToRegister);
 
+        userAuthorities.setAuthority("read");
+        userAuthorities.setUsers(List.of(userToRegister));
+
         userToRegister.setUserInfo(userInfoToRegister);
         userToRegister.setUserAccountDetails(userAccountDetails);
+        userToRegister.setAuthorities(List.of(userAuthorities));
 
         return userToRegister;
     }

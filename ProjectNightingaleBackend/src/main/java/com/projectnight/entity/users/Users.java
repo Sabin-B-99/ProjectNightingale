@@ -4,6 +4,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -28,6 +29,9 @@ public class Users {
 
     @OneToOne(mappedBy = "users", cascade = CascadeType.ALL)
     private UserInfo userInfo;
+
+    @ManyToMany(mappedBy = "users", cascade = CascadeType.ALL)
+    private List<UserAuthorities> authorities;
 
     public Users() {
     }
@@ -70,5 +74,13 @@ public class Users {
 
     public void setUserInfo(UserInfo userInfo) {
         this.userInfo = userInfo;
+    }
+
+    public List<UserAuthorities> getAuthorities() {
+        return authorities;
+    }
+
+    public void setAuthorities(List<UserAuthorities> authorities) {
+        this.authorities = authorities;
     }
 }

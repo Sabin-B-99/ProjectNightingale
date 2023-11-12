@@ -2,6 +2,8 @@ package com.projnight.authorizationserver.entity.users;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "users")
 public class Users {
@@ -22,6 +24,10 @@ public class Users {
 
     @OneToOne(mappedBy = "users", cascade = CascadeType.ALL)
     private UserInfo userInfo;
+
+    @ManyToMany(mappedBy = "users", cascade = CascadeType.ALL)
+    private List<UserAuthorities> authorities;
+
 
     public Users() {
     }
@@ -64,5 +70,13 @@ public class Users {
 
     public void setUserInfo(UserInfo userInfo) {
         this.userInfo = userInfo;
+    }
+
+    public List<UserAuthorities> getAuthorities() {
+        return authorities;
+    }
+
+    public void setAuthorities(List<UserAuthorities> authorities) {
+        this.authorities = authorities;
     }
 }
