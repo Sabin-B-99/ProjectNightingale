@@ -25,7 +25,7 @@ public class Users {
     @OneToOne(mappedBy = "users", cascade = CascadeType.ALL)
     private UserInfo userInfo;
 
-    @ManyToMany(mappedBy = "users", cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "users", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<UserAuthorities> authorities;
 
 
