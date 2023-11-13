@@ -17,7 +17,7 @@ export class SignupPageComponent implements OnInit, OnDestroy{
   registrationFormSubmitted: boolean = false;
   private userRegistrationSubscription: Subscription;
 
-  userNameToRegister: string;
+  userNameToRegister: string | null;
 
   constructor(private authService: AuthenticationService,
               private router: Router) {

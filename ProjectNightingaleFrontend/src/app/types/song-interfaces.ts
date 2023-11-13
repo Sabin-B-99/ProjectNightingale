@@ -239,6 +239,16 @@ interface IChordSaveResponse{
   title: string
 }
 
+interface IUserRatingDTO{
+  username: string,
+  tabId: string,
+  rating: number
+}
+
+interface ITabRatingDTO{
+  rating: number
+}
+
 
 enum TabType{
   harmonica = "HARMONICA",
@@ -282,5 +292,7 @@ export {
   IHarmonicaTabDTO,
   ITopicComponents,
   IChordSaveResponse,
+  IUserRatingDTO,
+  ITabRatingDTO,
   TabType
 }

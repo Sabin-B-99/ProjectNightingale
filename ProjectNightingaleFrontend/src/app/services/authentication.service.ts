@@ -77,10 +77,10 @@ export class AuthenticationService {
     }
   }
 
-  private getAuthenticatedUserInfo(): IUserDTO{
+  public getAuthenticatedUserInfo(): IUserDTO{
     const user: string | null = window.localStorage.getItem('username');
     return {
-      username: user || ''
+      username: user
     }
   }
 

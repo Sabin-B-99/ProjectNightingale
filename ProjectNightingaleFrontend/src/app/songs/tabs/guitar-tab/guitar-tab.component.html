@@ -1,12 +1,20 @@
 <ng-template appChordTooltip></ng-template>
 <div *ngIf="guitarTab">
-  <div>
-    <p>{{guitarTab.tabDetails.songTitle}}</p>
-    <p>{{guitarTab.tabDetails.artistName}}</p>
-    <hr>
-    <p>{{guitarTab.guitarOtherReqDetails.tuningType}}</p>
-    <p>{{guitarTab.guitarOtherReqDetails.capoPosition}}</p>
-    <p>{{guitarTab.guitarOtherReqDetails.difficulty}}</p>
+  <div class="row row-cols-md-2">
+    <div class="col col-sm-4">
+      <p>{{guitarTab.tabDetails.songTitle}}</p>
+      <p>{{guitarTab.tabDetails.artistName}}</p>
+      <hr>
+      <p>{{guitarTab.guitarOtherReqDetails.tuningType}}</p>
+      <p>{{guitarTab.guitarOtherReqDetails.capoPosition}}</p>
+      <p>{{guitarTab.guitarOtherReqDetails.difficulty}}</p>
+    </div>
+    <div class="col col-sm-4">
+      <p>Average rating: {{averageRating}}</p>
+      <p>Rate: </p>
+      <app-rating [selectedStar]="starsSelected"
+                  (selectedStarEvent)="onRated($event)"></app-rating>
+    </div>
   </div>
   <hr>
   <div #lyricsDiv class="formatted-line-break"

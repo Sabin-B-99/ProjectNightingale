@@ -13,7 +13,7 @@ export class RegistrationConfirmationComponent implements OnInit, OnDestroy{
 
   private registrationConfirmationSubscription: Subscription;
 
-  username: string;
+  username: string | null;
   constructor(private authService: AuthenticationService, private route: ActivatedRoute) {
   }
 

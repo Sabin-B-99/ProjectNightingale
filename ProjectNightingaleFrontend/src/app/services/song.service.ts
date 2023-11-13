@@ -10,7 +10,7 @@ import {
   ILyricsOnlyTabDTO,
   ILyricsOnlyTabLyricsDTO,
   IOtherArtistDTO,
-  ISongTabDTO
+  ISongTabDTO, ITabRatingDTO, IUserRatingDTO
 } from "../types/song-interfaces";
 import {forkJoin, map, switchMap} from "rxjs";
 
@@ -112,6 +112,23 @@ export class SongService {
   }
   public searchSongsByTitle(title: string){
     return  this.http.get<ISongTabDTO[]>(`http://localhost:8080/ProjectNightingale/api/tabs/songs/${title}/results`);
+  }
+
+  public loadAverageRatingForTab(tabId: string){
+    return this.http.get<ITabRatingDTO>(`http://localhost:8080/ProjectNightingale/api/tabs/songs/${tabId}/ratings`);
+  }
+
+  public loadRatingForSongByUser(username: string, tabId: string){
+    return this.http.get<ITabRatingDTO>(`http://localhost:8080/ProjectNightingale/api/tabs/songs/${username}/${tabId}/ratings`)
+  }
+
+  public rateTab(username: string ,tabId: string, rating: number){
+    const userRating:IUserRatingDTO = {
+      username: username,
+      tabId: tabId,
+      rating: rating
+    }
+    return this.http.post<ITabRatingDTO>('http://localhost:8080/ProjectNightingale/api/tabs/songs/ratings', userRating)
   }
 
 }

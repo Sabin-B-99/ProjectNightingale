@@ -16,7 +16,7 @@ interface IUserRegistrationDTO{
 }
 
 interface IUserDTO{
-  username: string
+  username: string | null
 }
 
 export {

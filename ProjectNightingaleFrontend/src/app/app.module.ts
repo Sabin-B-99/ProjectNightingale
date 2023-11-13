@@ -47,6 +47,8 @@ import { SignupPageComponent } from './authentication/signup-page/signup-page.co
 import { AuthenticatingComponent } from './authentication/authenticating/authenticating.component';
 import { RegistrationConfirmationComponent } from './authentication/registration-confirmation/registration-confirmation.component';
 import {AuthenticationInterceptorService} from "./services/authentication-interceptor.service";
+import { RatingComponent } from './songs/tabs/rating/rating.component';
+import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 
 @NgModule({
   declarations: [
@@ -88,7 +90,8 @@ import {AuthenticationInterceptorService} from "./services/authentication-interc
     LoginPageComponent,
     SignupPageComponent,
     AuthenticatingComponent,
-    RegistrationConfirmationComponent
+    RegistrationConfirmationComponent,
+    RatingComponent
   ],
   imports: [
     BrowserModule,
@@ -99,6 +102,7 @@ import {AuthenticationInterceptorService} from "./services/authentication-interc
     NgOptimizedImage,
     NoopAnimationsModule,
     MatAutocompleteModule,
+    FontAwesomeModule
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptorService, multi: true}],
   bootstrap: [AppComponent]
