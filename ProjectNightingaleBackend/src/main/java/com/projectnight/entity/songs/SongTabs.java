@@ -52,6 +52,10 @@ public class SongTabs {
     @JsonIgnore
     private HarmonicaTabLyrics harmonicaTabLyrics;
 
+    @OneToMany(mappedBy = "songTab", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<TabRatings> rating;
+
     public SongTabs() {
     }
 
@@ -133,5 +137,13 @@ public class SongTabs {
 
     public void setTabType(String tabType) {
         this.tabType = tabType;
+    }
+
+    public List<TabRatings> getRating() {
+        return rating;
+    }
+
+    public void setRating(List<TabRatings> rating) {
+        this.rating = rating;
     }
 }

@@ -6,6 +6,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.UUID;
+
 @Service
 public class UsersServiceImpl implements UsersService{
 
@@ -23,9 +25,16 @@ public class UsersServiceImpl implements UsersService{
 
 
     @Override
-    @Transactional
+    @Transactional("userRegistrationTransactionManager")
     public Users loadUserByUserName(String username) {
         return this.usersRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found."));
+    }
+
+    @Override
+    @Transactional("userRegistrationTransactionManager")
+    public Users findByUserId(UUID id) {
+        return this.usersRepository.findById(id)
+                .orElseThrow(()-> new UsernameNotFoundException("User with id not found"));
     }
 }

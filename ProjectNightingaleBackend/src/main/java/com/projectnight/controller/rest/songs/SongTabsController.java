@@ -2,16 +2,12 @@ package com.projectnight.controller.rest.songs;
 
 import com.projectnight.entity.songs.SongTabs;
 import com.projectnight.service.songs.SongTabsService;
-import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-import org.w3c.dom.stylesheets.LinkStyle;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
