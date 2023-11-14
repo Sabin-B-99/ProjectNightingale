@@ -6,7 +6,6 @@ import com.projectnight.service.practice.RoutinesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -34,16 +33,21 @@ public class RoutineController {
         return routinesService.getAllRoutines();
     }
 
+    @GetMapping("{username}/routines")
+    public List<Routines> getAllRoutinesForUser(@PathVariable String username){
+        return routinesService.getAllRoutinesForUser(username);
+    }
+
     @GetMapping("/routines/{routineId}/topics")
     public List<Topics> getRoutineTopicsByRoutineId(@PathVariable int routineId){
         return routinesService.getRoutineTopicsByRoutineId(routineId);
     }
 
-    @PostMapping(value = "/routines",
+    @PostMapping(value = "{username}/routines",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody Routines saveRoutine(@RequestBody Routines routine){
-         Routines savedRoutine = routinesService.saveRoutine(routine);
+    public @ResponseBody Routines saveRoutine(@RequestBody Routines routine, @PathVariable String username){
+         Routines savedRoutine = routinesService.saveRoutineForUser(routine, username);
          if(savedRoutine == null){
              throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error while saving routine");
          }

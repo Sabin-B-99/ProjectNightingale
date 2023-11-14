@@ -8,7 +8,7 @@ import java.util.UUID;
 public interface SongTabsService {
     List<SongTabs> getAllTabs();
     SongTabs getSongTabById(UUID id);
-    SongTabs saveSongTab(SongTabs songTab);
+    SongTabs saveSongTabByUser(SongTabs songTab, String username);
 
     List<SongTabs> getDistinctTabsWithTitleLike(String title);
 

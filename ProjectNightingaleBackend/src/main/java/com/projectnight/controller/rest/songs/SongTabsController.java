@@ -21,11 +21,11 @@ public class SongTabsController {
         this.songTabsService = songTabsService;
     }
 
-    @PostMapping(value = "/songs",
+    @PostMapping(value = "/{username}/songs",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody SongTabs saveSongTab(@RequestBody SongTabs songTab){
-        SongTabs savedTab = songTabsService.saveSongTab(songTab);
+    public @ResponseBody SongTabs saveSongTab(@RequestBody SongTabs songTab, @PathVariable String username){
+        SongTabs savedTab = songTabsService.saveSongTabByUser(songTab, username);
         if(savedTab == null){
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error while saving tab");
         }

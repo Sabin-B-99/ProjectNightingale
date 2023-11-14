@@ -1,10 +1,12 @@
 package com.projectnight.entity.songs;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.projectnight.entity.users.Users;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -27,6 +29,12 @@ public class SongTabs {
 
     @Column(name = "tab_type")
     private String tabType;
+
+    @Column(name = "creator_username")
+    private String username;
+
+    @Column(name = "date_created")
+    private LocalDateTime creationDateTime;
 
     @OneToMany(mappedBy = "songTab", orphanRemoval = true, cascade = CascadeType.ALL)
     @JsonIgnore
@@ -145,5 +153,21 @@ public class SongTabs {
 
     public void setRating(List<TabRatings> rating) {
         this.rating = rating;
+    }
+
+    public LocalDateTime getCreationDateTime() {
+        return creationDateTime;
+    }
+
+    public void setCreationDateTime(LocalDateTime creationDateTime) {
+        this.creationDateTime = creationDateTime;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

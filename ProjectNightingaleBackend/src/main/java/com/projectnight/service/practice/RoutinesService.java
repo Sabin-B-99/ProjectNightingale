@@ -11,7 +11,9 @@ public interface RoutinesService {
 
     List<Topics> getRoutineTopicsByRoutineId(int routineId);
 
-    Routines saveRoutine(Routines routine);
+    Routines saveRoutineForUser(Routines routine, String username);
 
     void deleteRoutineById(int routineId);
+
+    List<Routines> getAllRoutinesForUser(String username);
 }

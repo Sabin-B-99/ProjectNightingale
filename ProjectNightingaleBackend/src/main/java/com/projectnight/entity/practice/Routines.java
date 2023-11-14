@@ -1,5 +1,8 @@
 package com.projectnight.entity.practice;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.projectnight.entity.users.Users;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -20,6 +23,12 @@ public class Routines {
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "routine", fetch = FetchType.LAZY)
     private List<Topics> topics;
+
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @JsonIgnore
+    private Users users;
 
     public Routines() {
     }
@@ -54,5 +63,13 @@ public class Routines {
 
     public void setTopics(List<Topics> topics) {
         this.topics = topics;
+    }
+
+    public Users getUsers() {
+        return users;
+    }
+
+    public void setUsers(Users users) {
+        this.users = users;
     }
 }

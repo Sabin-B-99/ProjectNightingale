@@ -1,5 +1,8 @@
 package com.projectnight.entity.users;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.projectnight.entity.practice.Routines;
+import com.projectnight.entity.songs.SongTabs;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
@@ -32,6 +35,11 @@ public class Users {
 
     @ManyToMany(mappedBy = "users", cascade = CascadeType.ALL)
     private List<UserAuthorities> authorities;
+
+    @OneToMany(mappedBy = "users", fetch = FetchType.LAZY, orphanRemoval = true)
+    @JsonIgnore
+    private List<Routines> userRoutines;
+
 
     public Users() {
     }
@@ -83,4 +91,14 @@ public class Users {
     public void setAuthorities(List<UserAuthorities> authorities) {
         this.authorities = authorities;
     }
+
+
+    public List<Routines> getUserRoutines() {
+        return userRoutines;
+    }
+
+    public void setUserRoutines(List<Routines> userRoutines) {
+        this.userRoutines = userRoutines;
+    }
+
 }
