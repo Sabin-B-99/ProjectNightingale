@@ -4,6 +4,7 @@ import {RoutineService} from "../../services/routine.service";
 import {ActivatedRoute,  Router} from "@angular/router";
 import {Subscription, switchMap} from "rxjs";
 import {RoutineCreatorService} from "../../services/routine-creator.service";
+import {AuthenticationService} from "../../services/authentication.service";
 
 @Component({
   selector: 'app-routine-list',
@@ -18,31 +19,36 @@ export class RoutineListComponent implements OnInit,  OnDestroy{
   private deleteRoutineSubscription: Subscription;
   private routineListReloadSubscription: Subscription;
 
+  username: string | null;
+
 
   disableAllDeleteButtonAfterClicked: boolean = false;
 
   constructor(private routineService: RoutineService,
               private routineCreatorService: RoutineCreatorService,
               private route: ActivatedRoute,
-              private router: Router) {
+              private router: Router, private authService: AuthenticationService) {
   }
   ngOnInit(): void {
-    this.loadUserRoutines();
-    this.reloadUserRoutinesIfNecessary()
+    this.username = this.authService.getAuthenticatedUserInfo().username;
+    if(this.username){
+      this.loadUserRoutines(this.username);
+      this.reloadUserRoutinesIfNecessary(this.username)
+    }
   }
 
-  private loadUserRoutines(){
-    this.routinesListSubscription = this.routineService.loadUserRoutines()
+  private loadUserRoutines(username: string){
+    this.routinesListSubscription = this.routineService.loadUserRoutines(username)
       .subscribe( (loadedRoutines: Routine[]) =>{
         this.routines = loadedRoutines;
       });
   }
 
-  private reloadUserRoutinesIfNecessary(){
+  private reloadUserRoutinesIfNecessary(username: string){
     this.routineListReloadSubscription = this.routineService.routineSaved
       .subscribe(saveStatus => {
         if(saveStatus){
-          this.loadUserRoutines();
+          this.loadUserRoutines(username);
         }
       })
   }
@@ -74,15 +80,17 @@ export class RoutineListComponent implements OnInit,  OnDestroy{
     this.router.navigate(['create'], {relativeTo: this.route});
   }
 
-  onRoutineDeleteClicked(routine: Routine) {
-    this.disableAllDeleteButtonAfterClicked = true;
-    this.deleteRoutineSubscription =  this.routineService.deleteRoutineById(routine.routineId)
-      .pipe(switchMap( () => {
-          return this.routineService.loadUserRoutines();
-      })).subscribe((loadedRoutines: Routine[]) => {
-        this.routines = loadedRoutines;
-        this.disableAllDeleteButtonAfterClicked = false;
-      });
+  onRoutineDeleteClicked(routine: Routine, username: string|null) {
+    if(username){
+      this.disableAllDeleteButtonAfterClicked = true;
+      this.deleteRoutineSubscription =  this.routineService.deleteRoutineById(routine.routineId)
+        .pipe(switchMap( () => {
+          return this.routineService.loadUserRoutines(username);
+        })).subscribe((loadedRoutines: Routine[]) => {
+          this.routines = loadedRoutines;
+          this.disableAllDeleteButtonAfterClicked = false;
+        });
+    }
   }
 
   onStartClicked(routineId: number) {

@@ -12,12 +12,14 @@ import {
   IOtherArtistDTO,
   ISongTabDTO, ITabRatingDTO, IUserRatingDTO
 } from "../types/song-interfaces";
-import {forkJoin, map, switchMap} from "rxjs";
+import {forkJoin, map, Subject, switchMap} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
 export class SongService {
+
+  loadedTabEmitter: Subject<ISongTabDTO> = new Subject<ISongTabDTO>();
 
   constructor(private http: HttpClient) { }
 

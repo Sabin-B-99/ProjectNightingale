@@ -31,8 +31,8 @@ export class RoutineService {
   constructor(private http: HttpClient) {
   }
 
-  public loadUserRoutines(): Observable<Routine[]>{
-    return  this.http.get<IRoutine[]>('http://localhost:8080/ProjectNightingale/api/practice/routines/')
+  public loadUserRoutines(username: string): Observable<Routine[]>{
+    return  this.http.get<IRoutine[]>(`http://localhost:8080/ProjectNightingale/api/practice/${username}/routines`)
       .pipe(map( (routines: IRoutine[]) => {
         const loadedRoutines :Routine[] = [];
         for (let routine of routines){

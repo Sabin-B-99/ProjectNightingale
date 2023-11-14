@@ -7,6 +7,7 @@ import {IRoutine, IRoutineForm, ITopicForm} from "../../types/song-interfaces";
 import {Subscription} from "rxjs";
 import {noWhiteSpaceValidator} from "../../validators/no-white-space-validator.directive";
 import {RoutineService} from "../../services/routine.service";
+import {AuthenticationService} from "../../services/authentication.service";
 
 @Component({
   selector: 'app-routine-creator',
@@ -25,12 +26,20 @@ export class RoutineCreatorComponent implements OnInit, OnDestroy ,AfterViewChec
 
   formSaveStatus: boolean = false;
 
-  constructor(private routineCreatorService: RoutineCreatorService, private routineService: RoutineService,
-              private router: Router, private route: ActivatedRoute) {
+  private username: string | null;
+
+  constructor(private routineCreatorService: RoutineCreatorService,
+              private routineService: RoutineService,
+              private authService: AuthenticationService,
+              private router: Router,
+              private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
-    this.initializeRoutineCreationForm();
+    this.username = this.authService.getAuthenticatedUserInfo().username;
+    if(this.username){
+      this.initializeRoutineCreationForm();
+    }
   }
 
   initializeRoutineCreationForm(){
@@ -88,8 +97,9 @@ export class RoutineCreatorComponent implements OnInit, OnDestroy ,AfterViewChec
 
   onRoutineSubmitted() {
     this.formSaveStatus = true;
-    if(this.routineCreationForm.valid){
-      this.saveRoutineSubscription = this.routineCreatorService.buildAndSaveRoutine(this.routineCreationForm.controls)
+    if(this.routineCreationForm.valid && this.username){
+      this.saveRoutineSubscription =
+        this.routineCreatorService.buildAndSaveRoutine(this.routineCreationForm.controls, this.username)
         .subscribe(
           (topicSaveComplete: boolean) =>{
               this.router.navigate(['../../routines'], {relativeTo: this.route});

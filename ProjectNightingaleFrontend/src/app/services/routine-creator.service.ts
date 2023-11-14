@@ -31,15 +31,17 @@ export class RoutineCreatorService {
   constructor(private http: HttpClient) {
   }
 
-  buildAndSaveRoutine(controls: IRoutineForm) : Observable<boolean>{
+  buildAndSaveRoutine(controls: IRoutineForm, username: string) : Observable<boolean>{
     if(this.editMode){
       this.routineCreated.id = this.routineIdForEdit;
+    }else{
+      this.routineCreated.id = undefined;
     }
     this.routineCreated.title = controls.routineTitle.value || '';
     let routineTopics: ITopic[] = this.buildTopics(controls.topics);
     this.routineCreated.duration = this.calculateRoutineTotalDuration(routineTopics);
 
-    return this.saveRoutine(this.routineCreated)
+    return this.saveRoutine(this.routineCreated, username)
       .pipe(switchMap(savedRoutine => this.saveTopics(savedRoutine.id, routineTopics)
         .pipe(map(savedTopic =>{
           let saved: boolean = false;
@@ -53,8 +55,8 @@ export class RoutineCreatorService {
 
 
 
-  private saveRoutine(routine: IRoutine){
-    return  this.http.post<IRoutine>('http://localhost:8080/ProjectNightingale/api/practice/routines/', routine);
+  private saveRoutine(routine: IRoutine, username: string){
+    return this.http.post<IRoutine>(`http://localhost:8080/ProjectNightingale/api/practice/${username}/routines`, routine);
   }
 
   saveTopics(routineId: number = -1, topics: ITopic[]){

@@ -11,6 +11,7 @@ import {lyricsBracketsValidation} from "../../validators/tab-lyrics-text-bracket
 import {chordsValidator} from "../../validators/valid-chords-validator.directive";
 import {Router} from "@angular/router";
 import {Subscription} from "rxjs";
+import {AuthenticationService} from "../../services/authentication.service";
 
 @Component({
   selector: 'app-song-tab-creator',
@@ -47,26 +48,32 @@ export class SongTabCreatorComponent implements OnInit, OnDestroy, AfterViewInit
   private validChordChangedSubscription: Subscription;
 
 
+  private username: string|null;
 
-  constructor(private router:Router, private tabCreatorService: TabCreatorService) {
+  constructor(private router:Router,
+              private tabCreatorService: TabCreatorService,
+              private authService: AuthenticationService) {
   }
 
   ngOnInit(): void {
-    this.tabCreatorService.loadAllValidChordRoots();
-    this.tabCreatorService.loadAllValidChordKeys();
+    this.username = this.authService.getAuthenticatedUserInfo().username;
+    if(this.username){
+      this.tabCreatorService.loadAllValidChordRoots();
+      this.tabCreatorService.loadAllValidChordKeys();
 
-    this.tabCreationForm = new FormGroup<ISongTabCreationForm>({
-      'tabRequiredDetails': TabRequiredDetailsComponent.getTabRequiredDetailForm(),
-      'tabLyricsArea': new FormControl<string>('')
-      // 'harmonicaTabArea': new FormControl<ITableFormCellValue[]>([])
-    });
-
-    this.validChordChangedSubscription = this.tabCreatorService.validChordsChanged
-      .subscribe((validChords: string[])=>{
-        this.validChords = validChords;
-        this.tabCreationForm.get('tabLyricsArea')?.setValidators([Validators.required,
-          lyricsBracketsValidation(), chordsValidator(this.validChords.slice())])
+      this.tabCreationForm = new FormGroup<ISongTabCreationForm>({
+        'tabRequiredDetails': TabRequiredDetailsComponent.getTabRequiredDetailForm(),
+        'tabLyricsArea': new FormControl<string>('')
+        // 'harmonicaTabArea': new FormControl<ITableFormCellValue[]>([])
       });
+
+      this.validChordChangedSubscription = this.tabCreatorService.validChordsChanged
+        .subscribe((validChords: string[])=>{
+          this.validChords = validChords;
+          this.tabCreationForm.get('tabLyricsArea')?.setValidators([Validators.required,
+            lyricsBracketsValidation(), chordsValidator(this.validChords.slice())])
+        });
+    }
   }
 
 
@@ -83,9 +90,9 @@ export class SongTabCreatorComponent implements OnInit, OnDestroy, AfterViewInit
 
   onTabCreationFormSubmitted(){
     this.tabSaveStatus = true;
-    if(this.tabCreationForm.valid){
+    if(this.tabCreationForm.valid && this.username){
       if(this.guitarTabSelected){
-        this.tabSavedSubscription = this.tabCreatorService.saveGuitarTab(this.tabCreationForm)
+        this.tabSavedSubscription = this.tabCreatorService.saveGuitarTab(this.tabCreationForm, this.username)
           .subscribe( (tabSaved: boolean) =>{
             if(tabSaved){
               this.router.navigate(['songs']);
@@ -93,7 +100,7 @@ export class SongTabCreatorComponent implements OnInit, OnDestroy, AfterViewInit
             this.tabSaveStatus = false;
           });
       }else if(this.harmonicaTabSelected){
-        this.tabSavedSubscription = this.tabCreatorService.saveHarmonicaTab(this.tabCreationForm)
+        this.tabSavedSubscription = this.tabCreatorService.saveHarmonicaTab(this.tabCreationForm, this.username)
           .subscribe((tabSaved: boolean)=>{
             if(tabSaved){
               this.router.navigate(['songs']);
@@ -101,7 +108,7 @@ export class SongTabCreatorComponent implements OnInit, OnDestroy, AfterViewInit
             this.tabSaveStatus = false;
           });
       }else {
-        this.tabSavedSubscription = this.tabCreatorService.saveLyrics(this.tabCreationForm)
+        this.tabSavedSubscription = this.tabCreatorService.saveLyrics(this.tabCreationForm, this.username)
           .subscribe((tabSaved: boolean) =>{
             if(tabSaved){
               this.router.navigate(['songs']);

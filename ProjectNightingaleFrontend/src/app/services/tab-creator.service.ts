@@ -279,8 +279,9 @@ private validChords: string[] = [];
     };
   }
 
-  private saveTabSongDetails(songDetails: ISongTabDTO){
-    return this.http.post<ISongTabDTO>('http://localhost:8080/ProjectNightingale/api/tabs/songs/', songDetails)
+  private saveTabSongDetails(songDetails: ISongTabDTO, username: string){
+    return this.http.post<ISongTabDTO>(`http://localhost:8080/ProjectNightingale/api/tabs/${username}/songs`,
+      songDetails)
       .pipe(map((tabSong: ISongTabDTO) =>{
         return tabSong.id;
       }));
@@ -389,7 +390,7 @@ private validChords: string[] = [];
     this.http.post<IHarmonicaTabLyricsDTO>(`http://localhost:8080/ProjectNightingale/api/tabs/songs/${songTabId}/harmonica-tab-lyrics`,
       harmonicaTabLyrics).subscribe();
   }
-  saveGuitarTab(tabCreationForm: FormGroup<ISongTabCreationForm>): Observable<boolean> {
+  saveGuitarTab(tabCreationForm: FormGroup<ISongTabCreationForm>, username: string): Observable<boolean> {
     const tabSongDetails: ISongTabDTO = this.extractTabSongDetails(tabCreationForm);
     tabSongDetails.tabType = TabType.guitar;
 
@@ -397,7 +398,7 @@ private validChords: string[] = [];
     const tabGuitarOtherReqDetails: IGuitarOtherReqDetailsDTO = this.extractGuitarOtherReqDetails(tabCreationForm);
     const tabLyrics: IGuitarTabLyricsDTO = this.extractGuitarTabLyrics(tabCreationForm);
 
-    return this.saveTabSongDetails(tabSongDetails)
+    return this.saveTabSongDetails(tabSongDetails, username)
       .pipe(map((id: string | undefined)=>{
         let guitarTabSaved: boolean = false;
         if(id){
@@ -412,7 +413,7 @@ private validChords: string[] = [];
 
   }
 
-  saveHarmonicaTab(tabCreationForm: FormGroup<ISongTabCreationForm>): Observable<boolean> {
+  saveHarmonicaTab(tabCreationForm: FormGroup<ISongTabCreationForm>, username: string): Observable<boolean> {
     const tabSongDetails: ISongTabDTO = this.extractTabSongDetails(tabCreationForm);
     tabSongDetails.tabType = TabType.harmonica;
 
@@ -421,7 +422,7 @@ private validChords: string[] = [];
     // const tabLyrics: IHarmonicaTabLyricsDTO[] = this.extractHarmonicaTabLyrics(tabCreationForm);
     const tabLyrics: IHarmonicaTabLyricsDTO = this.extractHarmonicaTabLyrics(tabCreationForm);
 
-    return this.saveTabSongDetails(tabSongDetails)
+    return this.saveTabSongDetails(tabSongDetails, username)
       .pipe(map((id: string | undefined) =>{
         let harmonicaTabSaved: boolean = false;
         if(id){
@@ -434,14 +435,14 @@ private validChords: string[] = [];
       }));
   }
 
-  saveLyrics(tabCreationForm: FormGroup<ISongTabCreationForm>):Observable<boolean> {
+  saveLyrics(tabCreationForm: FormGroup<ISongTabCreationForm>, username: string):Observable<boolean> {
     const tabSongDetails: ISongTabDTO = this.extractTabSongDetails(tabCreationForm);
     tabSongDetails.tabType = TabType.lyrics
 
     const tabOtherArtists: IOtherArtistDTO[] = this.extractOtherArtistsName(tabCreationForm);
     const lyrics: ILyricsOnlyTabLyricsDTO = this.extractLyricsOnlyTabLyrics(tabCreationForm);
 
-    return this.saveTabSongDetails(tabSongDetails)
+    return this.saveTabSongDetails(tabSongDetails, username)
       .pipe(map((id: string|undefined) =>{
         let lyricsSaved: boolean = false;
         if(id){

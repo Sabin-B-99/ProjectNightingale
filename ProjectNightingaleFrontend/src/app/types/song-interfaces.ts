@@ -123,7 +123,9 @@ interface ISongTabDTO{
   id?: string,
   songTitle: string,
   artistName: string,
-  tabType?: string
+  tabType?: string,
+  username?: string,
+  creationDateTime?: string,
 }
 
 interface IOtherArtistDTO{
