@@ -10,7 +10,7 @@ export class AuthenticationInterceptorService implements HttpInterceptor{
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const authToken: string | null = this.authService.getAuthToken();
-    if(authToken && req.url.includes("/api/practice")){
+    if(authToken){
       const header: HttpHeaders = new HttpHeaders()
         .append('Authorization', `Bearer ${authToken}`);
       const modifiedReq: HttpRequest<any> = req.clone({
