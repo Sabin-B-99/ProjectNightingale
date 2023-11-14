@@ -6,12 +6,11 @@
       <p>{{harmonicaTab.harmonicaOtherReqDetails.harmonicaType}}</p>
       <p>{{harmonicaTab.harmonicaOtherReqDetails.harmonicaKey}}</p>
       <p>{{harmonicaTab.harmonicaOtherReqDetails.difficulty}}</p>
+      <p>Tab created by: {{harmonicaTab.tabDetails.username}}</p>
+      <p>At: {{harmonicaTab.tabDetails.creationDateTime | formatDatetime}}</p>
     </div>
     <div class="col col-sm-4">
-      <p>Average rating: {{averageRating}}</p>
-      <p>Rate: </p>
-      <app-rating [selectedStar]="starsSelected"
-                  (selectedStarEvent)="onRated($event)"></app-rating>
+      <app-tab-rating></app-tab-rating>
     </div>
   </div>
   <hr/>

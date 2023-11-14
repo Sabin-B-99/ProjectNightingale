@@ -11,21 +11,28 @@ import {faStar, IconDefinition} from "@fortawesome/free-solid-svg-icons";
 })
 export class RatingComponent {
 
-  @Input()
-  averageRating: number;
+  _averageRating: number;
 
   stars: number[] = [1, 2, 3, 4, 5];
 
   @Output()
   selectedStarEvent: EventEmitter<number> = new EventEmitter<number>();
 
-  @Input()
-  selectedStar: number = 0;
+  _selectedStar: number = 0;
 
   starIcon: IconDefinition = faStar;
   constructor() { }
   countStar(star: number) {
-    this.selectedStar = star;
-    this.selectedStarEvent.emit(this.selectedStar);
+    this._selectedStar = star;
+    this.selectedStarEvent.emit(this._selectedStar);
+  }
+
+
+  @Input() set averageRating(avgRating: number){
+    this._averageRating = avgRating;
+  }
+
+  @Input() set selectedStar(stars: number){
+    this._selectedStar = stars;
   }
 }

@@ -3,12 +3,11 @@
       <div class="col col-sm-4">
         <p>{{lyricsTab.tabDetails.songTitle}}</p>
         <p>{{lyricsTab.tabDetails.artistName}}</p>
+        <p>Lyrics posted by: {{lyricsTab.tabDetails.username}}</p>
+        <p>At: {{lyricsTab.tabDetails.creationDateTime | formatDatetime}}</p>
       </div>
       <div class="col col-sm-4">
-          <p>Average rating: {{averageRating}}</p>
-          <p>Rate: </p>
-          <app-rating [selectedStar]="starsSelected"
-                      (selectedStarEvent)="onRated($event)"></app-rating>
+         <app-tab-rating></app-tab-rating>
       </div>
     </div>
     <hr/>

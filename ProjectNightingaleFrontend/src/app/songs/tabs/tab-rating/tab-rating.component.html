@@ -1,0 +1,4 @@
+<p>Average rating: {{averageRating}}</p>
+<p>Rate: </p>
+<app-rating [selectedStar]="starsSelected"
+            (selectedStarEvent)="onRated($event, tabId)"></app-rating>

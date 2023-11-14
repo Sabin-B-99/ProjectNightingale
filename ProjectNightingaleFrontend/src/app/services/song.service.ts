@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {EventEmitter, Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {
   IGuitarOtherReqDetailsDTO,
@@ -12,14 +12,14 @@ import {
   IOtherArtistDTO,
   ISongTabDTO, ITabRatingDTO, IUserRatingDTO
 } from "../types/song-interfaces";
-import {forkJoin, map, Subject, switchMap} from "rxjs";
+import {BehaviorSubject, forkJoin, map, Subject, switchMap} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
 export class SongService {
 
-  loadedTabEmitter: Subject<ISongTabDTO> = new Subject<ISongTabDTO>();
+  loadedTabEmitter: BehaviorSubject<ISongTabDTO|null> = new BehaviorSubject<ISongTabDTO|null>(null);
 
   constructor(private http: HttpClient) { }
 
@@ -133,4 +133,7 @@ export class SongService {
     return this.http.post<ITabRatingDTO>('http://localhost:8080/ProjectNightingale/api/tabs/songs/ratings', userRating)
   }
 
+  emitLoadedTab(loadedTab: ISongTabDTO) {
+    this.loadedTabEmitter.next(loadedTab);
+  }
 }

@@ -47,8 +47,10 @@ import { SignupPageComponent } from './authentication/signup-page/signup-page.co
 import { AuthenticatingComponent } from './authentication/authenticating/authenticating.component';
 import { RegistrationConfirmationComponent } from './authentication/registration-confirmation/registration-confirmation.component';
 import {AuthenticationInterceptorService} from "./services/authentication-interceptor.service";
-import { RatingComponent } from './songs/tabs/rating/rating.component';
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
+import { TabRatingComponent } from './songs/tabs/tab-rating/tab-rating.component';
+import { FormatDatetimePipe } from './pipes/format-datetime.pipe';
+import {RatingComponent} from "./songs/tabs/tab-rating/rating/rating.component";
 
 @NgModule({
   declarations: [
@@ -91,7 +93,9 @@ import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
     SignupPageComponent,
     AuthenticatingComponent,
     RegistrationConfirmationComponent,
-    RatingComponent
+    RatingComponent,
+    TabRatingComponent,
+    FormatDatetimePipe
   ],
   imports: [
     BrowserModule,
