@@ -4,6 +4,7 @@ import com.projectnight.entity.songs.GuitarTabOtherReqDetails;
 import com.projectnight.service.songs.GuitarTabOtherReqDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -22,6 +23,7 @@ public class GuitarTabOtherReqDetailsController {
     @PostMapping(value = "/songs/{songTabId}/guitar-other-req-details",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("isAuthenticated()")
     public @ResponseBody GuitarTabOtherReqDetails saveGuitarTabOtherReqDetails(@PathVariable String songTabId,
                                                                                @RequestBody GuitarTabOtherReqDetails guitarTabOtherReqDetails){
         UUID id = UUID.fromString(songTabId);

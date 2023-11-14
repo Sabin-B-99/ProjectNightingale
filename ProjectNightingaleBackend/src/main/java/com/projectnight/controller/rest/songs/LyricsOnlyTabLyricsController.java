@@ -4,6 +4,7 @@ import com.projectnight.entity.songs.LyricsOnlyTabLyrics;
 import com.projectnight.service.songs.LyricsOnlyTabLyricsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -21,6 +22,7 @@ public class LyricsOnlyTabLyricsController {
     @PostMapping(value = "/songs/{songTabId}/lyrics-only-tab-lyrics",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("isAuthenticated()")
     public @ResponseBody LyricsOnlyTabLyrics saveLyricsForLyricsOnlyTab(@PathVariable String songTabId,
                                                           @RequestBody LyricsOnlyTabLyrics lyricsOnlyTabLyrics){
         UUID id = UUID.fromString(songTabId);

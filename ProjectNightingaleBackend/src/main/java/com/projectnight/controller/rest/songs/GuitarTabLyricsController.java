@@ -6,6 +6,7 @@ import com.projectnight.service.songs.GuitarTabLyricsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -24,6 +25,7 @@ public class GuitarTabLyricsController {
     @PostMapping(value = "/songs/{songTabId}/guitar-tab-lyrics",
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("isAuthenticated()")
     private @ResponseBody GuitarTabLyrics saveGuitarTabLyrics(@PathVariable String songTabId,
                                                 @RequestBody GuitarTabLyrics guitarTabLyrics){
         UUID id = UUID.fromString(songTabId);

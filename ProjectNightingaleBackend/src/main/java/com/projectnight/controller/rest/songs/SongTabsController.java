@@ -5,6 +5,7 @@ import com.projectnight.service.songs.SongTabsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -24,6 +25,7 @@ public class SongTabsController {
     @PostMapping(value = "/{username}/songs",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("isAuthenticated()")
     public @ResponseBody SongTabs saveSongTab(@RequestBody SongTabs songTab, @PathVariable String username){
         SongTabs savedTab = songTabsService.saveSongTabByUser(songTab, username);
         if(savedTab == null){

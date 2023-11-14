@@ -3,6 +3,7 @@ package com.projectnight.controller.rest.songs;
 import com.projectnight.entity.songs.HarmonicaTabLyrics;
 import com.projectnight.service.songs.HarmonicaTabLyricsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,6 +22,7 @@ public class HarmonicaTabLyricsController {
     }
 
     @PostMapping("/songs/{songTabId}/harmonica-tab-lyrics")
+    @PreAuthorize("isAuthenticated()")
     public @ResponseBody HarmonicaTabLyrics saveHarmonicaTabLyrics(@PathVariable String songTabId,
                                                                    @RequestBody HarmonicaTabLyrics harmonicaTabLyrics){
         UUID id = UUID.fromString(songTabId);

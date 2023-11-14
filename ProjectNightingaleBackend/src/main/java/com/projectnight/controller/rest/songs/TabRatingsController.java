@@ -4,6 +4,7 @@ import com.projectnight.dto.songs.TabRatingDTO;
 import com.projectnight.dto.songs.UserRatingDTO;
 import com.projectnight.service.songs.TabRatingsService;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -20,6 +21,7 @@ public class TabRatingsController {
 
     @PostMapping(value = "/songs/ratings", consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("isAuthenticated()")
     public @ResponseBody TabRatingDTO rateSongTab(@RequestBody UserRatingDTO userRating){
         return tabRatingsService.addUserRating(userRating);
     }
@@ -31,6 +33,7 @@ public class TabRatingsController {
     }
 
     @GetMapping(value = "/songs/{username}/{tabId}/ratings", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("isAuthenticated()")
     public @ResponseBody TabRatingDTO getRatingByUserForTab(@PathVariable String username, @PathVariable String tabId){
         return tabRatingsService.getUserRatingForTab(username, tabId);
     }
