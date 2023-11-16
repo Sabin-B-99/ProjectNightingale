@@ -5,6 +5,7 @@ import {Buffer} from "buffer";
 import {BehaviorSubject} from "rxjs";
 import {Router} from "@angular/router";
 import {jwtDecode, JwtPayload} from "jwt-decode";
+import * as crypto from "crypto-js";
 
 @Injectable({
   providedIn: 'root'
@@ -15,14 +16,14 @@ import {jwtDecode, JwtPayload} from "jwt-decode";
 export class AuthenticationService {
   private readonly clientId: string = 'ProjectNightingaleWebApp';
   private readonly clientSecret: string = '12345' //TODO: Don't keep it here later for production.
-  private readonly authServerUrl: string = "http://localhost:9090/oauth2/authorize?response_type=code&client_id=ProjectNightingaleWebApp&scope=openid&redirect_uri=http://127.0.0.1:4200/authorized&code_challenge=QYPAZ5NU8yvtlQ9erXrUYR-T5AGCjCF47vN-KsaI2A8&code_challenge_method=S256"
   private authorizationCode: string;
 
   authenticatedUser: BehaviorSubject<IUserDTO | null> = new BehaviorSubject<IUserDTO | null>(null);
 
   constructor(private http: HttpClient, private router: Router) { }
    getAuthServerUrl(){
-    return this.authServerUrl;
+    const codeChallenge: string | null = window.sessionStorage.getItem('code_challenge');
+    return `http://localhost:9090/oauth2/authorize?response_type=code&client_id=${this.clientId}&scope=openid&redirect_uri=http://127.0.0.1:4200/authorized&code_challenge=${codeChallenge}&code_challenge_method=S256`
   }
 
   setAuthorizationCode(code: string){
@@ -34,8 +35,9 @@ export class AuthenticationService {
   }
 
   private buildJwtTokenUrl(code: string): string{
-    const redirectUri: string = `http://127.0.0.1:4200/authorized&code=${code}&grant_type=authorization_code&code_verifier=qPsH306-ZDDaOE8DFzVn05TkN3ZZoVmI_6x4LsVglQI&scope=openid`;
-    return `http://localhost:9090/oauth2/token?client_id=ProjectNightingaleWebApp&redirect_uri=${redirectUri}`;
+    const codeVerifier: string|null = window.sessionStorage.getItem('code_verifier')
+    const redirectUri: string = `http://127.0.0.1:4200/authorized&code=${code}&grant_type=authorization_code&code_verifier=${codeVerifier}&scope=openid`;
+    return `http://localhost:9090/oauth2/token?client_id=${this.clientId}&redirect_uri=${redirectUri}`;
   }
 
   getJWTToken(){
@@ -103,6 +105,9 @@ export class AuthenticationService {
   }
 
   redirectToAuthServerUrl() {
+    this.generateAndSaveCodeVerifierAndChallenge();
+    console.log(window.sessionStorage.getItem('code_verifier'));
+    console.log(window.sessionStorage.getItem('code_challenge'));
     window.location.href = this.getAuthServerUrl();
   }
 
@@ -116,4 +121,25 @@ export class AuthenticationService {
     this.saveJWTTokenInfo(jwtTokenResponse);
     this.persistAuthenticatedUserInfo(jwtTokenResponse);
   }
+  private convertToBase64Url(word:crypto.lib.WordArray|string){
+    return  word.toString(crypto.enc.Base64).replace(/=/g, '').replace(/\+/g, '-').replace(/\//g, '_');
+  }
+
+  private generatePKCECodeVerifier(){
+    const randomString:string = crypto.enc.Base64.stringify(crypto.lib.WordArray.random(32));
+    return this.convertToBase64Url(randomString);
+  }
+  private generatePKCECodeChallenge(verifier: string){
+    const challenge: crypto.lib.WordArray = crypto.SHA256(verifier);
+    return this.convertToBase64Url(challenge);
+  }
+
+
+  private generateAndSaveCodeVerifierAndChallenge(){
+    const codeVerifier: string = this.generatePKCECodeVerifier();
+    window.sessionStorage.setItem('code_verifier', codeVerifier);
+    const codeChallenge: string = this.generatePKCECodeChallenge(codeVerifier);
+    window.sessionStorage.setItem('code_challenge', codeChallenge);
+  }
+
 }
