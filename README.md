@@ -17,7 +17,7 @@ A short demonstration video of the project in its current state.
 (Will be added later)
 
 
-## Quijck Start
+## Quick Start
 
 1. Make sure you have docker installed in your system. Follow [this](https://docs.docker.com/engine/install/) guide if you don't have it installed.
 
