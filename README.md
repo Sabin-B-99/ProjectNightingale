@@ -21,6 +21,8 @@ A short demonstration video of the project in its current state.
 
 1. Make sure you have docker installed in your system. Follow [this](https://docs.docker.com/engine/install/) guide if you don't have it installed.
 
+  * **NOTE:** If you are using docker desktop, please make sure that you are logged in with your docker username and password. Otherwise, the image may fail to build. 
+
 2. Clone the source into your local directory. Open (cd) the folder in terminal (cmd) from the root of the source folder (The folder that contains docker-compose file) and enter the following command:
     * To build the docker image. May take few minutes depending upon your system.
     ```
