@@ -35,9 +35,11 @@ A short demonstration video of the project in its current state.
 3.  After running the container successfully, you can browse the website via 127.0.0.1:4200 through your web browser.
     * The frontend is hosted on: 127.0.0.1:4200
     * The authorization server is hosted on: localhost:9090
-    * The resource server is hosted: localhost:8080
-    * Mailhog, fake SMTP mail server, is hosted: 0.0.0.0:8025    
+    * The resource server is hosted on: localhost:8080
+    * Mailhog, fake SMTP mail server, is hosted on: 0.0.0.0:8025    
       * If you sign up in the website, you can find the confirmation email in 0.0.0.0:8025 address. You use any email for registration. For example: a@b.com, xy@z.com etc.
+    * MySQL database is hosted on: 127.0.0.1:3306
+      * The ./docker/db folder also contains the MySQL dump file that contains all the data used for development purpose.
 
 4. To close the container once you finish testing run the following command:
    ```
@@ -55,7 +57,7 @@ A short demonstration video of the project in its current state.
 
 
 ## TODOs
-* I will not be wroking actively on this project anymore. But whenever I feel like it I will try to improve the website visually with proper CSS. 
+* I will not be working actively on this project anymore. But whenever I feel like it I will try to improve the website visually with proper CSS. 
 
 
 
