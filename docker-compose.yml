@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+  auth-server:
+    build: ./ProjectNightingaleAuthorizationServer
+    ports:
+      - 9090:9090
+    networks:
+      - ProjectNightingale-net
+    env_file:
+      - ./.env/auth-server.env
+    depends_on:
+      - db
+  
+  resource-server:
+    build: ./ProjectNightingaleBackend
+    ports:
+      - 8080:8080
+    networks:
+      - ProjectNightingale-net
+    env_file:
+      - ./.env/resource-server.env
+    depends_on:
+      - db
+
+  angular-frontend:
+    build: ./ProjectNightingaleFrontend
+    ports:
+      - 4200:80
+    networks:
+      - ProjectNightingale-net
+    depends_on:
+      - resource-server
+
+  db:
+    build: ./.docker/db
+    restart: always
+    ports:
+      - 3307:3306
+    networks:
+      - ProjectNightingale-net
+    env_file:
+      - ./.env/db.env
+
+  mailhog:
+    build: ./.docker/mailhog
+    ports: 
+      - 1025:1025
+      - 8025:8025
+    networks:
+      - ProjectNightingale-net
+    depends_on:
+      - auth-server
+       
+networks:
+  ProjectNightingale-net:
+    name: ProjectNightingale-net

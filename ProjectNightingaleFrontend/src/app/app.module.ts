@@ -42,7 +42,6 @@ import { HarmonicaTabComponent } from './songs/tabs/harmonica-tab/harmonica-tab.
 import { LinkifyChordsPipe } from './pipes/linkify-chords.pipe';
 import { ChordTooltipComponent } from './chords/chord-tooltip/chord-tooltip.component';
 import { ChordTooltipDirective } from './directives/chord-tooltip.directive';
-import { LoginPageComponent } from './authentication/login-page/login-page.component';
 import { SignupPageComponent } from './authentication/signup-page/signup-page.component';
 import { AuthenticatingComponent } from './authentication/authenticating/authenticating.component';
 import { RegistrationConfirmationComponent } from './authentication/registration-confirmation/registration-confirmation.component';
@@ -89,7 +88,6 @@ import {RatingComponent} from "./songs/tabs/tab-rating/rating/rating.component";
     LinkifyChordsPipe,
     ChordTooltipComponent,
     ChordTooltipDirective,
-    LoginPageComponent,
     SignupPageComponent,
     AuthenticatingComponent,
     RegistrationConfirmationComponent,

@@ -12,7 +12,6 @@ import {SongTabCreatorComponent} from "./songs/song-tab-creator/song-tab-creator
 import {PractiseComponent} from "./practise/practise.component";
 import {GuitarTabComponent} from "./songs/tabs/guitar-tab/guitar-tab.component";
 import {HarmonicaTabComponent} from "./songs/tabs/harmonica-tab/harmonica-tab.component";
-import {LoginPageComponent} from "./authentication/login-page/login-page.component";
 import {SignupPageComponent} from "./authentication/signup-page/signup-page.component";
 import {AuthenticatingComponent} from "./authentication/authenticating/authenticating.component";
 import {
@@ -36,7 +35,6 @@ const appRoutes: Routes = [
       {path: 'create', component: RoutineCreatorComponent}
     ]},
   {path: 'practise/:id', component: PractiseComponent},
-  {path:'login', component: LoginPageComponent},
   {path: 'register', component: SignupPageComponent},
   {path: 'confirm', component: RegistrationConfirmationComponent, canActivate: [canActivateRegistrationAuthenticationUrls]},
   {path: 'authorized', component: AuthenticatingComponent, pathMatch: "full", canActivate: [canActivateRegistrationAuthenticationUrls]}

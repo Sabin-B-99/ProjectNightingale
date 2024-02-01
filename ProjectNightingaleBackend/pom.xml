@@ -4,8 +4,8 @@
   <groupId>org.projectnight</groupId>
   <artifactId>ProjectNightingale</artifactId>
   <packaging>war</packaging>
-  <version>0.1-SNAPSHOT</version>
-  <name>ProjectNightingale Maven Webapp</name>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>ProjectNightingaleResourceServer</name>
   <url>http://maven.apache.org</url>
 
   <properties>

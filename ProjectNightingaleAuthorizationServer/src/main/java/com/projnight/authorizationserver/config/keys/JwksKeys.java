@@ -24,9 +24,7 @@ public class JwksKeys {
 
     private KeyStore loadKeyStore(){
         try {
-            File file = new File(getClass().getResource("/static/pnaskp.jks").toURI());
-            InputStream data = new FileInputStream(file);
-
+            InputStream data = getClass().getResourceAsStream("/static/pnaskp.jks");
             KeyStore keyStore = KeyStore.getInstance(KeyStore.getDefaultType());
             keyStore.load(data, keyStorePassword.toCharArray());
             return keyStore;
