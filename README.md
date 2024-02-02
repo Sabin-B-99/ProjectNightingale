@@ -16,9 +16,9 @@ But, as the project progressed, with the form I had developed, I found it diffic
 So, midway through the project I decided to change the project to include guitar tabs, chords, and practice routines as well. The form to enter the harmonica was changed back to the traditional form you can find in every other website ,that publishes harmonica tabs.
 
 ## Demo
-A short demonstration video of the project in its current state. 
-
-[![ProjectNightingale demo video](http://img.youtube.com/vi/3LIiGFmkoDw/0.jpg)](http://www.youtube.com/watch?v=YOUTUBE_3LIiGFmkoDw "ProjectNightingale demonstration video")
+A short demonstration video of the project in its current state.
+Click on the image below to watch the video.
+[![ProjectNightingale demo video](http://img.youtube.com/vi/3LIiGFmkoDw/0.jpg)](https://youtu.be/3LIiGFmkoDw)
 
 ## Quick Start
 
