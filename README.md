@@ -9,7 +9,7 @@ When I was learning harmonica, I had difficulty in understanding some of the tab
 
 
 
-[The matrix form that I had developed](https://github.com/Sabin-B-99/ProjectNightingale/assets/55592534/078a5d90-8ffd-47ce-93f4-ccbe6e29a979)
+[The matrix form that I had developed](https://github.com/Sabin-B-99/ProjectNightingale/assets/55592534/e7b9db61-b26b-47c4-a7d8-199ff1d8b959)
 
 But, as the project progressed, with the form I had developed, I found it difficult (inefficient) to store and retrieve each cell's data from the database. Moreover, I had hard time rendering those data in their correct position on the screen. I don't really have a good CSS skill (This was my first frontend project). (**Learnt it the hard way: Programming Spreadsheet is really hard!!!**. My next project probably will be writing a toy excel (spreadsheet program))
 
@@ -18,7 +18,7 @@ So, midway through the project I decided to change the project to include guitar
 ## Demo
 A short demonstration video of the project in its current state. 
 
-[![ProjectNightingale demo video](http://img.youtube.com/vi/yZkyXV8jhQY/0.jpg)](http://www.youtube.com/watch?v=YOUTUBE_yZkyXV8jhQY "ProjectNightingale demonstration video.")
+[![ProjectNightingale demo video](http://img.youtube.com/vi/3LIiGFmkoDw/0.jpg)](http://www.youtube.com/watch?v=YOUTUBE_3LIiGFmkoDw "ProjectNightingale demonstration video")
 
 ## Quick Start
 
